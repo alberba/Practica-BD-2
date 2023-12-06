@@ -10,7 +10,7 @@
         ");
         $producto = mysqli_fetch_array($consulta);
         $consulta_precios = mysqli_query($conexion, "
-        SELECT precio, stock, nombre
+        SELECT precio, stock, nombre, r_vendedor_producto.idVendedor
         FROM r_vendedor_producto
         JOIN 
             (SELECT idVendedor, nombre
@@ -24,37 +24,29 @@
 ?>
 
 <!DOCTYPE html>
+<html lang="es">
 <head>
-    <?php
-        echo "<title>".$producto['nombre']." - Estimazon</title>";
-    ?>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/estils.css">
     <link rel="stylesheet" type="text/css" href="css/cabecera.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <link rel="stylesheet" type="text/css" href="css/producto.css">
+    <?php
+        echo "<title>".$producto['nombre']." - Estimazon</title>";
+    ?>    
 </head>
 <body>
-    <div class="sup">
-        <div id="Titulo">
-            <a id="Titol" href=principal.php>
-                <h1>Estimazon</h1>
-            </a>
-        </div>
-    </div>
+    <?php
+        include "cabecera.php";
+    ?>
+    
     <div class="subpage">
             <h2 class="subtitulo">Catálogo</h2>
     </div>
     <div class=content>
-        <nav class="menu-categorias">
-            <?php
-                $consulta_cat = mysqli_query($conexion, "SELECT * FROM categoria ORDER BY nombre ASC");
-                while ($fila = mysqli_fetch_array($consulta_cat)) {
-                    $link = "catshow.php?param=".$fila["idCategoria"];
-                    echo "<a class='catlist' href= '$link'>".$fila['nombre']. "</a>";
-                }
-            ?>
-        </nav>
+        <?php
+            include "l_categorias.php";
+        ?>
         <div id=vista-producto>
             <div id=vend-princ>
                 <div class=imagen-prod>
@@ -68,7 +60,15 @@
                         echo "<p>".$producto['descripcion']."</p>";
                         echo "<h3>".$p_fila_vendedores['precio']." €</h3>";
                         echo "<p id=stock> Faltan ".$p_fila_vendedores['stock']." unidades</p>";
-                    ?>
+                    
+                        echo "<form method='post' action='añadir_carrito.php'>";
+                            echo "<input type='hidden' name='producto' value='".$idprod."'>";
+                            echo "<input type='hidden' name='idVendedor' value='".$p_fila_vendedores['idVendedor']."'>";
+                            echo '<label for="cantidad">Cantidad:</label>';
+                            echo '<input type="number" id="cantidad" name="cantidad">';
+                            echo '<input class=boton-compra type="submit" name="agregar" value="Agregar al carrito">';
+                        echo "</form>"
+                    ?>    
                 </div>
             </div>
             <div id=otros-vend>

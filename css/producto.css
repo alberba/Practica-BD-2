@@ -35,3 +35,16 @@
     font-size: 30px;
     font-weight: bold;
 }
+
+.boton-compra{
+    padding: 10px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgb(97, 94, 94);
+}
+
+.boton-compra:hover{
+    background-color: rgba(234, 234, 234, 0.777);
+}

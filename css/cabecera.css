@@ -21,6 +21,16 @@
     float: right;
 }
 
+#nombre-Usuario{
+    margin-right: 30px;
+    font-weight: bold;
+    color: white;
+}
+
+#cerrar-sesion{
+    padding: 10px;
+}
+
 #Titol{
     text-decoration: none;
     font-size: 30px;
