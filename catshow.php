@@ -1,21 +1,21 @@
-<?php
-    $conexion = mysqli_connect("localhost","root","");
-    $bd = mysqli_select_db($conexion, "estimazon");
-?>
 <!DOCTYPE html>
 <head>
     <title>Catalogo - Estimazon</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="estils.css?v=1.0.0">
+    <link rel="stylesheet" type="text/css" href="css/estils.css">
+    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
+    <link rel="stylesheet" type="text/css" href="css/general.css">
 </head>
 <body>
     <div class="sup">
         <div id="Titulo">
-            <a id="Titol" href=principal.php>Estimazon</a>
+            <a id="Titol" href=principal.php>
+                <h1>Estimazon</h1>
+            </a>
         </div>
     </div>
     <div class="subpage">
-            <h1 class="subtitulo">Catálogo</h1>
+            <h2 class="subtitulo">Catálogo</h2>
     </div>
     <div class=content>
         <nav class="menu-categorias">
@@ -51,8 +51,8 @@
                             while ($fila = mysqli_fetch_array($consulta)) {
                                 echo "<li class='product-prev'>";
                                 echo "<div>";
-                                echo "<a class=enl-prod href='prodshow.php?param=".$fila['idProducto']."'>";
-                                echo "<img src=".$fila['imagen']." class='imagen-prod'>";
+                                echo "<a class=enl-prod href='prodshow.php?prod=".$fila['idProducto']."'>";
+                                echo "<img src=".$fila['imagen']." class='imagen-prod-cat'>";
                                 echo $fila['nombre'];
                                 echo "</a>";
                                 #echo "<li class='product-prev'>".$fila['nombre']." "."</li>";

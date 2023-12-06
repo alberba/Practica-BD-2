@@ -1,0 +1,29 @@
+.sup{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgb(5, 113, 255);
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+#Titulo{
+    margin-left: 20px;
+    width:fit-content;
+    color: white;
+}
+
+#login{
+    float: right;
+}
+
+#Titol{
+    text-decoration: none;
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+}

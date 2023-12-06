@@ -2,14 +2,18 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="estils.css?v=1">
+    <link rel="stylesheet" type="text/css" href="css/estils.css">
+    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
+    <link rel="stylesheet" type="text/css" href="css/general.css">
     <title>Estimazon</title>
 </head>
 <body>
 <body>
     <div class="sup">
-        <div id="Titulo">
-            <a id="Titol" href=principal.php>Estimazon</a>
+        <div id=Titulo>
+            <a id="Titol" href=principal.php>
+                <h1>Estimazon</h1>
+            </a>
         </div>
         <div id="login">
             <?php

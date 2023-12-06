@@ -1,0 +1,28 @@
+@font-face{
+    font-family: 'GeistSans';
+    src: url('../fonts/Geist-Medium.woff2') format('woff2');
+    font-style: normal;
+    font-weight: normal;
+}
+
+h1{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 50px;
+}
+
+h2{
+    font-size: 40px;
+}
+
+h3{
+    font-size: 28px;
+}
+
+h4{
+    font-size: 20px;
+}
+
+*{
+    font-family: 'GeistSans', sans-serif;
+}
