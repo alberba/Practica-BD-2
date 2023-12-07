@@ -26,6 +26,7 @@
             } else {
                 echo "<p id=nombre-Usuario>".$_SESSION['nombreUsuario'].'</p>';
                 echo '<form action="" method="post">';
+                echo "<input type='hidden' name='sesionCerrada' value=''>";
                 echo '<input class=boton-sesion type="submit" value="Cerrar Sesión" name="cerrarSesion">';
                 echo '</form>';
             }

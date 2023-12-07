@@ -59,30 +59,33 @@
                         echo "<h2>".$producto['nombre']."</h2>";
                         echo "<p>".$producto['descripcion']."</p>";
                         echo "<h3>".$p_fila_vendedores['precio']." €</h3>";
-                        echo "<p id=stock> Faltan ".$p_fila_vendedores['stock']." unidades</p>";
+                        if ($p_fila_vendedores['stock'] <= 10)
+                            echo "<p id=stock> Sólo quedan ".$p_fila_vendedores['stock']." unidades a este precio!</p>";
                     
                         echo "<form method='post' action='añadir_carrito.php'>";
                             echo "<input type='hidden' name='producto' value='".$idprod."'>";
                             echo "<input type='hidden' name='idVendedor' value='".$p_fila_vendedores['idVendedor']."'>";
-                            echo '<label for="cantidad">Cantidad:</label>';
+                            echo '<label for="cantidad">Cantidad: </label>';
                             echo '<input type="number" id="cantidad" name="cantidad">';
                             echo '<input class=boton-compra type="submit" name="agregar" value="Agregar al carrito">';
                         echo "</form>"
                     ?>    
                 </div>
             </div>
-            <div id=otros-vend>
-                <p id=tit-otros-vend>
-                    Otros vendedores
-                </p>
-                <ul>
-                    <?php
-                        while ($p_fila_vendedores = mysqli_fetch_array($consulta_precios)) {
-                            echo "<li>".$p_fila_vendedores['nombre']." ".$p_fila_vendedores['precio']." €</li>";
-                        }
-                    ?>
-                </ul>
-            </div>
+            <?php
+                if ($p_fila_vendedores = mysqli_fetch_array($consulta_precios)) {
+                    echo '<div id=otros-vend>';
+                    echo '<p id=tit-otros-vend> Otros vendedores </p>';
+                    echo '<ul>';
+                    
+                    do {
+                        echo "<li>".$p_fila_vendedores['nombre'].": ".$p_fila_vendedores['precio']." €</li>";
+                    } while ($p_fila_vendedores = mysqli_fetch_array($consulta_precios));
+                    
+                    echo '</ul>';
+                    echo '</div>';
+                }
+            ?>
         </div>
 
     </div>

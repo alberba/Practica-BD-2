@@ -1,14 +1,14 @@
 <?php
-
     if (isset($_POST['user']) && isset($_POST['pass'])) {
         $usuario = $_POST['user'];
         $contrasena = $_POST['pass'];
         $nom_usuario = verificarCredenciales($usuario, $contrasena);
 
-        if ($consulta !== ""){
+        if ($nom_usuario !== ""){
             session_start();
 
             $_SESSION['nombreUsuario'] = $nom_usuario;
+            $_SESSION['carrito'] = array();
             header("Location: catshow.php");
             exit();
         } else{
