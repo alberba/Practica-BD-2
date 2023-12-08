@@ -44,7 +44,6 @@
                                 echo "<img src=".$fila['imagen']." class='imagen-prod-cat'>";
                                 echo $fila['nombre'];
                                 echo "</a>";
-                                #echo "<li class='product-prev'>".$fila['nombre']." "."</li>";
                                 echo "</div>";
                                 echo "</li>";
                             }

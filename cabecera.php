@@ -4,6 +4,11 @@
             <h1>Estimazon</h1>
         </a>
     </div>
+    <div id="carrito-btn-container">
+        <a href="carrito.php">
+            <img src="imagenes/carrito.png" alt="Ir al carrito" class="imagen-carrito">
+        </a>
+    </div>
     <div id="login">
         <?php
             session_start();

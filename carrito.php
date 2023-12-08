@@ -1,27 +1,7 @@
 <?php
     $conexion = mysqli_connect("localhost","root","");
     $bd = mysqli_select_db($conexion, "estimazon");
-    if(isset($_GET["prod"])) {
-        $idprod = $_GET["prod"];
-        $consulta = mysqli_query($conexion, "
-        SELECT nombre, imagen, descripcion
-        FROM producto
-        WHERE idProducto = $idprod
-        ");
-        $producto = mysqli_fetch_array($consulta);
-        $consulta_precios = mysqli_query($conexion, "
-        SELECT precio, stock, nombre, r_vendedor_producto.idVendedor
-        FROM r_vendedor_producto
-        JOIN 
-            (SELECT idVendedor, nombre
-            FROM vendedor) AS vendedor
-        ON r_vendedor_producto.idVendedor = vendedor.idVendedor
-        WHERE idProducto = $idprod
-        ORDER BY precio ASC
-        ");
-        $p_fila_vendedores = mysqli_fetch_array($consulta_precios);
-    }
-?>
+    ?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -31,7 +11,8 @@
     <link rel="stylesheet" type="text/css" href="css/cabecera.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <link rel="stylesheet" type="text/css" href="css/producto.css">
-       
+    <link rel="stylesheet" type="text/css" href="css/carrito.css">
+    <!-- Otros enlaces a archivos CSS -->
 </head>
 <body>
     <?php
@@ -39,55 +20,89 @@
     ?>
     
     <div class="subpage">
-            <h2 class="subtitulo">Carrito</h2>
+        <h2 class="subtitulo">Carrito de compra</h2>
     </div>
-    <div class=content>
-        <div id=div-carrito>
+    <div class="content">
+        <div id="div-carrito">
             <?php
                 if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
                     // acumulador del precio
                     $precio_total = 0;
+
+                    // contador para determinar cuándo iniciar una nueva fila
+                    $contador = 0;
+
                     // mostrar todos los productos del carrito
                     foreach ($_SESSION['carrito'] as $idProducto => $detallesProducto) {
                         // obtenemos valores de cantidad e idVendedor
                         $cantidad = $detallesProducto['cantidad'];
                         $idVendedor = $detallesProducto['idVendedor'];
-                        // consultas de nombre del producto, precio, stock y nombre del vendedor
-                        $consulta_nomprod = mysqli_query($conexion, "
-                        SELECT nombre
-                        FROM producto
-                        WHERE idProducto = $idProducto
-                        ");
-                        $consulta_precio = mysqli_query($conexion, "
-                        SELECT precio
-                        FROM r_vendedor_producto
-                        WHERE idProducto = $idProducto
-                        AND idVendedor = $idVendedor
-                        ");
-                        $consulta_nombre = mysqli_query($conexion, "
-                        SELECT nombre
-                        FROM vendedor
-                        WHERE idVendedor = $idVendedor
+                        // consulta del nombre del producto, precio, stock y nombre del vendedor
+                        $consulta = mysqli_query($conexion, "
+                            SELECT producto.nombre AS prod, producto.imagen, r_prod_vend.precio, nom_vend.nombre AS vend
+                            FROM producto
+                            JOIN
+                                (SELECT precio, idVendedor
+                                FROM r_vendedor_producto
+                                WHERE idProducto = $idProducto
+                                AND idVendedor = $idVendedor) AS r_prod_vend
+                            JOIN
+                                (SELECT vendedor.nombre
+                                FROM vendedor
+                                WHERE idVendedor = $idVendedor) AS nom_vend
+                            WHERE producto.idProducto = $idProducto
                         ");
                         
                         // realizamos las consultas
-                        $nombre_prod = mysqli_fetch_array($consulta_nomprod);
-                        $fila_precio = mysqli_fetch_array($consulta_precio);
-                        $nombre_ven = mysqli_fetch_array($consulta_nombre);
+                        $fila = mysqli_fetch_array($consulta);
 
                         // calcular precio total
-                        $precio = $fila_precio['precio'] * $cantidad;
+                        $precio = $fila['precio'] * $cantidad;
                         $precio_total += $precio;
 
-                        echo "<h4>" . $nombre_prod['nombre'] . ": \t " . $cantidad . " \t-------\t " . $precio . " Vendedor: " . $nombre_ven['nombre'] . "</h4>";
+                        // Mostrar la imagen y la información del producto
+                        echo "<div class='producto'>";
+                                echo "<div class='imagen-prod-container'>";
+                                    echo "<img src='" . $fila['imagen'] . "' alt='" . $fila['prod'] . "' class='imagen-prod'>";
+                                echo "</div>";
+                                echo "<div class='descripcion-prod'>";
+                                    echo "<a class=link-prod href='prodshow.php?prod=".$idProducto."'>";
+                                        echo "<h4>" . $fila['prod'] . "</h4>";
+                                    echo "</a>";
+                                    echo "<p>Precio por unidad: $" . $fila['precio'] . "</p>";
+                                    echo "<p>Cantidad en el carrito: " . $cantidad . "</p>";
+                                    echo "<p>Vendedor: " . $fila['vend'] . "</p>";
+                                    echo "<p>Precio total: $" . $precio . "</p>";
+                                echo "</div>";
+                        echo "</div>";
+
+                        // Incrementar el contador
+                        $contador++;
+
+                        // Si se han mostrado 4 productos, cerrar la fila y reiniciar el contador
+                        if ($contador == 4) {
+                            echo "<div class='clear'></div>";
+                            $contador = 0;
+                        }
                     }
-                    // mostrar precio total
-                    echo "<h3>Precio total: {$precio_total}</h3>";
+                    // mostrar precio total arriba y a la derecha en color verde
+                    echo "<div id='precio-total-container'>";
+                    echo "<h3 id='precio-total' style='color: green; text-align: right;'>Precio total: {$precio_total}</h3>";
+                    echo "</div>";
+                
+                    // mostrar información general y formulario de pago
+                    echo "<div class='info-gen-carrito'>";
+                        echo '<form method="post" action="prepago.php">';
+                            echo '<input type="hidden" name="precio_total" value="' . $precio_total . '">';
+                            echo '<input class="boton-pago" type="submit" value="Ir al pago">';
+                        echo '</form>';
+                    echo "</div>";
                 } else {
-                    echo "<h3>No hay productos en el carrito</h3>";
+                    echo "<h3>No hay productos en el carrito.</h3>";
                 }
             ?>
         </div>
     </div>
 </body>
 </html>
+

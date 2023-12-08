@@ -16,6 +16,15 @@
     width:fit-content;
     color: white;
 }
+#carrito-btn-container {
+    top: 10px;
+    left: 20%;
+    transform: translateX(-50%);
+}
+.imagen-carrito {
+    width: 70px; 
+    height: 70px; 
+}
 
 #login{
     float: right;
