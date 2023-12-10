@@ -3,22 +3,19 @@
     $bd = mysqli_select_db($conexion, "estimazon");
     if(isset($_GET["prod"])) {
         $idprod = $_GET["prod"];
-        // información del producto
         $consulta = mysqli_query($conexion, "
         SELECT nombre, imagen, descripcion
         FROM producto
         WHERE idProducto = $idprod
         ");
         $producto = mysqli_fetch_array($consulta);
-
-        // información del producto/vendedor
         $consulta_precios = mysqli_query($conexion, "
-        SELECT precio, stock, nombre, r_vendedor_producto.nUsuarioVend AS vend
+        SELECT precio, stock, nombre, r_vendedor_producto.idVendedor
         FROM r_vendedor_producto
         JOIN 
-            (SELECT nUsuario, nombre
+            (SELECT idVendedor, nombre
             FROM vendedor) AS vendedor
-        ON r_vendedor_producto.nUsuarioVend = vendedor.nUsuario
+        ON r_vendedor_producto.idVendedor = vendedor.idVendedor
         WHERE idProducto = $idprod
         ORDER BY precio ASC
         ");
@@ -67,7 +64,7 @@
                     
                         echo "<form method='post' action='añadir_carrito.php'>";
                             echo "<input type='hidden' name='producto' value='".$idprod."'>";
-                            echo "<input type='hidden' name='nUsuarioVend' value='".$p_fila_vendedores['vend']."'>";
+                            echo "<input type='hidden' name='idVendedor' value='".$p_fila_vendedores['idVendedor']."'>";
                             echo '<label for="cantidad">Cantidad: </label>';
                             echo "<input type='number' min='1' max=".$p_fila_vendedores['stock']." value='1' id='cantidad' name='cantidad' required>";
                             echo '<input class=boton-compra type="submit" name="agregar" value="Agregar al carrito">';

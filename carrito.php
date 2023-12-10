@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <link rel="stylesheet" type="text/css" href="css/producto.css">
     <link rel="stylesheet" type="text/css" href="css/carrito.css">
+    <!-- Otros enlaces a archivos CSS -->
 </head>
 <body>
     <?php
@@ -35,21 +36,20 @@
                     foreach ($_SESSION['carrito'] as $idProducto => $detallesProducto) {
                         // obtenemos valores de cantidad e idVendedor
                         $cantidad = $detallesProducto['cantidad'];
-                        echo '<h3>' . $cantidad . '</h3>';
-                        $nUsuarioVend = $detallesProducto['nUsuarioVend'];
+                        $idVendedor = $detallesProducto['idVendedor'];
                         // consulta del nombre del producto, precio, stock y nombre del vendedor
                         $consulta = mysqli_query($conexion, "
                             SELECT producto.nombre AS prod, producto.imagen, r_prod_vend.precio, nom_vend.nombre AS vend
                             FROM producto
                             JOIN
-                                (SELECT precio, nUsuarioVend
+                                (SELECT precio, idVendedor
                                 FROM r_vendedor_producto
                                 WHERE idProducto = $idProducto
-                                AND nUsuarioVend = '$nUsuarioVend') AS r_prod_vend
+                                AND idVendedor = $idVendedor) AS r_prod_vend
                             JOIN
                                 (SELECT vendedor.nombre
                                 FROM vendedor
-                                WHERE nUsuario = '$nUsuarioVend') AS nom_vend
+                                WHERE idVendedor = $idVendedor) AS nom_vend
                             WHERE producto.idProducto = $idProducto
                         ");
                         

@@ -26,7 +26,7 @@
 
                     if(isset($_GET["param"])) {
                         $idcat = $_GET["param"];
-                        // consulta para obtener la información del producto
+
                         $consulta = mysqli_query($conexion, "
                         SELECT nombre, imagen, producto.idProducto
                         FROM producto
@@ -38,9 +38,7 @@
                         ");
                         if($consulta)
                             while ($fila = mysqli_fetch_array($consulta)) {
-                                // mostrar información del producto
                                 echo "<li class='product-prev'>";
-                                // enlace a la página del producto
                                 echo "<div>";
                                 echo "<a class=enl-prod href='prodshow.php?prod=".$fila['idProducto']."'>";
                                 echo "<img src=".$fila['imagen']." class='imagen-prod-cat'>";
@@ -52,10 +50,13 @@
                         else{
                             echo "<p>No hay productos en esta categoria</p>";
                         }
+
                     }
                 ?>
             </ul>
         </div>
-    </div> 
+
+    </div>
+    
 </body>
 </html>
