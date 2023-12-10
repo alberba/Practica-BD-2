@@ -66,7 +66,7 @@
                             echo "<input type='hidden' name='producto' value='".$idprod."'>";
                             echo "<input type='hidden' name='idVendedor' value='".$p_fila_vendedores['idVendedor']."'>";
                             echo '<label for="cantidad">Cantidad: </label>';
-                            echo '<input type="number" min="1" value="1" id="cantidad" name="cantidad" required>';
+                            echo "<input type='number' min='1' max=".$p_fila_vendedores['stock']." value='1' id='cantidad' name='cantidad' required>";
                             echo '<input class=boton-compra type="submit" name="agregar" value="Agregar al carrito">';
                         echo "</form>"
                     ?>    

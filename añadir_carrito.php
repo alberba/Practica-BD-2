@@ -24,6 +24,6 @@
             );
         }
     }
-    header('Location: carrito.php');
+    header('Location: catshow.php');
     exit();
 ?>
