@@ -34,6 +34,7 @@
     <link rel="stylesheet" type="text/css" href="css/cabecera.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <link rel="stylesheet" type="text/css" href="css/producto.css">
+    <link rel="stylesheet" type="text/css" href="css/productshow.css">
     <?php
         echo "<title>".$producto['nombre']." - Estimazon</title>";
     ?>    
