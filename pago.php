@@ -30,8 +30,7 @@
                     $fecha = date("Y-m-d");
                     $nUsuarioComp = $_SESSION['nombreUsuario'];
                     $nUsuarioCont = NULL;
-                    $idDomicilio = NULL;
-                    $idControlador = rand(1, 10);;
+                    $idDomicilio = $_POST['domicilio'];
 
                     // comenzar transacción (solo alteraremos la base de datos en caso
                     // de que todas las modificaciones sean exitosas)
@@ -39,13 +38,12 @@
                     
                     try {
                         // obtener usuario de controlador aleatoriamente
-                        /*
                         $consulta_cont = mysqli_query($conexion, "
                                 SELECT nUsuario
                                 FROM controlador
                                 ");
                         $consulta_num_cont = mysqli_query($conexion, "
-                        SELECT count(nUsuario) as n
+                        SELECT count(nUsuario) AS n
                         FROM controlador
                         ");
 
@@ -53,24 +51,18 @@
                         $elegido = rand(1, $n['n']);
 
                         $fila = mysqli_fetch_array($consulta_cont);
-                        for ($i=1; $i < $elegido; $i++) { 
+                        for ($i=1; $i <= $elegido; $i++) { 
                             $fila = mysqli_fetch_array($consulta_cont);
                         }
-                        $nUsuarioCont = $fila['nUsuario'];
-                        */
-                        $nUsuarioCont = "ricCtrl";
+                        $nUsuarioCont = $fila['nUsuario'];         
+                        
+                        // esto habrá que quitarlo
+                        //$idDomicilio = 1;
 
                         // generamos la comanda
-                        /*
                         $ret = mysqli_query($conexion, "
-                            INSERT INTO comanda(fecha,nTarjeta,idDomicilio,usuarioContr,usuarioCompr) VALUES
-                            ($fecha, $numT, $idDomicilio, $nUsuarioCont, $nUsuarioComp);
-                            ");
-                        */
-
-                        $ret = mysqli_query($conexion, "
-                            INSERT INTO comanda(fecha,nTarjeta,idDomicilio,idControlador) VALUES
-                            ($fecha, $numT, NULL, 3);
+                            INSERT INTO comanda(fecha, nTarjeta, idDomicilio, nUsuarioComp, nUsuarioCont) VALUES
+                            ('$fecha', '$numT', $idDomicilio, '$nUsuarioComp', '$nUsuarioCont');
                             ");
 
                         // obtener idComanda
@@ -84,13 +76,13 @@
                         foreach ($_SESSION['carrito'] as $idProducto => $detallesProducto) {
                             // obtenemos valores de cantidad e idVendedor
                             $cantidad = $detallesProducto['cantidad'];
-                            $idVendedor = $detallesProducto['idVendedor'];
+                            $nUsuarioVend = $detallesProducto['nUsuarioVend'];
 
                             // consulta del stock
                             $consulta_stock = mysqli_query($conexion, "
                                 SELECT stock
                                 FROM r_vendedor_producto
-                                WHERE idProducto = $idProducto AND idVendedor = $idVendedor
+                                WHERE idProducto = $idProducto AND nUsuarioVend = '$nUsuarioVend'
                                 ");
                             
                             // obtener stock tras compra
@@ -105,7 +97,7 @@
                                 mysqli_query($conexion, "
                                     UPDATE r_vendedor_producto
                                     SET stock = $stock_f
-                                    WHERE idProducto = $idProducto AND idVendedor = $idVendedor
+                                    WHERE idProducto = $idProducto AND nUsuarioVend = '$nUsuarioVend'
                                     ");
                             }
 

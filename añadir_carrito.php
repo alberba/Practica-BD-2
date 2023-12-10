@@ -5,7 +5,7 @@
         // asignar datos a variables locales
         $cantidad = $_POST['cantidad'];
         $producto = $_POST['producto'];
-        $idVendedor = $_POST['idVendedor'];
+        $nUsuarioVend = $_POST['nUsuarioVend'];
         
 
         if (!isset($_SESSION['carrito'])) {
@@ -20,7 +20,7 @@
             // Si no existe, añadirlo al carrito
             $_SESSION['carrito'][$producto] = array(
                 'cantidad' => $cantidad,
-                'idVendedor' => $idVendedor
+                'nUsuarioVend' => $nUsuarioVend
             );
         }
     }
