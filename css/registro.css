@@ -51,3 +51,26 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.select-tipo {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff
+}
+ 
+select:focus {
+    border-color: rgb(5, 113, 255);
+}
+
+.option-tipo {
+    padding: 5px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+}
+
+.error-mess {
+    color: #ff0000; 
+}

@@ -18,7 +18,7 @@
                 session_unset();
                 session_destroy();
                 // Redirigir a la página de inicio de sesión
-                header("Location: catshow.php");
+                header("Location: pagina_principal.php");
                 exit();
             }
 

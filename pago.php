@@ -37,27 +37,16 @@
                     mysqli_begin_transaction($conexion);
                     
                     try {
-                        // obtener usuario de controlador aleatoriamente
+                        // Consulta para seleccionar un usuario aleatorio
                         $consulta_cont = mysqli_query($conexion, "
-                                SELECT nUsuario
-                                FROM controlador
-                                ");
-                        $consulta_num_cont = mysqli_query($conexion, "
-                        SELECT count(nUsuario) AS n
-                        FROM controlador
+                            SELECT nUsuario
+                            FROM controlador
+                            ORDER BY RAND()
+                            LIMIT 1
                         ");
 
-                        $n = mysqli_fetch_array($consulta_num_cont);
-                        $elegido = rand(1, $n['n']);
-
                         $fila = mysqli_fetch_array($consulta_cont);
-                        for ($i=1; $i <= $elegido; $i++) { 
-                            $fila = mysqli_fetch_array($consulta_cont);
-                        }
-                        $nUsuarioCont = $fila['nUsuario'];         
-                        
-                        // esto habrá que quitarlo
-                        //$idDomicilio = 1;
+                        $nUsuarioCont = $fila['nUsuario'];        
 
                         // generamos la comanda
                         $ret = mysqli_query($conexion, "
