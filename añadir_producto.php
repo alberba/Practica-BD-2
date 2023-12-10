@@ -63,27 +63,24 @@
             $categorias = $_POST['categorias'];
             $nombre_usuario = $_SESSION['nombreUsuario'];
 
-            $consulta = mysqli_query($conexion, "SELECT nUsuario, nombre, idVendedor FROM vendedor WHERE nombre = '$nombre_usuario'");
 
-            if($fila = mysqli_fetch_assoc($consulta)){
-                $idVendedor = $fila['idVendedor'];
-            }
+        
 
             //comprobar si ya existe el producto
             $consulta = mysqli_query($conexion, "SELECT idProducto FROM producto WHERE nombre = '$nombre'");
 
-            if ($fila = mysqli_fetch_assoc($consulta)){ //el producto ya existe
+            if ($fila = mysqli_fetch_array($consulta)){ //el producto ya existe
 
                 //se comprueba si el vendedor ya vende el producto
                 $consulta = mysqli_query($conexion, "
                 SELECT nombre, imagen, descripcion
                 FROM producto
-                JOIN (SELECT idProducto FROM R_VENDEDOR_PRODUCTO WHERE idVendedor = '$idVendedor') as r_vend_prod
+                JOIN (SELECT idProducto FROM R_VENDEDOR_PRODUCTO WHERE nUsuarioVend = '$nombre_usuario') as r_vend_prod
                 ON producto.idProducto = r_vend_prod.idProducto
                 WHERE nombre = '$nombre'
                 ");
 
-                if ($fila = mysqli_fetch_assoc($consulta)) {                
+                if ($fila = mysqli_fetch_array($consulta)) {                
                     
                     echo '<p class="error-message">Ya vendes este producto.</p>';
                     echo '<meta http-equiv="refresh" content="0.4;url=vendedor.php" />';
@@ -92,11 +89,11 @@
 
                     //obtener idProducto
                     $consulta = mysqli_query($conexion, "SELECT idProducto FROM producto WHERE nombre = '$nombre'");
-                    $fila = mysqli_fetch_assoc($consulta);
+                    $fila = mysqli_fetch_array($consulta);
                     $idProducto = $fila['idProducto'];
 
                     //añadir a r_vendedor_producto
-                    mysqli_query($conexion, "INSERT INTO r_vendedor_producto ('$idVendedor', '$idProducto', '$precio', '$stock');");
+                    mysqli_query($conexion, "INSERT INTO r_vendedor_producto ('$nombre_usuario', '$idProducto', '$precio', '$stock');");
                 }
                 
             } else { //el producto no existe
@@ -114,7 +111,7 @@
 
                     //obtener idCategoría
                     $consulta = mysqli_query($conexion, "SELECT idCategoria FROM categoria WHERE nombre = '$categoria'");
-                    $fila = mysqli_fetch_assoc($consulta);
+                    $fila = mysqli_fetch_array($consulta);
                     $idCategoria = $fila['idCategoria'];
 
                     //se añade a r_producto_categoria
@@ -122,7 +119,7 @@
                 }
 
                 //añadir a r_vendedor_producto
-                mysqli_query($conexion, "INSERT INTO r_vendedor_producto (idVendedor, idProducto, precio, stock) VALUES ('$idVendedor', '$idProducto', '$precio', '$stock');");
+                mysqli_query($conexion, "INSERT INTO r_vendedor_producto (nUsuarioVend, idProducto, precio, stock) VALUES ('$nombre_usuario', '$idProducto', '$precio', '$stock');");
 
                 echo '<p class="success-message">Producto añadido.</p>';
                 echo '<meta http-equiv="refresh" content="0.4;url=vendedor.php" />';
