@@ -1,26 +1,36 @@
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/estils.css">
     <link rel="stylesheet" type="text/css" href="css/cabecera.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <link rel="stylesheet" type="text/css" href="css/producto.css">
+    <link rel="stylesheet" type="text/css" href="css/vendedor.css">
 </head>
-
 <body>
-<h1>Añadir producto</h1>
 
+<div class="sup">
+    <h1>Añadir producto</h1>
+</div>
 
+<div class="mensaje-bienvenida">
+    <p>Bienvenido a la sección de los vendedores.</p>
+    <p>Aquí puedes agregar o modificar un producto existente.</p>
+</div>
 
-<button onclick="window.location.href='añadir_producto.php'">Añadir un producto</button>
-<button onclick="window.location.href='modificar_producto.php'">Modificar un producto</button>
+<div class="boton">
+    <a href="añadir_producto.php">
+        <img src="imagenes/producto+.png" alt="Añadir producto">
+        <p>Añadir un producto</p>
+    </a>
+</div>
 
+<div class="boton">
+<a href="modificar_producto.php">
+    <img src="imagenes/editar.png" alt="Modificar producto">
+    <p>Modificar un producto</p>
+</div>
+
+</body>
 </html>
-
-
-
-

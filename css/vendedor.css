@@ -1,0 +1,84 @@
+.sup{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgb(5, 113, 255);
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.mensaje-bienvenida {
+    color: black; 
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.mensaje-bienvenida p {
+    margin: 0;
+    font-size: 24px; 
+    font-weight: bold; 
+}
+
+.boton {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.boton img {
+    width: 100px; 
+    height: auto; 
+    margin-right: 10px; 
+}
+
+.boton p {
+    margin-top: 10px; 
+    text-align: center; 
+    font-weight: bold;
+}
+
+
+.productos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.producto {
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.producto:hover {
+    transform: scale(1.05);
+}
+
+.producto a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.producto img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.producto p {
+    margin: 0;
+}

@@ -1,0 +1,39 @@
+.subpage {
+    margin-left: 30px;
+    display: block;
+}
+
+.content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 300vh; 
+    margin-top: 20px; 
+}
+
+.boton {
+    text-align: center;
+}
+
+.boton a {
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+.boton a:hover {
+    background-color: #ddd;
+}
+
+.boton img {
+    width: 300px; 
+    height: auto;
+    margin-bottom: 10px;
+}
+
+
+
+.boton p {
+    font-size: 18px; 
+    margin: 0;
+}
