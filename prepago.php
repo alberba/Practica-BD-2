@@ -26,16 +26,47 @@
             <?php
                 if (isset($_POST['precio_total']) && isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
                     $precio_total = $_POST['precio_total'];
+                    $nUsuarioComp = $_SESSION['nombreUsuario'];
+
+                    // consulta de los domicilios del usuario
+                    $consulta = mysqli_query($conexion, "
+                        SELECT domicilio.idDomicilio, direccion, cp
+                        FROM domicilio
+                        JOIN	(SELECT idDomicilio
+                                FROM r_comprador_domicilio
+                                WHERE nUsuarioComp = '$nUsuarioComp') AS r
+                        ON r.idDomicilio = domicilio.idDomicilio
+                        ");
+
                     // mostrar formulario para introducir método de pago
                     echo "<div class='info-gen-carrito'>";
                         echo "<h3 class='precio-total'>Total: {$precio_total} €</h3>";
-                        echo '<form method="post" action="pago.php">';
-                            echo '<input type="hidden" name="precio_total" value="' . $precio_total . '">';
-                            echo '<input type="text" name="tipo_tarjeta" value="VISA" readonly>';
-                            echo '<input type="text" name="numero_tarjeta" placeholder="Número de tarjeta" pattern="\d{16}" title="Ingrese 16 números" required>';
-                            echo '<input type="text" name="cvc" placeholder="CVC" pattern="\d{3}" title="Ingrese 3 números" required>';
-                            echo '<input class="boton-pago" type="submit" value="Pagar" name="pagar">';
-                        echo '</form>';
+
+                        if ($domicilios = mysqli_fetch_array($consulta)) {
+
+                            echo '<form method="post" action="pago.php">';
+                                echo '<input type="hidden" name="precio_total" value="' . $precio_total . '">';
+
+                                echo '<input type="text" name="tipo_tarjeta" value="VISA" readonly>';
+
+                                echo '<input type="text" name="numero_tarjeta" placeholder="Número de tarjeta" pattern="\d{16}" title="Ingrese 16 números" required>';
+                                
+                                echo '<input type="text" name="cvc" placeholder="CVC" pattern="\d{3}" title="Ingrese 3 números" required>';
+
+                                echo '<select name="domicilio" required>';
+                                do {
+                                    echo "<option value=\"" . $domicilios['idDomicilio'] . "\">" . $domicilios['direccion'] . " - " . $domicilios['cp'] . "</option>";
+                                } while ($domicilios = mysqli_fetch_array($consulta));
+                                echo '</select>';
+
+                                echo '<input class="boton-pago" type="submit" value="Pagar" name="pagar">';
+                            echo '</form>';        
+                        
+                        } else {
+                            echo '<a href="añadir_domicilios.php"> <h3> Añadir domicilios </h3> </a>';
+                            echo '<h4> No se puede realizar el proceso de compra hasta no haber registrado al menos un domicilios </h4>';
+                        }
+
                     echo "</div>";
                 } else {
                     echo "<h3>No hay productos en el carrito.</h3>";
