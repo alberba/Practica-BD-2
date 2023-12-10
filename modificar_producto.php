@@ -27,16 +27,11 @@
 
     $nombre_usuario = $_SESSION['nombreUsuario'];
 
-    $consulta = mysqli_query($conexion, "SELECT idVendedor FROM vendedor WHERE nombre = '$nombre_usuario'");
-
-    if ($fila = mysqli_fetch_assoc($consulta)) {
-        $idVendedor = $fila['idVendedor'];
-
         $productos_vendedor = mysqli_query($conexion, "
             SELECT producto.idProducto, producto.nombre, producto.imagen
             FROM producto
             JOIN r_vendedor_producto ON producto.idProducto = r_vendedor_producto.idProducto
-            WHERE r_vendedor_producto.idVendedor = '$idVendedor'
+            WHERE r_vendedor_producto.nUsuarioVend = '$nombre_usuario'
         ");
 
         while ($producto = mysqli_fetch_assoc($productos_vendedor)) {
@@ -47,7 +42,7 @@
             echo '</a>';
             echo '</div>';
         }
-    }
+    
     ?>
 </div>
 
