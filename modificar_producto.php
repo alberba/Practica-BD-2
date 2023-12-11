@@ -30,11 +30,13 @@
         $productos_vendedor = mysqli_query($conexion, "
             SELECT producto.idProducto, producto.nombre, producto.imagen
             FROM producto
-            JOIN r_vendedor_producto ON producto.idProducto = r_vendedor_producto.idProducto
-            WHERE r_vendedor_producto.nUsuarioVend = '$nombre_usuario'
+            JOIN (SELECT idProducto
+                FROM r_vendedor_producto 
+                WHERE r_vendedor_producto.nUsuarioVend = '$nombre_usuario') as producto_vendedor
+            ON producto.idProducto = producto_vendedor.idProducto
         ");
 
-        while ($producto = mysqli_fetch_assoc($productos_vendedor)) {
+        while ($producto = mysqli_fetch_array($productos_vendedor)) {
             echo '<div class="producto">';
             echo '<a href="editar_producto.php?idProducto=' . $producto['idProducto'] . '">';
             echo '<img src="' . $producto['imagen'] . '" alt="' . $producto['nombre'] . '">';
