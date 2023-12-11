@@ -3,39 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Domicilio</title>
+    <link rel="stylesheet" href="css/cabecera.css">
+    <link rel="stylesheet" href="css/estils.css">
     <link rel="stylesheet" href="css/domicilios.css">
+    <title>Formulario de Domicilio</title>
 </head>
 <body>
+    <?php
+        include "cabecera.php";
+    ?>
 
-    <h2>Formulario de Domicilio</h2>
+    <div class="content">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <h2 class="subtitulo">Formulario de Domicilio</h2>
+            
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" name="direccion" required>
 
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <label for="codigoPostal">Código Postal:</label>
+            <input type="text" id="codigoPostal" name="codigoPostal" required>
 
 
-        <label for="direccion">Dirección:</label>
-        <input type="text" id="direccion" name="direccion" required>
+            <label for="poblacion">Población:</label>
+            <select id="poblacion" name="poblacion" required>
+                <option value="" disabled selected>Selecciona una población</option>
+                <?php 
+                    $conexion = mysqli_connect("localhost","root","");
+                    $bd = mysqli_select_db($conexion, "estimazon");
+                    $consulta = mysqli_query($conexion, "SELECT nombre FROM POBLACION");
+                    while($poblacion = mysqli_fetch_array($consulta)){
+                        echo "<option value='" . htmlspecialchars($poblacion['nombre']) . "'>" . htmlspecialchars($poblacion['nombre']) . "</option>";
+                    }
+                ?>
+            </select><br><br>
 
-        <label for="codigoPostal">Código Postal:</label>
-        <input type="text" id="codigoPostal" name="codigoPostal" required>
-
-
-        <label for="poblacion">Población:</label>
-        <select id="poblacion" name="poblacion" required>
-            <option value="" disabled selected>Selecciona una población</option>
-            <?php 
-                $conexion = mysqli_connect("localhost","root","");
-                $bd = mysqli_select_db($conexion, "estimazon");
-                $consulta = mysqli_query($conexion, "SELECT nombre FROM POBLACION");
-                while($poblacion = mysqli_fetch_array($consulta)){
-                    echo "<option value='" . htmlspecialchars($poblacion['nombre']) . "'>" . htmlspecialchars($poblacion['nombre']) . "</option>";
-                }
-            ?>
-        </select><br><br>
-
-        <button type="submit">Añadir domicilio</button>
-    </form>
-
+            <button class= "button" type="submit">Añadir domicilio</button>
+        </form>
+    </div>
 </body>
 </html>
 
@@ -44,7 +48,6 @@
 
 
 <?php
-session_start();
 $conexion = mysqli_connect("localhost", "root", "");
 $bd = mysqli_select_db($conexion, "estimazon");
 $nombre_usuario = $_SESSION['nombreUsuario'];

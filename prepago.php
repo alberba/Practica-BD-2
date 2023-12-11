@@ -11,7 +11,8 @@
     <link rel="stylesheet" type="text/css" href="css/cabecera.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <link rel="stylesheet" type="text/css" href="css/producto.css">
-    <link rel="stylesheet" type="text/css" href="css/carrito.css">  
+    <link rel="stylesheet" type="text/css" href="css/carrito.css">
+    <link rel="stylesheet" href="css/domicilios.css">  
 </head>
 <body>
     <?php
@@ -40,8 +41,7 @@
 
                     // mostrar formulario para introducir método de pago
                     echo "<div class='info-gen-carrito'>";
-                        echo "<h3 class='precio-total'>Total: {$precio_total} €</h3>";
-
+                        
                         if ($domicilios = mysqli_fetch_array($consulta)) {
 
                             echo '<form method="post" action="pago.php">';
@@ -53,18 +53,23 @@
                                 
                                 echo '<input type="text" name="cvc" placeholder="CVC" pattern="\d{3}" title="Ingrese 3 números" required>';
 
-                                echo '<select name="domicilio" required>';
-                                do {
-                                    echo "<option value=\"" . $domicilios['idDomicilio'] . "\">" . $domicilios['direccion'] . " - " . $domicilios['cp'] . "</option>";
-                                } while ($domicilios = mysqli_fetch_array($consulta));
-                                echo '</select>';
+                                echo "<div class= 'div-but-mod'>";
+                                    echo '<select name="domicilio" required>';
+                                    do {
+                                        echo "<option value=\"" . $domicilios['idDomicilio'] . "\">" . $domicilios['direccion'] . " - " . $domicilios['cp'] . "</option>";
+                                    } while ($domicilios = mysqli_fetch_array($consulta));
+                                    echo '</select>';
+                                    echo '<a class="link" href="añadir_domicilios.php"> Añadir nuevo domicilio </a>';
+                                echo "</div>";
 
-                                echo '<input class="boton-pago" type="submit" value="Pagar" name="pagar">';
+                                echo "<h3 class='precio-total'>Total: {$precio_total} €</h3>";
+
+                                echo '<input class="button" type="submit" value="Pagar" name="pagar">';
                             echo '</form>';        
                         
                         } else {
-                            echo '<a href="añadir_domicilios.php"> <h3> Añadir domicilios </h3> </a>';
-                            echo '<h4> No se puede realizar el proceso de compra hasta no haber registrado al menos un domicilios </h4>';
+                            echo '<a class="link" href="añadir_domicilios.php"> Añadir domicilios </a>';
+                            echo '<h4> No se puede realizar el proceso de compra hasta no haber registrado al menos un domicilio </h4>';
                         }
 
                     echo "</div>";

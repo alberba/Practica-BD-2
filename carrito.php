@@ -1,7 +1,7 @@
 <?php
     $conexion = mysqli_connect("localhost","root","");
     $bd = mysqli_select_db($conexion, "estimazon");
-    ?>
+?>
 
 <!DOCTYPE html>
 <html lang="es">
