@@ -57,11 +57,21 @@ if(isset($_POST['direccion']) && isset($_POST['codigoPostal']) && isset($_POST['
     $poblacion = $_POST['poblacion'];
 
 
+    //obtener idPoblacion
+    $consulta = mysqli_query($conexion, "
+    SELECT idPoblacion 
+    FROM poblacion
+    WHERE nombre = '$poblacion'
+    ");
+
+    $fila = mysqli_fetch_array($consulta);
+    $idPoblacion = $fila['idPoblacion'];
+
 
     //añadir el domicilio
     mysqli_query($conexion, "
-    INSERT INTO domicilio (direccion, CP) VALUES
-    ('$direccion', '$codigoPostal');
+    INSERT INTO domicilio (direccion, CP, idPoblacion) VALUES
+    ('$direccion', '$codigoPostal', '$idPoblacion');
     ");
 
     //obtener idDomicilio
@@ -80,22 +90,6 @@ if(isset($_POST['direccion']) && isset($_POST['codigoPostal']) && isset($_POST['
             ('$nombre_usuario','$idDomicilio');
     ");
 
-
-    //obtener idPoblacion
-    $consulta = mysqli_query($conexion, "
-    SELECT idPoblacion
-    FROM poblacion
-    WHERE nombre = '$poblacion'
-    ");
-
-    $fila = mysqli_fetch_array($consulta);
-    $idPoblacion = $fila['idPoblacion'];
-
-    //r_domicilio_poblacion
-    mysqli_query($conexion, "
-    INSERT INTO r_domicilio_poblacion (idDomicilio, idPoblacion) VALUES
-    ('$idDomicilio','$idPoblacion');
-    ");
 }
 
 
