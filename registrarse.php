@@ -51,7 +51,7 @@
             <input type="submit" name="registrarse" value="Registrarse" class="registro-button">
         </form>
         
-        <p>¿Ya tienes una cuenta? <a href="pagina_principal.html">Iniciar sesión</a></p>
+        <p>¿Ya tienes una cuenta? <a href="portal_inicio_usuario.html">Iniciar sesión</a></p>
     </div>
 </body>
 </html>

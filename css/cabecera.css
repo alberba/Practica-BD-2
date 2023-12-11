@@ -31,12 +31,43 @@
     float: right;
 }
 
-#login{
+#bot-log-reg{
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
+.boton-sesion{
+    text-decoration: none;
+    width: 100px;
+    padding: 4px 8px 4px 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#boton-inicio{
+    background-color: white;
+    color:rgb(255, 127, 41);
+    border:1px solid rgb(255, 127, 41);
+}
+
+#boton-inicio:hover{
+    background-color: rgb(255, 159, 95);
+    color: white;
+}
+
+#boton-registro{
+    background-color: rgb(255, 127, 41);
+    color: white;
+}
+
+#boton-registro:hover{
+    background-color: rgb(255, 102, 0);
+    color: white;
+}
 
 #nombre-Usuario{
     margin-right: 30px;

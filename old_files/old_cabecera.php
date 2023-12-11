@@ -5,7 +5,7 @@
         </a>
     </div>
     <div id=log-and-cart>
-        <div id="bot-log-reg">
+        <div id="login">
             <?php
                 session_start();
 
@@ -19,9 +19,11 @@
                 }
 
                 if(!isset($_SESSION['nombreUsuario'])){
-                    echo '<a class="boton-sesion" id=boton-inicio href="portal_inicio_usuario.html">Iniciar Sesión</a>';
-                    echo '<a class="boton-sesion" id=boton-registro href="registrarse.php">Registrarse</a>';
-
+                    echo '<form action="login.php" method="post">';
+                    echo '<input name="usuario" placeholder="Usuario:">';
+                    echo '<input name="contrasena" type="password" placeholder="Contraseña:">';
+                    echo '<input class=boton-sesion type="submit" value="Iniciar Sesión" name="Iniciar Sesión">';
+                    echo '</form>';
                 } else {
                     echo "<p id=nombre-Usuario>".$_SESSION['nombreUsuario'].'</p>';
                     echo '<form action="" method="post">';
