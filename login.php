@@ -22,6 +22,8 @@ if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
             header("Location: vendedor.php");
         }else if($tipo_usuario=="controlador"){
             header("Location: controlador.php");
+        }else{
+            echo "Error";
         }
 
         exit();

@@ -66,7 +66,7 @@
                         if ($p_fila_vendedores['stock'] <= 10)
                             echo "<p id=stock> Sólo quedan ".$p_fila_vendedores['stock']." unidades a este precio!</p>";
                     
-                        echo "<form method='post' action='añadir_carrito.php'>";
+                        echo "<form method='post' action='añadir_carrito.php' id=form-prod>";
                             echo "<input type='hidden' name='producto' value='".$idprod."'>";
                             echo "<input type='hidden' name='nUsuarioVend' value='".$p_fila_vendedores['vend']."'>";
                             echo '<label for="cantidad">Cantidad: </label>';
