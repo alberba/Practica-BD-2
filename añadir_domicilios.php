@@ -14,12 +14,26 @@
 
 
         <label for="direccion">Dirección:</label>
-        <input type="text" id="direccion" name="direccion" required>z
+        <input type="text" id="direccion" name="direccion" required>
 
         <label for="codigoPostal">Código Postal:</label>
         <input type="text" id="codigoPostal" name="codigoPostal" required>
 
-        <button type="submit">Enviar Domicilio</button>
+
+        <label for="poblacion">Población:</label>
+        <select id="poblacion" name="poblacion" required>
+            <option value="" disabled selected>Selecciona una población</option>
+            <?php 
+                $conexion = mysqli_connect("localhost","root","");
+                $bd = mysqli_select_db($conexion, "estimazon");
+                $consulta = mysqli_query($conexion, "SELECT nombre FROM POBLACION");
+                while($poblacion = mysqli_fetch_array($consulta)){
+                    echo "<option value='" . htmlspecialchars($poblacion['nombre']) . "'>" . htmlspecialchars($poblacion['nombre']) . "</option>";
+                }
+            ?>
+        </select><br><br>
+
+        <button type="submit">Añadir domicilio</button>
     </form>
 
 </body>
@@ -36,11 +50,56 @@ $bd = mysqli_select_db($conexion, "estimazon");
 $nombre_usuario = $_SESSION['nombreUsuario'];
 
 
+if(isset($_POST['direccion']) && isset($_POST['codigoPostal']) && isset($_POST['poblacion'])){
 
-mysqli_query($conexion, "
-    INSERT INTO r_(idProducto, idCategoria) VALUES 
-    ('$idProducto','$idCategoria');
-");
+    $direccion = $_POST['direccion'];
+    $codigoPostal = $_POST['codigoPostal'];
+    $poblacion = $_POST['poblacion'];
+
+
+
+    //añadir el domicilio
+    mysqli_query($conexion, "
+    INSERT INTO domicilio (direccion, CP) VALUES
+    ('$direccion', '$codigoPostal');
+    ");
+
+    //obtener idDomicilio
+    $consulta = mysqli_query($conexion, "
+    SELECT idDomicilio 
+    FROM domicilio
+    WHERE direccion = '$direccion'
+    ");
+
+    $fila = mysqli_fetch_array($consulta);
+    $idDomicilio = $fila['idDomicilio'];
+
+    //r_comprador_domicilio
+    mysqli_query($conexion, "
+    INSERT INTO r_comprador_domicilio (nUsuarioComp, idDomicilio) VALUES 
+            ('$nombre_usuario','$idDomicilio');
+    ");
+
+
+    //obtener idPoblacion
+    $consulta = mysqli_query($conexion, "
+    SELECT idPoblacion
+    FROM poblacion
+    WHERE nombre = '$poblacion'
+    ");
+
+    $fila = mysqli_fetch_array($consulta);
+    $idPoblacion = $fila['idPoblacion'];
+
+    //r_domicilio_poblacion
+    mysqli_query($conexion, "
+    INSERT INTO r_domicilio_poblacion (idDomicilio, idPoblacion) VALUES
+    ('$idDomicilio','$idPoblacion');
+    ");
+}
+
+
+
 
 ?>
 

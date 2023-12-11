@@ -48,7 +48,7 @@ $consulta = mysqli_query($conexion, "
     WHERE producto.idProducto = '$idProducto'
 ");
 
-if ($producto = mysqli_fetch_assoc($consulta)) {
+if ($producto = mysqli_fetch_array($consulta)) {
     // Formulario para editar el producto
     ?>
 
