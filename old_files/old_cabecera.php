@@ -1,5 +1,5 @@
 <div class="sup">
-    <div id=Titulo>
+    <div class=titulo-sup>
         <a id="Titol" href=catshow.php>
             <h1>Estimazon</h1>
         </a>

@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="sup">
-    <div id=Titulo>
+    <div class=titulo-sup>
        
             <h1>Estimazon</h1>
         </a>

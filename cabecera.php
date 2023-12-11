@@ -1,5 +1,5 @@
 <div class="sup">
-    <div id=Titulo>
+    <div class=titulo-sup>
         <a id="Titol" href=catshow.php>
             <h1>Estimazon</h1>
         </a>
@@ -26,7 +26,7 @@
                     echo "<p id=nombre-Usuario>".$_SESSION['nombreUsuario'].'</p>';
                     echo '<form action="" method="post">';
                     echo "<input type='hidden' name='sesionCerrada' value=''>";
-                    echo '<input class=boton-sesion type="submit" value="Cerrar Sesión" name="cerrarSesion">';
+                    echo '<input class=boton-sesion id=cerrar-sesion type="submit" value="Cerrar Sesión" name="cerrarSesion">';
                     echo '</form>';
                 }
             ?>

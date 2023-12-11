@@ -4,6 +4,15 @@
     align-items: flex-end; 
     margin-top: 20px;
 }
+
+#content-carrito{
+    margin-top: 40px;
+}
+
+.info-prod-carrito {
+    margin: 2px;
+}
+
 .imagen-prod-container {
     width: 150px; 
     height: 150px; 
@@ -17,36 +26,112 @@
 }
 
 .producto {
-    float: left;
-    width: 30%;
+    border-bottom: 1px solid gray;
+    padding-bottom:30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    vertical-align: middle;
     margin: 10px;
+}
+
+.imagen-descripcion-prod {
+    display: flex;
+    flex-direction: row;
+}
+
+.descripcion-prod {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    vertical-align: middle;
+}
+
+.descripcion-prod p {
+    font-size: 14px;
 }
 
 .link-prod {
     text-decoration: none;
 } 
 
+.link-prod h4 {
+    margin: 2px;
+}
+
 #precio-total-container {
     margin: 30px;
-    position: fixed;
-    top: 200px;
-    right: 0;
     background-color: #ffffff; 
     border: 2px solid #28a745; 
     padding: 15px;
     z-index: 999; 
 }
 
+.cant-tot-precio-producto{
+    float:right;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap:15px;
+    justify-content: space-between;
+    margin: 2px;
+}
+
+.cant-tot-precio-producto p {
+    margin: 0px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.cant-tot-precio-producto select {
+    font-size: 18px;
+    border-radius: 4px;
+}
+
+.precio-prod-carrito{
+    color: #26e45f; 
+    margin:0px;
+}
+
 .boton-pago {
-    position: fixed;
-    top: 290px;
-    right: 130px;
     margin-top: 10px;
     background-color: #28a745;
     color: #fff;
     padding: 10px;
     text-decoration: none;
     display: inline-block;
+}
+
+
+.div-carrito-right{  
+    box-sizing: border-box;
+    position:relative;
+    display: flex;
+    align-items: start;
+    height:100%;
+    margin-right: 20px;
+    width: auto;
+}
+
+#div-carrito-right-inside{
+    box-sizing: border-box;
+    top:100px;
+    position: sticky;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+    border:gray 1px solid;
+    border-radius: 5px;
+}
+
+.lista-carrito {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 25px;
+    padding-right: 25px;
+    border-right: 1px solid gray;
 }
 
 .boton-pago:hover {

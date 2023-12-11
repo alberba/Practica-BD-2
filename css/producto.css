@@ -40,7 +40,11 @@
 
 #div-carrito{
     float: right;
-    margin-left: 50px;
+    
+    margin-left: 30px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .boton-compra{

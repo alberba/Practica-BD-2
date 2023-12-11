@@ -7,7 +7,7 @@ if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
     $credenciales = verificarCredenciales($usuario, $contrasena);
 
     $nom_usuario = $credenciales[0];
-    $tipo_usuario = $credenciales[1]; 
+    $tipo_usuario = $credenciales[1];
 
     if ($nom_usuario == ""){
         echo "Usuario o contraseña incorrectos";

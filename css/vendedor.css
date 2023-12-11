@@ -82,3 +82,9 @@
 .producto p {
     margin: 0;
 }
+
+#log-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

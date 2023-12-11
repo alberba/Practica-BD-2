@@ -26,3 +26,11 @@ h4{
 *{
     font-family: 'GeistSans', sans-serif;
 }
+
+body {
+    margin: 0px;
+}
+
+img{
+    object-fit: contain;
+}

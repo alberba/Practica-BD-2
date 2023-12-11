@@ -11,7 +11,35 @@
 <body>
 
 <div class="sup">
-    <h1>Añadir producto</h1>
+    <div class=titulo-sup>
+        <a id="Titol" href=catshow.php>
+            <h1>Estimazon</h1>
+        </a>
+    </div>
+    <div id=log-info>
+        <?php
+            session_start();
+
+            if(isset($_POST['cerrarSesion'])){
+                // Destruir la sesión
+                session_unset();
+                session_destroy();
+                // Redirigir a la página de inicio de sesión
+                header("Location: portal_inicio_usuario.html");
+                exit();
+            }
+
+            echo "<p id=nombre-Usuario>".$_SESSION['nombreUsuario'].'</p>';
+            echo '<form action="" method="post">';
+            echo "<input type='hidden' name='sesionCerrada' value=''>";
+            echo '<input class=boton-sesion id=cerrar-sesion type="submit" value="Cerrar Sesión" name="cerrarSesion">';
+            echo '</form>';
+        ?>
+    </div>
+</div>
+
+<div class="subpage">
+    <h2 class="subtitulo">Catálogo</h2>
 </div>
 
 <div class="mensaje-bienvenida">

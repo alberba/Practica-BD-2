@@ -16,7 +16,6 @@
 
 .imagen-prod {
     max-width: 100%;
-    height: auto;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
@@ -37,7 +36,6 @@
 
 #descripcion-prod h3 {
     color: #26e45f; 
-    font-size: 1.2em;
     margin-bottom: 10px;
 }
 
