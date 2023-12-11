@@ -22,7 +22,14 @@
 <div class="boton">
     <a href="añadir_producto.php">
         <img src="imagenes/producto+.png" alt="Añadir producto">
-        <p>Añadir un producto</p>
+        <p>Añadir un producto nuevo</p>
+    </a>
+</div>
+
+<div class="boton">
+    <a href="añadir_producto_existente.php">
+        <img src="imagenes/carrito.png" alt="Añadir producto existente">
+        <p>Vender producto existente</p>
     </a>
 </div>
 
