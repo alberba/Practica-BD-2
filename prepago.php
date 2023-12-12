@@ -1,4 +1,5 @@
 <?php
+    session_start();
     $conexion = mysqli_connect("localhost","root","");
     $bd = mysqli_select_db($conexion, "estimazon");
 ?>
