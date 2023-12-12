@@ -51,7 +51,7 @@
                         // generamos la comanda
                         $ret = mysqli_query($conexion, "
                             INSERT INTO comanda(fecha, nTarjeta, estado, idDomicilio, nUsuarioComp, nUsuarioCont, nUsuarioRep) VALUES
-                            ('$fecha', '$numT', pagado, $idDomicilio, '$nUsuarioComp', '$nUsuarioCont', NULL);
+                            ('$fecha', '$numT', 'pagado', $idDomicilio, '$nUsuarioComp', '$nUsuarioCont', NULL);
                             ");
 
                         // obtener idComanda
@@ -109,6 +109,7 @@
                         echo "<h3>La transacción se completó exitosamente</h3>";
                     
                     } catch (Exception $e) {
+                        echo $e;
                         // Ha habido un error, revertir los cambios
                         mysqli_rollback($conexion);
                         echo "<h3>La transacción falló.</h3>";
