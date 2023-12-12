@@ -1,12 +1,10 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
+
 .container {
     background-color: #fff;
     border-radius: 8px;
@@ -31,11 +29,19 @@ label {
     color: #555;
 }
 
-input {
+.registro-input{
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.login-input{
     width: 100%;
     padding: 8px;
     margin-bottom: 16px;
     box-sizing: border-box;
+}
+
+input {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -47,10 +53,26 @@ input {
     cursor: pointer;
     border: 1px solid #fff;
     border-radius: 4px;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
 }
 
 .login-button:hover {
-    background-color: rgb(5, 113, 255);
+    background-color: rgb(0, 85, 197);
+}
+
+.registro-button {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: rgb(5, 113, 255);;
+    color: #fff;
+    cursor: pointer;
+}
+
+.registro-button:hover {
+    background-color: rgb(0, 85, 197);
 }
 
 .signup-button {
@@ -73,4 +95,27 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+.select-tipo {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff
+}
+ 
+select:focus {
+    border-color: rgb(5, 113, 255);
+}
+
+.option-tipo {
+    padding: 5px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+}
+
+.error-mess {
+    color: #ff0000; 
 }

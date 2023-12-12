@@ -93,6 +93,8 @@ if(isset($_POST['direccion']) && isset($_POST['codigoPostal']) && isset($_POST['
             ('$nombre_usuario','$idDomicilio');
     ");
 
+    header("Location: prepago.php");
+
 }
 
 
