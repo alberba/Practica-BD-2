@@ -65,10 +65,10 @@ if ($producto = mysqli_fetch_array($consulta)) {
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?idProducto=" . $idProducto); ?>" method="post">
         <label for="precio">Precio:</label>
-        <input type="text" id="precio" name="precio" value="<?php echo $producto['precio']; ?>" required>
+        <input type="number" id="precio" name="precio" min=0.01 step=0.01 value="<?php echo $producto['precio']; ?>" required>
 
         <label for="stock">Stock:</label>
-        <input type="number" id="stock" name="stock" value="<?php echo $producto['stock']; ?>" required>
+        <input type="number" id="stock" name="stock" min=1 step=1 value=1 required>
 
         <button type="submit">Añadir producto</button>
     </form>
