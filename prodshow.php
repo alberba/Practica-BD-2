@@ -13,12 +13,13 @@
 
         // información del producto/vendedor
         $consulta_precios = mysqli_query($conexion, "
-        SELECT precio, stock, nombre, r_vendedor_producto.nUsuarioVend AS vend
-        FROM r_vendedor_producto
-        JOIN 
-            (SELECT nUsuario, nombre
-            FROM vendedor) AS vendedor
-        ON r_vendedor_producto.nUsuarioVend = vendedor.nUsuario
+        SELECT idIVP, precio, stock, vendedor.nombre, info_vendedor_producto.nUsuarioVend AS vend
+        FROM info_vendedor_producto
+            JOIN 
+                (SELECT nUsuario, nombre
+                FROM vendedor) AS vendedor
+            ON info_vendedor_producto.nUsuarioVend = vendedor.nUsuario
+            AND info_vendedor_producto.idProducto = $idprod
         WHERE idProducto = $idprod
         ORDER BY precio ASC
         ");
@@ -67,6 +68,7 @@
                             echo "<p id=stock> Sólo quedan ".$p_fila_vendedores['stock']." unidades a este precio!</p>";
                     
                         echo "<form method='post' action='añadir_carrito.php' id=form-prod>";
+                            echo "<input type='hidden' name='idIVP' value='".$p_fila_vendedores['idIVP']."'>";
                             echo "<input type='hidden' name='producto' value='".$idprod."'>";
                             echo "<input type='hidden' name='nUsuarioVend' value='".$p_fila_vendedores['vend']."'>";
                             echo '<label for="cantidad">Cantidad: </label>';

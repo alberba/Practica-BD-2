@@ -37,7 +37,7 @@
                     mysqli_begin_transaction($conexion);
                     
                     try {
-                        // Consulta para seleccionar un usuario aleatorio
+                        // Consulta para seleccionar un controlador aleatorio
                         $consulta_cont = mysqli_query($conexion, "
                             SELECT nUsuario
                             FROM controlador
@@ -50,8 +50,8 @@
 
                         // generamos la comanda
                         $ret = mysqli_query($conexion, "
-                            INSERT INTO comanda(fecha, nTarjeta, idDomicilio, nUsuarioComp, nUsuarioCont) VALUES
-                            ('$fecha', '$numT', $idDomicilio, '$nUsuarioComp', '$nUsuarioCont');
+                            INSERT INTO comanda(fecha, nTarjeta, idDomicilio, nUsuarioComp, nUsuarioCont, nUsuarioRep) VALUES
+                            ('$fecha', '$numT', $idDomicilio, '$nUsuarioComp', '$nUsuarioCont', NULL);
                             ");
 
                         // obtener idComanda
@@ -62,16 +62,17 @@
                         }
 
                         // restar stock de los productos y añadirlos a producto_comanda
-                        foreach ($_SESSION['carrito'] as $idProducto => $detallesProducto) {
+                        foreach ($_SESSION['carrito'] as $idIVP => $detallesProducto) {
                             // obtenemos valores de cantidad e idVendedor
+                            $idProducto = $detallesProducto['producto'];
                             $cantidad = $detallesProducto['cantidad'];
                             $nUsuarioVend = $detallesProducto['nUsuarioVend'];
 
                             // consulta del stock
                             $consulta_stock = mysqli_query($conexion, "
                                 SELECT stock
-                                FROM r_vendedor_producto
-                                WHERE idProducto = $idProducto AND nUsuarioVend = '$nUsuarioVend'
+                                FROM info_vendedor_producto
+                                WHERE idIVP = $idIVP
                                 ");
                             
                             // obtener stock tras compra
@@ -84,16 +85,16 @@
                             } else {
                                 // stock positivo, actualizamos (no se lleva a cabo hasta el commit)
                                 mysqli_query($conexion, "
-                                    UPDATE r_vendedor_producto
+                                    UPDATE info_vendedor_producto
                                     SET stock = $stock_f
-                                    WHERE idProducto = $idProducto AND nUsuarioVend = '$nUsuarioVend'
+                                    WHERE idIVP = $idIVP
                                     ");
                             }
 
-                            // añadir producto a producto_comanda
+                            // añadir producto a r_ipv_comanda
                             $ret = mysqli_query($conexion, "
-                                INSERT INTO r_producto_comanda(idProducto,idComanda,cantidad) VALUES
-                                ($idProducto, $idComanda, $cantidad);
+                                INSERT INTO r_ipv_comanda(idIVP,idComanda,cantidad) VALUES
+                                ($idIVP, $idComanda, $cantidad);
                                 ");
 
                             if ($ret === false) {

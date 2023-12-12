@@ -19,18 +19,16 @@
 
         // Procesar el formulario cuando se envía
         if ($_SERVER["REQUEST_METHOD"] == "POST"){
-            if (isset($_POST['idProducto']) && isset($_POST['cantidad'])) {
-                $productId = $_POST['idProducto'];
+            if (isset($_POST['idIVP']) && isset($_POST['cantidad'])) {
+                $IVPId = $_POST['idIVP'];
                 $cantidad = $_POST['cantidad'];
 
                 if ($cantidad > 0){
-                    $_SESSION['carrito'][$productId]['cantidad'] = $cantidad;
+                    $_SESSION['carrito'][$IVPId]['cantidad'] = $cantidad;
                 } else {
-                    unset($_SESSION['carrito'][$productId]);
+                    unset($_SESSION['carrito'][$IVPId]);
                 }
-        
-                
-                
+
                 // Después de actualizar la cantidad, redirige a la página del carrito o realiza cualquier otra acción necesaria.
                 header("Location: carrito.php");
                 exit();
@@ -55,20 +53,19 @@
                     echo "<div class='lista-carrito'>";
 
                     // mostrar todos los productos del carrito
-                    foreach ($_SESSION['carrito'] as $idProducto => $detallesProducto) {
+                    foreach ($_SESSION['carrito'] as $idIVP => $detallesProducto) {
                         // obtenemos valores de cantidad e idVendedor
+                        $idProducto = $detallesProducto['producto'];
                         $cantidad = $detallesProducto['cantidad'];
-                        //echo '<h3>' . $cantidad . '</h3>';
                         $nUsuarioVend = $detallesProducto['nUsuarioVend'];
                         // consulta del nombre del producto, precio, stock y nombre del vendedor
                         $consulta = mysqli_query($conexion, "
-                            SELECT producto.nombre AS prod, producto.imagen, r_prod_vend.precio, nom_vend.nombre AS vend, r_prod_vend.stock
+                            SELECT producto.nombre AS prod, producto.imagen, i_prod_vend.precio, nom_vend.nombre AS vend, i_prod_vend.stock
                             FROM producto
                             JOIN
                                 (SELECT precio, nUsuarioVend, stock
-                                FROM r_vendedor_producto
-                                WHERE idProducto = $idProducto
-                                AND nUsuarioVend = '$nUsuarioVend') AS r_prod_vend
+                                FROM info_vendedor_producto
+                                WHERE idIVP = $idIVP) AS i_prod_vend
                             JOIN
                                 (SELECT vendedor.nombre
                                 FROM vendedor
@@ -100,7 +97,6 @@
                                         echo "<p class=precio-prod-carrito>$" . $fila['precio'] . "</p>";
                                     echo "</div>";
 
-                                    // echo "<p class=info-prod-carrito>Cantidad en el carrito: " . $cantidad . "</p>";
                                     echo "<p class=info-prod-carrito>Vendedor: " . $fila['vend'] . "</p>";
                                 echo "</div>";
 
@@ -108,7 +104,7 @@
                                     
                             echo "<div class=cant-tot-precio-producto>";
                                 echo "<form method='post'>";
-                                    echo "<input type='hidden' name='idProducto' value='" . $idProducto . "'>";
+                                    echo "<input type='hidden' name='idIVP' value='" . $idIVP . "'>";
                                     echo "<select name='cantidad' onchange='this.form.submit()'>";
                                     for ($i=0; $i <= $fila['stock']; $i++) {
                                         if ($i == $cantidad) {
