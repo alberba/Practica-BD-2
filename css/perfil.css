@@ -1,4 +1,4 @@
-#form-perfil {
+#main-container {
     max-width: 400px;
     margin: 20px auto;
     background-color: #fff;
@@ -14,4 +14,45 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+.subpage{
+    display: flex;
+    justify-content: center;
+    margin-left: 0px;
+}
+
+.boton-input {
+    background-color:rgb(5, 113, 255);
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+.boton-input:hover {
+    background-color: rgb(0, 85, 197);
+}
+
+#direcciones{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.direccion{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    gap: 5px;
+}
+
+.direccion > *{
+    margin:0px;
 }
