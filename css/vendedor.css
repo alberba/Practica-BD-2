@@ -1,3 +1,16 @@
+.subpage{
+    display: flex;
+    justify-content: center;
+    margin-left: 0px;
+}
+
+#menu-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap:40px;
+}
+
 .sup{
     display: flex;
     justify-content: space-between;
@@ -12,6 +25,8 @@
 }
 
 .mensaje-bienvenida {
+    display: flex;
+    justify-content: center;
     color: black; 
     padding: 10px;
     margin-bottom: 10px;
@@ -22,25 +37,57 @@
     margin: 0;
     font-size: 24px; 
     font-weight: bold; 
+    text-align: center;
+}
+
+.boton-container {
+    width: 220px;
+    height: 220px;
+    background-color: white;
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.boton-container:hover {
+    transform: scale(1.05);
 }
 
 .boton {
     display: flex;
-    flex-direction: row; 
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    width: 100%;
+    height: 100%;
+    gap: 30px;
+    border-radius: 5px;
 }
 
 .boton img {
     width: 100px; 
-    height: auto; 
-    margin-right: 10px; 
+    height: auto;
 }
 
 .boton p {
-    margin-top: 10px; 
+    margin:0px;
     text-align: center; 
     font-weight: bold;
+}
+
+#img-vend {
+    margin-right: 10px;
+}
+
+#img-mod {
+    margin-left: 10px;
 }
 
 
@@ -53,6 +100,9 @@
 }
 
 .producto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 200px;
     margin: 10px;
     text-align: center;
@@ -73,8 +123,9 @@
 }
 
 .producto img {
+    height: 200px;
+    object-fit: contain;
     max-width: 100%;
-    height: auto;
     border-radius: 5px;
     margin-bottom: 10px;
 }

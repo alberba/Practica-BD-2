@@ -14,7 +14,7 @@
     <title>Comandas - Estimazon</title>
 </head>
 <body>
-    <?php include "cabecera.php"; ?>
+    <?php include "cabecera_comprador.php"; ?>
 
     <div class="subpage">
         <h2 class="subtitulo">Comandas Activas</h2>

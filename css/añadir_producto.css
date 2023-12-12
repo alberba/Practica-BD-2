@@ -1,4 +1,4 @@
-form {
+#form-añadir-prod{
     max-width: 400px;
     margin: 20px auto;
     background-color: #fff;
@@ -31,8 +31,7 @@ label {
     min-width: 100%;
 }
 
-input,
-select {
+.input-form {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -69,22 +68,4 @@ button:hover {
     color: rgb(224, 18, 18);
     font-size: 24px; 
     text-align: left;
-}
-.sup{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: rgb(5, 113, 255);
-    margin-bottom: 10px;
-    font-size: 20px;
-}
-
-#Titulo{
-    margin-left: 20px;
-    width:fit-content;
-    color: white;
 }
