@@ -58,6 +58,7 @@ if ($producto = mysqli_fetch_array($consulta)) {
     <head>
         <meta charset="UTF-8">
         <title>Editar Producto</title>
+        <link rel="stylesheet" type="text/css" href="css/general.css">
         <link rel="stylesheet" type="text/css" href="css/añadir_producto.css">
 
     </head>
@@ -74,7 +75,7 @@ if ($producto = mysqli_fetch_array($consulta)) {
         <input type="text" id="nombre" name="nombre" value="<?php echo $producto['nombre']; ?>" required>
 
         <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" name="descripcion" required><?php echo $producto['descripcion']; ?></textarea>
+        <textarea name="descripcion" id="descrip-prod-tarea" required><?php echo $producto['descripcion']; ?></textarea>
 
         <label for="imagen">Imagen:</label>
         <input type="text" id="imagen" name="imagen" value="<?php echo $producto['imagen']; ?>" required>

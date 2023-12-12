@@ -3,7 +3,7 @@
     height: 400px;
     object-fit:contain;
     margin-right: 50px;
-    padding: 10px;
+    border: 1px solid #ddd;
 }
 
 #vista-producto{

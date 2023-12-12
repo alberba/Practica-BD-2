@@ -19,16 +19,28 @@
 
 .imagen-carrito {
     position: relative;
-    margin-right: 20px;
     width: 50px; 
     height: 50px; 
-    padding-top: 10px;
+}
+
+.imagen-usuario{
+    position: relative;
+    width: 35px; 
+    height: 35px;
+}
+
+#img-nombre-usuario{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 #log-and-cart{
     display: flex;
     flex-direction: row;
     float: right;
+    align-items: center;
+    margin-right: 20px;
 }
 
 #bot-log-reg{
@@ -70,7 +82,7 @@
 }
 
 #nombre-Usuario{
-    margin-right: 30px;
+    margin-right: 10px;
     font-weight: bold;
     color: white;
 }

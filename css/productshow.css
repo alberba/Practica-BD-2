@@ -16,9 +16,7 @@
 
 .imagen-prod {
     max-width: 100%;
-    border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: white;
 }
 
 #descripcion-prod {

@@ -5,10 +5,8 @@
     <meta charset="UTF-8">
     <title>Modificar Producto</title>
     
-    <link rel="stylesheet" type="text/css" href="css/estils.css">
     <link rel="stylesheet" type="text/css" href="css/cabecera.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
-    <link rel="stylesheet" type="text/css" href="css/producto.css">
     <link rel="stylesheet" type="text/css" href="css/vendedor.css">
 
 

@@ -7,8 +7,6 @@
     <div id=log-and-cart>
         <div id="bot-log-reg">
             <?php
-                session_start();
-
                 if(isset($_POST['cerrarSesion'])){
                     // Destruir la sesión
                     session_unset();
@@ -23,7 +21,12 @@
                     echo '<a class="boton-sesion" id=boton-registro href="registrarse.php">Registrarse</a>';
 
                 } else {
-                    echo "<p id=nombre-Usuario>".$_SESSION['nombreUsuario'].'</p>';
+                    echo "<div id=img-nombre-usuario>";
+                        echo "<p id=nombre-Usuario>".$_SESSION['nombreReal'].'</p>';
+                        echo "<a href=perfil.php>";
+                            echo "<img src='imagenes/user.png' alt='Usuario' class='imagen-usuario'>";
+                        echo "</a>";
+                    echo "</div>";
                     echo '<form action="" method="post">';
                     echo "<input type='hidden' name='sesionCerrada' value=''>";
                     echo '<input class=boton-sesion id=cerrar-sesion type="submit" value="Cerrar Sesión" name="cerrarSesion">';

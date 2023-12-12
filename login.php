@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
 
     
@@ -6,13 +7,14 @@ if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
     $contrasena = $_POST['contrasena'];
     $credenciales = verificarCredenciales($usuario, $contrasena);
 
-    $nom_usuario = $credenciales[0];
-    $tipo_usuario = $credenciales[1];
+    $nombreReal = $credenciales[0];
+    $nom_usuario = $credenciales[1];
+    $tipo_usuario = $credenciales[2];
 
     if ($nom_usuario == ""){
         echo "Usuario o contraseña incorrectos";
     } else{
-        session_start();
+        $_SESSION['nombreReal'] = $nombreReal;
         $_SESSION['nombreUsuario'] = $nom_usuario;
 
         if($tipo_usuario=="comprador"){
@@ -44,7 +46,7 @@ function verificarCredenciales($username, $password){
     WHERE nUsuario = '$username' AND contraseña = '$password'
     ");
     if ($fila = mysqli_fetch_array($consulta)) {
-        return array($fila['nUsuario']." ", "comprador");
+        return array($fila['nombre']." ", $fila['nUsuario']." ", "comprador");
     }
 
     //se comprueba si es un vendedor
@@ -55,7 +57,7 @@ function verificarCredenciales($username, $password){
     ");
 
     if ($fila = mysqli_fetch_array($consulta)) {
-        return array($fila['nUsuario']." ", "vendedor");
+        return array($fila['nombre']." ", $fila['nUsuario']." ", "vendedor");
     }
 
     //se comprueba si es un controlador
@@ -66,9 +68,9 @@ function verificarCredenciales($username, $password){
     ");
 
     if ($fila = mysqli_fetch_array($consulta)) {
-        return array($fila['nUsuario']." ", "controlador");
+        return array($fila['nombre']." ", $fila['nUsuario']." ", "controlador");
     }else{
-        return array("","");
+        return array("","","");
     }
 
 
