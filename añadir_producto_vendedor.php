@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Crear la información del producto para este vendedor en la base de datos
     try {
         mysqli_query($conexion, "
-            INSERT INTO r_vendedor_producto(idProducto, nUsuarioVend, precio, stock) VALUES
+            INSERT INTO info_vendedor_producto(idProducto, nUsuarioVend, precio, stock) VALUES
             ($idProducto, '$nVend', $precio, $stock);
         ");
 
@@ -37,9 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Obtener información del producto basado en el ID
 $consulta = mysqli_query($conexion, "
-    SELECT producto.idProducto, producto.nombre, producto.descripcion, producto.imagen, r_vendedor_producto.precio, r_vendedor_producto.stock
+    SELECT producto.idProducto, producto.nombre, producto.descripcion, producto.imagen, info_vendedor_producto.precio, info_vendedor_producto.stock
     FROM producto
-    JOIN r_vendedor_producto ON producto.idProducto = r_vendedor_producto.idProducto
+    JOIN info_vendedor_producto ON producto.idProducto = info_vendedor_producto.idProducto
     WHERE producto.idProducto = '$idProducto'
 ");
 
@@ -51,7 +51,7 @@ if ($producto = mysqli_fetch_array($consulta)) {
     <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>Editar Producto</title>
+        <title>Vender Producto Existente</title>
         <link rel="stylesheet" type="text/css" href="css/añadir_producto.css">
 
     </head>

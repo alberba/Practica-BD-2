@@ -30,8 +30,8 @@
             SELECT producto.idProducto, producto.nombre, producto.imagen
             FROM producto
             LEFT JOIN (SELECT idProducto, nUsuarioVend
-                FROM r_vendedor_producto 
-                WHERE r_vendedor_producto.nUsuarioVend = '$nombre_usuario') as producto_vendedor
+                FROM info_vendedor_producto 
+                WHERE info_vendedor_producto.nUsuarioVend = '$nombre_usuario') as producto_vendedor
             ON producto.idProducto = producto_vendedor.idProducto
             WHERE nUsuarioVend IS NULL
         ");

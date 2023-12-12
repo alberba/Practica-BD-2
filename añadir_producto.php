@@ -17,19 +17,19 @@
     </div>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <label for="producto">Producto:</label>
-        <input type="text" id="producto" name="producto">
+        <input type="text" id="producto" name="producto" required>
 
         <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" name="descripcion">
+        <input type="text" id="descripcion" name="descripcion" required>
 
         <label for="imagen">Imagen:</label>
-        <input type="text" id="imagen" name="imagen">
+        <input type="text" id="imagen" name="imagen" required>
 
         <label for="precio">Precio:</label>
-        <input type="text" id="precio" name="precio">
+        <input type="text" id="precio" name="precio" required>
 
         <label for="stock">Stock:</label>
-        <input type="number" id="stock" name="stock">
+        <input type="number" id="stock" name="stock" required>
 
         
         <div class="contenedor-checkboxes">
@@ -63,9 +63,6 @@
             $categorias = $_POST['categorias'];
             $nombre_usuario = $_SESSION['nombreUsuario'];
 
-
-        
-
             //comprobar si ya existe el producto
             $consulta = mysqli_query($conexion, "SELECT idProducto FROM producto WHERE nombre = '$nombre'");
 
@@ -76,7 +73,7 @@
                 SELECT nombre, imagen, descripcion
                 FROM producto
                 JOIN (SELECT idProducto 
-                    FROM R_VENDEDOR_PRODUCTO 
+                    FROM INFO_VENDEDOR_PRODUCTO 
                     WHERE nUsuarioVend = '$nombre_usuario') as r_vend_prod
                 ON producto.idProducto = r_vend_prod.idProducto
                 WHERE nombre = '$nombre'
@@ -97,9 +94,9 @@
                     $fila = mysqli_fetch_array($consulta);
                     $idProducto = $fila['idProducto'];
 
-                    //añadir a r_vendedor_producto
+                    //añadir a info_vendedor_producto
                     mysqli_query($conexion, "
-                    INSERT INTO r_vendedor_producto 
+                    INSERT INTO info_vendedor_producto 
                     ('$nombre_usuario', '$idProducto', '$precio', '$stock');");
                 }
                 
@@ -136,9 +133,9 @@
                     ('$idProducto','$idCategoria');");
                 }
 
-                //añadir a r_vendedor_producto
+                //añadir a info_vendedor_producto
                 mysqli_query($conexion, "
-                INSERT INTO r_vendedor_producto (nUsuarioVend, idProducto, precio, stock) VALUES 
+                INSERT INTO info_vendedor_producto (nUsuarioVend, idProducto, precio, stock) VALUES 
                 ('$nombre_usuario', '$idProducto', '$precio', '$stock');");
 
                 echo '<p class="success-message">Producto añadido.</p>';

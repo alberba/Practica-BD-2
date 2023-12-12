@@ -11,6 +11,7 @@ if (!isset($_GET['idProducto'])) {
 }
 
 $idProducto = $_GET['idProducto'];
+$nUsuario = $_SESSION['nombreUsuario'];
 
 // Verificar si el formulario se ha enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -21,8 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $precio = $_POST['precio'];
     $stock = $_POST['stock'];
 
-    // Validar y procesar los datos (aquí debes agregar las validaciones necesarias)
-
     // Actualizar la información del producto en la base de datos
     mysqli_query($conexion, "
         UPDATE producto
@@ -31,21 +30,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ");
 
     mysqli_query($conexion, "
-        UPDATE r_vendedor_producto
+        UPDATE info_vendedor_producto
         SET precio = '$precio', stock = '$stock'
         WHERE idProducto = '$idProducto'
+        AND  nUsuarioVend = '$nUsuario'
     ");
 
     echo '<p class="success-message">Producto actualizado correctamente.</p>';
     echo '<meta http-equiv="refresh" content="0.4;url=vendedor.php" />';
 }
 
-// Obtener información del producto basado en el ID
+// Obtener información del producto basado en el ID y el vendedor
 $consulta = mysqli_query($conexion, "
-    SELECT producto.idProducto, producto.nombre, producto.descripcion, producto.imagen, r_vendedor_producto.precio, r_vendedor_producto.stock
+    SELECT producto.idProducto, producto.nombre, producto.descripcion, producto.imagen, info_vendedor_producto.precio, info_vendedor_producto.stock
     FROM producto
-    JOIN r_vendedor_producto ON producto.idProducto = r_vendedor_producto.idProducto
+    JOIN info_vendedor_producto ON producto.idProducto = info_vendedor_producto.idProducto
     WHERE producto.idProducto = '$idProducto'
+    AND  nUsuarioVend = '$nUsuario'
 ");
 
 if ($producto = mysqli_fetch_array($consulta)) {
@@ -83,8 +84,6 @@ if ($producto = mysqli_fetch_array($consulta)) {
 
         <label for="stock">Stock:</label>
         <input type="number" id="stock" name="stock" value="<?php echo $producto['stock']; ?>" required>
-
-        
 
         <button type="submit">Guardar cambios</button>
     </form>
