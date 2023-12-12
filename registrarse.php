@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" type="text/css" href="css/registro.css">
+    <link rel="stylesheet" type="text/css" href="css/general.css">
+    <link rel="stylesheet" type="text/css" href="css/login_registro.css">
 </head>
 <body>
     <div class="container">
@@ -18,22 +19,22 @@
             </select>
 
             <label for="nombre">Nombre y Apellidos:</label>
-            <input type="text" id="nombre" name="nombre" required>
+            <input class=registro-input type="text" id="nombre" name="nombre" required>
             
             <label for="nUsuario">Nombre de Usuario:</label>
-            <input type="text" id="nUsuario" name="nUsuario" required>
+            <input class=registro-input type="text" id="nUsuario" name="nUsuario" required>
 
             <label for="contrasena">Contraseña:</label>
-            <input type="password" id="contrasena" name="contrasena" required>
+            <input class=registro-input type="password" id="contrasena" name="contrasena" required>
 
             <label for="confirmar_contrasena">Confirmar Contraseña:</label>
-            <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
+            <input class=registro-input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
             
             <label for="telf">Teléfono:</label>
-            <input type="text" id="telf" name="telf" pattern="(\+\d{1,3})?\s?\d{3}(?:\s?\d{3}){2}" title="Ingrese un número de teléfono válido" required>
+            <input class=registro-input type="text" id="telf" name="telf" pattern="(\+\d{1,3})?\s?\d{3}(?:\s?\d{3}){2}" title="Ingrese un número de teléfono válido" required>
 
             <label for="email">Correo Electrónico:</label>
-            <input type="email" id="email" name="email" required>
+            <input class=registro-input type="email" id="email" name="email" required>
 
             <?php
                 if (isset($_GET["error"])) {
