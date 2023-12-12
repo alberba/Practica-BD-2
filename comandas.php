@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/estils.css">
     <link rel="stylesheet" type="text/css" href="css/cabecera.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
+    <link rel="stylesheet" type="text/css" href="css/controlador.css">
     <title>Comandas - Estimazon</title>
 </head>
 <body>
@@ -23,16 +24,16 @@
             $nUsuarioControlador = $_SESSION['nombreUsuario'];
 
             $consulta = mysqli_query($conexion, "
-                SELECT C.*
+                SELECT idComanda, fecha, estado
                 FROM COMANDA C
                 WHERE C.nUsuarioCont = '$nUsuarioControlador'
-                    AND NOT EXISTS (
-                        SELECT 1
-                        FROM INCIDENCIA I
-                        WHERE I.idComanda = C.idComanda
-                            AND I.idTIncidencia = (SELECT idTIncidencia FROM TIPO_INCIDENCIA WHERE nombre = 'Entregado al comprador')
-                    )
-                    AND DATEDIFF(NOW(), C.fecha) <= 15
+                AND DATEDIFF(NOW(), C.fecha) <= 15
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM INCIDENCIA I
+                    WHERE I.idComanda = C.idComanda
+                        AND I.idTIncidencia = (SELECT idTIncidencia FROM TIPO_INCIDENCIA WHERE nombre = 'Entregado al comprador')
+                )
             ");
 
             if ($consulta) {
@@ -44,7 +45,7 @@
                             echo "<a class='enl-com' href='control_comanda.php?com=" . $comanda['idComanda'] . "'>";
                                 echo "<p class='text-com'> ID Comanda: " . $comanda['idComanda']. "</p>";
                                 echo "<p class='text-com'> Fecha: " . $comanda['fecha']. "</p>";
-                                echo "<p class='text-com'> Número de Tarjeta: " . $comanda['nTarjeta']. "</p>";
+                                echo "<p class='text-com'> Estado: " . $comanda['estado']. "</p>";
                             echo "</a>";
                         echo "</div>";
                     echo "</li>";

@@ -17,20 +17,11 @@
         <h2 class="subtitulo">Menu Controlador</h2>
     </div>
 
-    
-        
-
     <div class="boton">
-    <a href="Comandas.php">
-        <img src="imagenes/comanda.png" alt="Consultar comanda activas">
-        <p>Consultar comandas</p>
-    </a>
-</div>
-
-        
-    
-
-    
-
+        <a href="Comandas.php">
+            <img src="imagenes/comanda.png" alt="Consultar comanda activas">
+            <p>Consultar comandas</p>
+        </a>
+    </div>
 </body>
 </html>

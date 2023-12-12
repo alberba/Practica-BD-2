@@ -50,8 +50,8 @@
 
                         // generamos la comanda
                         $ret = mysqli_query($conexion, "
-                            INSERT INTO comanda(fecha, nTarjeta, idDomicilio, nUsuarioComp, nUsuarioCont, nUsuarioRep) VALUES
-                            ('$fecha', '$numT', $idDomicilio, '$nUsuarioComp', '$nUsuarioCont', NULL);
+                            INSERT INTO comanda(fecha, nTarjeta, estado, idDomicilio, nUsuarioComp, nUsuarioCont, nUsuarioRep) VALUES
+                            ('$fecha', '$numT', pagado, $idDomicilio, '$nUsuarioComp', '$nUsuarioCont', NULL);
                             ");
 
                         // obtener idComanda

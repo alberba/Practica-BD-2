@@ -36,17 +36,17 @@
     margin: 0;
 }
 
-.com-prev{
-    list-style-type: none;
-    margin-right: 40px;
-    margin-bottom: 40px;
-}
-
 /* copiados de estils.css y cmabiados de nombre */
 .lista-com{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+.com-prev{
+    list-style-type: none;
+    margin-right: 40px;
+    margin-bottom: 40px;
 }
 
 .comanda{
