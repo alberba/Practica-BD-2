@@ -20,11 +20,7 @@
 
     <div class="content">
         <?php
-            
-
-            
-            
-            $nUsuarioControlador ="gabCtrl" ;   /* $_SESSION['nUsuarioControlador'];*/
+            $nUsuarioControlador = $_SESSION['nombreUsuario'];
 
             $consulta = mysqli_query($conexion, "
                 SELECT C.*
@@ -40,12 +36,17 @@
             ");
 
             if ($consulta) {
-                echo "<ul>";
+                echo "<ul class='lista-com'>";
                 while ($comanda = mysqli_fetch_array($consulta)) {
-                    echo "<li>";
-                    echo "ID Comanda: " . $comanda['idComanda'] . "<br>";
-                    echo "Fecha: " . $comanda['fecha'] . "<br>";
-                    echo "Número de Tarjeta: " . $comanda['nTarjeta'] . "<br>";
+                    echo "<li class='com-prev'>";
+                    // enlace a la página de la comanda
+                        echo "<div>";
+                            echo "<a class='enl-com' href='control_comanda.php?com=" . $comanda['idComanda'] . "'>";
+                                echo "<p class='text-com'> ID Comanda: " . $comanda['idComanda']. "</p>";
+                                echo "<p class='text-com'> Fecha: " . $comanda['fecha']. "</p>";
+                                echo "<p class='text-com'> Número de Tarjeta: " . $comanda['nTarjeta']. "</p>";
+                            echo "</a>";
+                        echo "</div>";
                     echo "</li>";
                 }
                 echo "</ul>";

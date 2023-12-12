@@ -31,9 +31,48 @@
     margin-bottom: 10px;
 }
 
-
-
 .boton p {
     font-size: 18px; 
     margin: 0;
+}
+
+.com-prev{
+    list-style-type: none;
+    margin-right: 40px;
+    margin-bottom: 40px;
+}
+
+/* copiados de estils.css y cmabiados de nombre */
+.lista-com{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.comanda{
+    display: flex;
+    flex-direction: column;
+    width:fit-content;
+    margin-left: 10px;
+    border-right-color: grey;
+    border-right-style: solid;
+    border-right-width: 1px;
+    padding-right: 5px;
+}
+
+.enl-com{
+    text-decoration: none;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items:center;    
+    border: 1px solid transparent;
+}
+
+.enl-com:hover{
+    border: 1px solid #000;
+}
+
+.text-com {
+    text-decoration: none;
 }
