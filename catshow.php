@@ -38,16 +38,28 @@
                         ");
                         if($consulta)
                             while ($fila = mysqli_fetch_array($consulta)) {
-                                // mostrar información del producto
-                                echo "<li class='product-prev'>";
-                                // enlace a la página del producto
-                                echo "<div>";
-                                echo "<a class=enl-prod href='prodshow.php?prod=".$fila['idProducto']."'>";
-                                echo "<img src=".$fila['imagen']." class='imagen-prod-cat'>";
-                                echo $fila['nombre'];
-                                echo "</a>";
-                                echo "</div>";
-                                echo "</li>";
+                                // comprobar que haya stock de este producto
+                                $idProd = $fila['idProducto'];
+                                $consulta_stock = mysqli_query($conexion, "
+                                    SELECT stock
+                                    FROM info_vendedor_producto   
+                                    WHERE info_vendedor_producto.idProducto = $idProd
+                                    AND info_vendedor_producto.stock > 0
+                                    LIMIT 1
+                                    ");
+                                // solo mostraremos el producto si algún vendedor lo tiene en stock
+                                if ($fila_stock = mysqli_fetch_array($consulta_stock)) {
+                                    // mostrar información del producto
+                                    echo "<li class='product-prev'>";
+                                    // enlace a la página del producto
+                                    echo "<div>";
+                                    echo "<a class=enl-prod href='prodshow.php?prod=".$idProd."'>";
+                                    echo "<img src=".$fila['imagen']." class='imagen-prod-cat'>";
+                                    echo $fila['nombre'];
+                                    echo "</a>";
+                                    echo "</div>";
+                                    echo "</li>";
+                                }
                             }
                         else{
                             echo "<p>No hay productos en esta categoria</p>";

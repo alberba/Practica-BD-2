@@ -20,10 +20,10 @@
                 FROM vendedor) AS vendedor
             ON info_vendedor_producto.nUsuarioVend = vendedor.nUsuario
             AND info_vendedor_producto.idProducto = $idprod
+            AND info_vendedor_producto.stock > 0
         WHERE idProducto = $idprod
         ORDER BY precio ASC
         ");
-        $p_fila_vendedores = mysqli_fetch_array($consulta_precios);
     }
 ?>
 
@@ -61,20 +61,25 @@
                 </div>
                 <div id=descripcion-prod>
                     <?php
-                        echo "<h2>".$producto['nombre']."</h2>";
-                        echo "<p>".$producto['descripcion']."</p>";
-                        echo "<h3>".$p_fila_vendedores['precio']." €</h3>";
-                        if ($p_fila_vendedores['stock'] <= 10)
-                            echo "<p id=stock> Sólo quedan ".$p_fila_vendedores['stock']." unidades a este precio!</p>";
-                    
-                        echo "<form method='post' action='añadir_carrito.php' id=form-prod>";
-                            echo "<input type='hidden' name='idIVP' value='".$p_fila_vendedores['idIVP']."'>";
-                            echo "<input type='hidden' name='producto' value='".$idprod."'>";
-                            echo "<input type='hidden' name='nUsuarioVend' value='".$p_fila_vendedores['vend']."'>";
-                            echo '<label for="cantidad">Cantidad: </label>';
-                            echo "<input type='number' min='1' max=".$p_fila_vendedores['stock']." value='1' id='cantidad' name='cantidad' required>";
-                            echo '<input class=boton-compra type="submit" name="agregar" value="Agregar al carrito">';
-                        echo "</form>"
+                        if ($p_fila_vendedores = mysqli_fetch_array($consulta_precios)) {
+                            echo "<h2>".$producto['nombre']."</h2>";
+                            echo "<p>".$producto['descripcion']."</p>";
+                            echo "<h3>".$p_fila_vendedores['precio']." €</h3>";
+                            if ($p_fila_vendedores['stock'] <= 10)
+                                echo "<p id=stock> Sólo quedan ".$p_fila_vendedores['stock']." unidades a este precio!</p>";
+                        
+                            echo "<form method='post' action='añadir_carrito.php' id=form-prod>";
+                                echo "<input type='hidden' name='idIVP' value='".$p_fila_vendedores['idIVP']."'>";
+                                echo "<input type='hidden' name='producto' value='".$idprod."'>";
+                                echo "<input type='hidden' name='nUsuarioVend' value='".$p_fila_vendedores['vend']."'>";
+                                echo "<input type='hidden' name='stock' value='".$p_fila_vendedores['stock']."'>";
+                                echo '<label for="cantidad">Cantidad: </label>';
+                                echo "<input type='number' min='1' max=".$p_fila_vendedores['stock']." value='1' id='cantidad' name='cantidad' required>";
+                                echo '<input class=boton-compra type="submit" name="agregar" value="Agregar al carrito">';
+                            echo "</form>";
+                        } else {
+                            echo "<h2> Este producto no está en stock. </h2>";
+                        }
                     ?>    
                 </div>
             </div>

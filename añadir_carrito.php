@@ -7,7 +7,8 @@
         $cantidad = $_POST['cantidad'];
         $producto = $_POST['producto'];
         $nUsuarioVend = $_POST['nUsuarioVend'];
-        
+        $stock = $_POST['stock'];
+
         if (!isset($_SESSION['carrito'])) {
             $_SESSION['carrito'] = array();
         }
@@ -16,6 +17,9 @@
         if (isset($_SESSION['carrito'][$idIVP])) {
             // Si el producto ya existe, añadir la cantidad
             $_SESSION['carrito'][$idIVP]['cantidad'] += $cantidad;
+            // comprobar que un cliente no añade más productos de los que hay
+            if ($_SESSION['carrito'][$idIVP]['cantidad'] > $stock)
+                $_SESSION['carrito'][$idIVP]['cantidad'] = $stock;
         } else {
             // Si no existe, añadirlo al carrito
             $_SESSION['carrito'][$idIVP] = array(
