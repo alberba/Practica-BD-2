@@ -13,11 +13,10 @@
 
 </head>
 <body>
-<div class="sup">
-    <div class=titulo-sup>
-        <h1>Estimazon</h1>
-    </div>
-</div>
+
+<?php
+    include "cabecera.php";
+?>
 
 <div class="productos-container">
     <?php

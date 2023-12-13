@@ -7,13 +7,13 @@
     <meta charset="UTF-8">
     <title>Añadir Producto</title>
     <link rel="stylesheet" type="text/css" href="css/añadir_producto.css">
-    <link rel="stylesheet" type="text/css" href="css/cabecera_vendedor.css">
+    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
 
 </head>
 <body>
     <?php
-        include "cabecera_vendedor.php";
+        include "cabecera.php";
     ?>
     <div id="form-añadir-prod">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">

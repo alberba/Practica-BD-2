@@ -16,6 +16,7 @@ if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
     } else{
         $_SESSION['nombreReal'] = $nombreReal;
         $_SESSION['nombreUsuario'] = $nom_usuario;
+        $_SESSION['tipoUsuario'] = $tipo_usuario;
 
         if($tipo_usuario=="comprador"){
             $_SESSION['carrito'] = array();

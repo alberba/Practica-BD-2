@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/estils.css">
-    <link rel="stylesheet" type="text/css" href="css/cabecera_vendedor.css">
+    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <link rel="stylesheet" type="text/css" href="css/producto.css">
     <link rel="stylesheet" type="text/css" href="css/vendedor.css">
@@ -15,7 +15,7 @@
 <body>
 
 <?php
-    include "cabecera_vendedor.php";
+    include "cabecera.php";
 ?>
 
 <div class="subpage">

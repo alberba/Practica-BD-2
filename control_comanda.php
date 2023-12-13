@@ -8,7 +8,7 @@
         $bd = mysqli_select_db($conexion, "estimazon");
 
         $consulta = mysqli_query($conexion, "
-            SELECT fecha, estado, comprador.nombre AS compN, nUsuarioRep
+            SELECT fecha, estado, comprador.nombre AS compN, nUsuarioRep, idDomicilio
             FROM comanda
                 JOIN comprador
                 ON comprador.nUsuario = nUsuarioComp
@@ -32,7 +32,7 @@
 </head>
 <body>
     <?php 
-        include "cabecera_comprador.php"; 
+        include "cabecera.php"; 
     ?>
 
     <div class="subpage">
@@ -58,11 +58,29 @@
                 $nUsuarioRep = $comanda['nUsuarioRep'];
                 if ($nUsuarioRep == NULL) {
                     // no hay repartidor
-                    echo "<p> Repartidor: </p>";
-                    // añadir botón para elegir empresa distribuidora (un select quizá pueda funcionar también)
-                    
+                    // añadir opción para elegir empresa distribuidora
+                    // consulta de empresas distribuidoras
+                    $consulta_distr = mysqli_query($conexion, "
+                        SELECT distribuidora.nombre, distribuidora.idDistribuidora
+                        FROM distribuidora
+                            JOIN r_zona_distribuidora
+                                JOIN zona_geografica
+                                    JOIN poblacio
+                                    ON zona_geografica.idZona = poblacio.idZona
+                                    AND poblacio.idPobl =   (SELECT idPoblacio
+                                                            FROM domicili
+                                                            WHERE idDomicili = $comanda['domicili'])
+                                ON r_zona_distribuidora.idZona = zona_geografica.idZona
+                            ON distribuidora.idDistribuidora = r_zona_distribuidora.idDistribuidora
+                    ");
+                    // campo de seleccion
+                    echo "<select name='distribuidora'>";
+                    // añadir cada distribuidora al select
+                    while($fila_distr = mysqli_fetch_array($consulta_distr)) {
+                        echo "<option value='" . $fila_distr['idDistribuidora'] . "'>" . $$fila_distr['nombre'] . "</option>";
+                    }
                 } else {
-                    echo "<p> Repartidor: " . $comanda['vendN']. "</p>";
+                    echo "<p> Repartidor: " . $nUsuarioRep. "</p>";
                 }
             ?>
         </div>

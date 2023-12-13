@@ -1,6 +1,15 @@
 <div class="sup">
     <div class=titulo-sup>
-        <a id="Titol" href=catshow.php>
+        <a id="Titol" href=
+        <?php
+            if (!isset($_SESSION['tipoUsuario']) or $_SESSION['tipoUsuario'] == 'comprador') {
+                echo "catshow.php";
+            } else if ($_SESSION['tipoUsuario'] == 'vendedor') {
+                echo "vendedor.php";
+            } else if ($_SESSION['tipoUsuario'] == 'controlador') {
+                echo "controlador.php";
+            }
+        ?>>
             <h1>Estimazon</h1>
         </a>
     </div>
@@ -34,9 +43,13 @@
                 }
             ?>
         </div>
-        <a href="carrito.php" id=carrito-btn-container>
-            <img src="imagenes/carrito.png" alt="Ir al carrito" class="imagen-carrito">
-        </a>
+        <?php
+            if (!isset($_SESSION['tipoUsuario']) or $_SESSION['tipoUsuario'] == 'comprador') {
+                echo '<a href="carrito.php" id=carrito-btn-container>';
+                    echo '<img src="imagenes/carrito.png" alt="Ir al carrito" class="imagen-carrito">';
+                echo '</a>';
+            }
+        ?>
         
     </div>
     

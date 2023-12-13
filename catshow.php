@@ -13,7 +13,7 @@
 </head>
 <body>
     <?php
-        include "cabecera_comprador.php";
+        include "cabecera.php";
     ?>
     <div class="subpage">
             <h2 class="subtitulo">Catálogo</h2>

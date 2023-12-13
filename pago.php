@@ -16,7 +16,7 @@
 </head>
 <body>
     <?php
-        include "cabecera_comprador.php";
+        include "cabecera.php";
     ?>
     
     <div class="subpage">
