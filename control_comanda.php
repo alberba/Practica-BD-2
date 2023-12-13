@@ -1,11 +1,18 @@
 <?php
     session_start();
+
     if (isset($_GET['com'])) {
-        
-        $idComanda = $_GET['com'];
-        
         $conexion = mysqli_connect("localhost","root","");
         $bd = mysqli_select_db($conexion, "estimazon");
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['asignarDistr'])) {
+            $idDistribuidora = $_POST['distribuidora'];
+            $idCom = $_GET['com'];
+            // elegir repartidor al azar
+            $consulta_rep = mysqli_query($conexion, "CALL setRepartidor($idDistribuidora, $idCom)");
+        }
+
+        $idComanda = $_GET['com'];
 
         $consulta = mysqli_query($conexion, "
             SELECT fecha, estado, comprador.nombre AS compN, nUsuarioRep, idDomicilio
@@ -16,7 +23,7 @@
         ");
         $comanda = mysqli_fetch_array($consulta);
     }
-    
+
     if ($comanda) {
 ?>
 <!DOCTYPE html>
@@ -56,6 +63,7 @@
 
                 // trato especial al repartidor (puede ser NULL)
                 $nUsuarioRep = $comanda['nUsuarioRep'];
+                $idDom = $comanda['idDomicilio'];
                 if ($nUsuarioRep == NULL) {
                     // no hay repartidor
                     // añadir opción para elegir empresa distribuidora
@@ -65,23 +73,37 @@
                         FROM distribuidora
                             JOIN r_zona_distribuidora
                                 JOIN zona_geografica
-                                    JOIN poblacio
-                                    ON zona_geografica.idZona = poblacio.idZona
-                                    AND poblacio.idPobl =   (SELECT idPoblacio
-                                                            FROM domicili
-                                                            WHERE idDomicili = $comanda['domicili'])
+                                    JOIN poblacion
+                                    ON zona_geografica.idZona = poblacion.idZona
+                                    AND poblacion.idPoblacion =   (SELECT idPoblacion
+                                                            FROM domicilio
+                                                            WHERE idDomicilio = $idDom)
                                 ON r_zona_distribuidora.idZona = zona_geografica.idZona
                             ON distribuidora.idDistribuidora = r_zona_distribuidora.idDistribuidora
                     ");
-                    // campo de seleccion
-                    echo "<select name='distribuidora'>";
-                    // añadir cada distribuidora al select
-                    while($fila_distr = mysqli_fetch_array($consulta_distr)) {
-                        echo "<option value='" . $fila_distr['idDistribuidora'] . "'>" . $$fila_distr['nombre'] . "</option>";
-                    }
+                    echo "<form method='post' action=". htmlspecialchars($_SERVER["PHP_SELF"]). "?com=" . $idComanda. ">";
+                        // campo de seleccion
+                        echo "<select name='distribuidora'>";
+                        // añadir cada distribuidora al select
+                        while($fila_distr = mysqli_fetch_array($consulta_distr)) {
+                            echo "<option value='" . $fila_distr['idDistribuidora'] . "'>" . $fila_distr['nombre'] . "</option>";
+                        }
+                        echo "</select>";
+                        echo "<input type='hidden' name='idCom' value='". $idComanda. "'>";
+                        echo "<input type='submit' value='Asignar distribuidora' name='asignarDistr'>";
+                    echo "</form>";
                 } else {
                     echo "<p> Repartidor: " . $nUsuarioRep. "</p>";
                 }
+
+                /*
+                if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['asignarDistr'])) {
+                    $idDistribuidora = $_POST['distribuidora'];
+                    $idCom = $_GET['com'];
+                    // elegir repartidor al azar
+                    $consulta_rep = mysqli_query($conexion, "CALL setRepartidor($idDistribuidora, $idCom)");
+                }
+                */
             ?>
         </div>
     </div>

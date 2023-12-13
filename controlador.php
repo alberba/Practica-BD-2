@@ -25,13 +25,14 @@
             $nUsuarioControlador = $_SESSION['nombreUsuario'];
 
             $consulta = mysqli_query($conexion, "
-                SELECT idComanda, fecha, estado
+                SELECT comanda.idComanda, comanda.fecha, comanda.estado
                 FROM comanda
                     LEFT JOIN incidencia
                     ON incidencia.idComanda = comanda.idComanda
                     AND idTIncidencia = (SELECT idTIncidencia FROM TIPO_INCIDENCIA WHERE nombre = 'Entregado al comprador')
-                WHERE DATE_SUB(CURRENT_DATE, 20 DAY) <= comanda.fecha
+                WHERE DATE_SUB(CURRENT_DATE, INTERVAL 20 DAY) <= comanda.fecha
                 AND incidencia.idIncidencia IS NULL
+                AND comanda.nUsuarioCont = '$nUsuarioControlador'
             ");
 
             /*
@@ -46,20 +47,22 @@
             */
 
             if ($consulta) {
-                echo "<ul class='lista-com'>";
-                while ($comanda = mysqli_fetch_array($consulta)) {
-                    echo "<li class='com-prev'>";
-                    // enlace a la página de la comanda
-                        echo "<div>";
-                            echo "<a class='enl-com' href='control_comanda.php?com=" . $comanda['idComanda'] . "'>";
-                                echo "<p class='text-com'> ID Comanda: " . $comanda['idComanda']. "</p>";
-                                echo "<p class='text-com'> Fecha: " . $comanda['fecha']. "</p>";
-                                echo "<p class='text-com'> Estado: " . $comanda['estado']. "</p>";
-                            echo "</a>";
-                        echo "</div>";
-                    echo "</li>";
-                }
-                echo "</ul>";
+                echo "<div class='div-com'>";
+                    echo "<ul class='lista-com'>";
+                    while ($comanda = mysqli_fetch_array($consulta)) {
+                        echo "<li class='com-prev'>";
+                        // enlace a la página de la comanda
+                            echo "<div>";
+                                echo "<a class='enl-com' href='control_comanda.php?com=" . $comanda['idComanda'] . "'>";
+                                    echo "<p class='text-com'> ID Comanda: " . $comanda['idComanda']. "</p>";
+                                    echo "<p class='text-com'> Fecha: " . $comanda['fecha']. "</p>";
+                                    echo "<p class='text-com'> Estado: " . $comanda['estado']. "</p>";
+                                echo "</a>";
+                            echo "</div>";
+                        echo "</li>";
+                    }
+                    echo "</ul>";
+                echo "</div>";
             } else {
                 echo "<p>No hay comandas activas.</p>";
             }

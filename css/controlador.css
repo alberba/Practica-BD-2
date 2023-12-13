@@ -37,6 +37,11 @@
 }
 
 /* copiados de estils.css y cmabiados de nombre */
+.div-com{
+    margin-left: 10px;
+    width: 100%;
+}
+
 .lista-com{
     display: flex;
     flex-direction: row;
