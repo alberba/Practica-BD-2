@@ -1,11 +1,20 @@
 <?php
-    session_start();
+
+session_start();
+    
 $conexion = mysqli_connect("localhost", "root", "");
 $bd = mysqli_select_db($conexion, "estimazon");
 $nombre_usuario = $_SESSION['nombreUsuario'];
 
 
+if(isset($_GET['llamador'])){
+    $_SESSION['llamador'] = $_GET['llamador'];
+}
+
+
+
 if(isset($_POST['direccion']) && isset($_POST['codigoPostal']) && isset($_POST['poblacion'])){
+    
 
     $direccion = $_POST['direccion'];
     $codigoPostal = $_POST['codigoPostal'];
@@ -45,7 +54,18 @@ if(isset($_POST['direccion']) && isset($_POST['codigoPostal']) && isset($_POST['
             ('$nombre_usuario','$idDomicilio');
     ");
 
-    header("Location: prepago.php");
+
+
+    if($_SESSION['llamador'] == 'perfil'){
+        echo "el destino es '$llamador'";
+        header("Location: perfil.php");
+    }else if($_SESSION['llamador']  == 'prepago'){
+        echo "el destino es '$llamador'";
+        header("Location: prepago.php");
+    }
+
+
+    
 }
 ?>
 

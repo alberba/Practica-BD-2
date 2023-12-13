@@ -154,6 +154,7 @@
                 echo '<div id=direccion-container>';
                     echo '<h3 class="subtitulo">Direcciones</h3>';
                     echo '<div id=direcciones>';
+                    echo '<a class="link" href="añadir_domicilios.php?llamador=perfil"> Añadir nuevo domicilio </a>';
         
                         $consulta = mysqli_query($conexion, "
                             SELECT r_comprador_domicilio.idDomicilio, domicilio_poblacion.direccion, domicilio_poblacion.CP, domicilio_poblacion.nombre

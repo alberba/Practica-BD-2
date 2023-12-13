@@ -66,7 +66,7 @@
                                         echo "<option value=\"" . $domicilios['idDomicilio'] . "\">" . $domicilios['direccion'] . " - " . $domicilios['cp'] . "</option>";
                                     } while ($domicilios = mysqli_fetch_array($consulta));
                                     echo '</select>';
-                                    echo '<a class="link" href="añadir_domicilios.php"> Añadir nuevo domicilio </a>';
+                                    echo '<a class="link" href="añadir_domicilios.php?llamador=prepago"> Añadir nuevo domicilio </a>';
                                 echo "</div>";
 
                                 echo "<h3 class='precio-total'>Total: {$precio_total} €</h3>";
@@ -75,7 +75,7 @@
                             echo '</form>';        
                         
                         } else {
-                            echo '<a class="link" href="añadir_domicilios.php"> Añadir domicilios </a>';
+                            echo '<a class="link" href="añadir_domicilios.php?llamador=prepago"> Añadir domicilios </a>';
                             echo '<h4> No se puede realizar el proceso de compra hasta no haber registrado al menos un domicilio </h4>';
                         }
 
