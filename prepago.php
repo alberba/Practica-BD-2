@@ -26,8 +26,14 @@
     <div class=content>
         <div id=div-carrito>
             <?php
-                if (isset($_POST['precio_total']) && isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
+                if (isset($_POST['precio_total'])){
+                    $_SESSION['precio_total'] = $_POST['precio_total'];
                     $precio_total = $_POST['precio_total'];
+                }else{
+                    $precio_total = $_SESSION['precio_total'];
+                }
+                if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
+                    
                     $nUsuarioComp = $_SESSION['nombreUsuario'];
 
                     // consulta de los domicilios del usuario

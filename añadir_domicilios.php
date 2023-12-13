@@ -1,5 +1,52 @@
 <?php
     session_start();
+$conexion = mysqli_connect("localhost", "root", "");
+$bd = mysqli_select_db($conexion, "estimazon");
+$nombre_usuario = $_SESSION['nombreUsuario'];
+
+
+if(isset($_POST['direccion']) && isset($_POST['codigoPostal']) && isset($_POST['poblacion'])){
+
+    $direccion = $_POST['direccion'];
+    $codigoPostal = $_POST['codigoPostal'];
+    $poblacion = $_POST['poblacion'];
+
+
+    //obtener idPoblacion
+    $consulta = mysqli_query($conexion, "
+    SELECT idPoblacion 
+    FROM poblacion
+    WHERE nombre = '$poblacion'
+    ");
+
+    $fila = mysqli_fetch_array($consulta);
+    $idPoblacion = $fila['idPoblacion'];
+
+
+    //añadir el domicilio
+    mysqli_query($conexion, "
+    INSERT INTO domicilio (direccion, CP, idPoblacion) VALUES
+    ('$direccion', '$codigoPostal', '$idPoblacion');
+    ");
+
+    //obtener idDomicilio
+    $consulta = mysqli_query($conexion, "
+    SELECT idDomicilio 
+    FROM domicilio
+    WHERE direccion = '$direccion'
+    ");
+
+    $fila = mysqli_fetch_array($consulta);
+    $idDomicilio = $fila['idDomicilio'];
+
+    //r_comprador_domicilio
+    mysqli_query($conexion, "
+    INSERT INTO r_comprador_domicilio (nUsuarioComp, idDomicilio) VALUES 
+            ('$nombre_usuario','$idDomicilio');
+    ");
+
+    header("Location: prepago.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -47,62 +94,4 @@
 </body>
 </html>
 
-
-
-
-
-<?php
-$conexion = mysqli_connect("localhost", "root", "");
-$bd = mysqli_select_db($conexion, "estimazon");
-$nombre_usuario = $_SESSION['nombreUsuario'];
-
-
-if(isset($_POST['direccion']) && isset($_POST['codigoPostal']) && isset($_POST['poblacion'])){
-
-    $direccion = $_POST['direccion'];
-    $codigoPostal = $_POST['codigoPostal'];
-    $poblacion = $_POST['poblacion'];
-
-
-    //obtener idPoblacion
-    $consulta = mysqli_query($conexion, "
-    SELECT idPoblacion 
-    FROM poblacion
-    WHERE nombre = '$poblacion'
-    ");
-
-    $fila = mysqli_fetch_array($consulta);
-    $idPoblacion = $fila['idPoblacion'];
-
-
-    //añadir el domicilio
-    mysqli_query($conexion, "
-    INSERT INTO domicilio (direccion, CP, idPoblacion) VALUES
-    ('$direccion', '$codigoPostal', '$idPoblacion');
-    ");
-
-    //obtener idDomicilio
-    $consulta = mysqli_query($conexion, "
-    SELECT idDomicilio 
-    FROM domicilio
-    WHERE direccion = '$direccion'
-    ");
-
-    $fila = mysqli_fetch_array($consulta);
-    $idDomicilio = $fila['idDomicilio'];
-
-    //r_comprador_domicilio
-    mysqli_query($conexion, "
-    INSERT INTO r_comprador_domicilio (nUsuarioComp, idDomicilio) VALUES 
-            ('$nombre_usuario','$idDomicilio');
-    ");
-
-    header("Location: prepago.php");
-
-}
-
-
-
-
-?>
 
