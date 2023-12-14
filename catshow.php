@@ -30,7 +30,7 @@
 
                     if(isset($_GET["param"])) {
                         $idcat = $_GET["param"];
-                        // consulta para obtener la información del producto
+                        // Consulta para obtener todos los productos de la categoria dada
                         $consulta = mysqli_query($conexion, "
                         SELECT nombre, imagen, producto.idProducto
                         FROM producto
@@ -42,7 +42,7 @@
                         ");
                         if($consulta)
                             while ($fila = mysqli_fetch_array($consulta)) {
-                                // comprobar que haya stock de este producto
+                                // Comprobar que haya stock de este producto
                                 $idProd = $fila['idProducto'];
                                 $consulta_stock = mysqli_query($conexion, "
                                     SELECT stock
@@ -51,17 +51,17 @@
                                     AND info_vendedor_producto.stock > 0
                                     LIMIT 1
                                     ");
-                                // solo mostraremos el producto si algún vendedor lo tiene en stock
+                                // Solo mostraremos el producto si algún vendedor lo tiene en stock
                                 if ($fila_stock = mysqli_fetch_array($consulta_stock)) {
-                                    // mostrar información del producto
+                                    // Mostrar información del producto
                                     echo "<li class='product-prev'>";
-                                    // enlace a la página del producto
-                                    echo "<div>";
-                                    echo "<a class=enl-prod href='prodshow.php?prod=".$idProd."'>";
-                                    echo "<img src=".$fila['imagen']." class='imagen-prod-cat'>";
-                                    echo $fila['nombre'];
-                                    echo "</a>";
-                                    echo "</div>";
+                                        // Enlace a la página del producto
+                                        echo "<div>";
+                                            echo "<a class=enl-prod href='prodshow.php?prod=".$idProd."'>";
+                                                echo "<img src=".$fila['imagen']." class='imagen-prod-cat'>";
+                                                echo $fila['nombre'];
+                                            echo "</a>";
+                                        echo "</div>";
                                     echo "</li>";
                                 }
                             }

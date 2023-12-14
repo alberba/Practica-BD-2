@@ -1,10 +1,13 @@
 <?php
     session_start();
+
     $conexion = mysqli_connect("localhost","root","");
     $bd = mysqli_select_db($conexion, "estimazon");
+
+    // Se pasara como parámetro el producto a mostrar
     if(isset($_GET["prod"])) {
         $idprod = $_GET["prod"];
-        // información del producto
+        // Información del producto
         $consulta = mysqli_query($conexion, "
         SELECT nombre, imagen, descripcion
         FROM producto
