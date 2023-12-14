@@ -57,10 +57,8 @@ if(isset($_POST['direccion']) && isset($_POST['codigoPostal']) && isset($_POST['
 
 
     if($_SESSION['llamador'] == 'perfil'){
-        echo "el destino es '$llamador'";
         header("Location: perfil.php");
     }else if($_SESSION['llamador']  == 'prepago'){
-        echo "el destino es '$llamador'";
         header("Location: prepago.php");
     }
 
