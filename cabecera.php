@@ -46,14 +46,14 @@
                     session_destroy();
 
                     // Redirigir a la página de inicio de sesión
-                    header("Location: portal_inicio_usuario.html");
+                    header("Location: portal_inicio_usuario.php");
                     exit();
 
                 }
 
                 if (!isset($_SESSION['nombreUsuario'])) {
 
-                    echo '<a class="boton-sesion" id=boton-inicio href="portal_inicio_usuario.html">Iniciar Sesión</a>';
+                    echo '<a class="boton-sesion" id=boton-inicio href="portal_inicio_usuario.php">Iniciar Sesión</a>';
                     echo '<a class="boton-sesion" id=boton-registro href="registrarse.php">Registrarse</a>';
 
                 } else {

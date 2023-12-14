@@ -27,6 +27,14 @@
             
         </form>
 
+        <?php
+            session_start();
+            if (isset($_SESSION['error'])) {
+                echo '<p style="color: red;">' . $_SESSION['error'] . '</p>';
+                unset($_SESSION['error']);
+            }
+        ?>
+
         <p>¿No tienes cuenta? <a href="registrarse.php">Registrarse</a></p>
 
         <a href=catshow.php>Volver a Estimazon</a>

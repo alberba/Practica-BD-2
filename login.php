@@ -15,9 +15,9 @@
         $tipo_usuario = $credenciales[2];
 
         if ($nom_usuario == ""){
-
-            echo "Usuario o contraseña incorrectos";
-
+            $_SESSION['error'] = "Usuario o contraseña incorrectos";
+            header("Location: portal_inicio_usuario.php");
+            exit();
         } else{
 
             // Inicializamos las variables de sesión relacionadas con el usuario
