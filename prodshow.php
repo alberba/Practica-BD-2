@@ -6,10 +6,14 @@
 
     // Se pasara como parámetro el producto a mostrar
     if(isset($_GET["prod"])) {
-        $idprod = $_GET["prod"];
+        $prod = $_GET["prod"];
+    }else if(isset($_POST["prod"])){
+        $prod = $_POST["prod"];
+    }
+        $idprod = $prod;
         // Información del producto
         $consulta = mysqli_query($conexion, "
-        SELECT nombre, imagen, descripcion
+        SELECT idProducto, nombre, imagen, descripcion
         FROM producto
         WHERE idProducto = $idprod
         ");
@@ -27,8 +31,7 @@
             AND info_vendedor_producto.stock > 0
         WHERE idProducto = $idprod
         ORDER BY precio ASC
-        ");
-    }
+        ");   
 ?>
 
 <!DOCTYPE html>
@@ -65,28 +68,71 @@
                 </div>
                 <div id=descripcion-prod>
                     <?php
-                        if ($p_fila_vendedores = mysqli_fetch_array($consulta_precios)) {
-                            echo "<h2>".$producto['nombre']."</h2>";
-                            echo "<p>".$producto['descripcion']."</p>";
-                            echo "<h3>".$p_fila_vendedores['precio']." €</h3>";
-                            if ($p_fila_vendedores['stock'] <= 10)
-                                echo "<p id=stock> Sólo quedan ".$p_fila_vendedores['stock']." unidades a este precio!</p>";
+
+                        echo "<h2>".$producto['nombre']."</h2>";
+                        echo "<p>".$producto['descripcion']."</p>";
+                        echo "<label for='vendedor'>Vendedor:</label>";
+                        echo "<form method='post' action=".$_SERVER['PHP_SELF']."?prod=".$prod.">";
+                        echo "<select id='vendedor' name='vendedor' required>";
+                        while($vendedor = mysqli_fetch_array($consulta_precios)){
+                            if ($_SERVER["REQUEST_METHOD"] == "POST" && $vendedor['nombre'] == $_POST['vendedor']) { // Cambia 'nombre_predeterminado' por el nombre del vendedor que quieres como predeterminado
+                                echo "<option value='" . htmlspecialchars($vendedor['nombre']) . "' selected>" . htmlspecialchars($vendedor['nombre']) . "</option>";
+                            } else {
+                                echo "<option value='" . htmlspecialchars($vendedor['nombre']) . "'>" . htmlspecialchars($vendedor['nombre']) . "</option>";
+                            }   
+                        }
+                        echo "</select><br>";
+                        echo "<input type='submit' name='submit' value='Escoger vendedor'>";
+                        echo "</form>";
+                   
+                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                            $selected_vendedor = $_POST['vendedor'];
+                            echo $selected_vendedor;
+
+
+                            //obtener nUsuario del vendedor
+                            $consulta = mysqli_query($conexion, "
+                            SELECT nUsuario
+                            FROM vendedor
+                            WHERE nombre = '$selected_vendedor'
+                            ");
+                            $fila = mysqli_fetch_array($consulta);
+                            $nUsuario = $fila['nUsuario'];
+
+                            $idProd = $producto['idProducto'];
+                            // información del producto/vendedor
+                            $consulta = mysqli_query($conexion, "
+                            SELECT idIVP, precio, stock, idProducto, nUsuarioVend
+                            FROM info_vendedor_producto
+                            WHERE idProducto = '$idProd' AND nUsuarioVend = '$nUsuario'
+                            ");
+
+                            $fila = mysqli_fetch_array($consulta);
+                          
+                            echo "<h3>".$fila['precio']." €</h3>";
+                            if ($fila['stock'] <= 10)
+                                echo "<p id=stock> Sólo quedan ".$fila['stock']." unidades a este precio!</p>";
                         
                             echo "<form method='post' action='añadir_carrito.php' id=form-prod>";
-                                echo "<input type='hidden' name='idIVP' value='".$p_fila_vendedores['idIVP']."'>";
+                                echo "<input type='hidden' name='idIVP' value='".$fila['idIVP']."'>";
                                 echo "<input type='hidden' name='producto' value='".$idprod."'>";
-                                echo "<input type='hidden' name='nUsuarioVend' value='".$p_fila_vendedores['vend']."'>";
-                                echo "<input type='hidden' name='stock' value='".$p_fila_vendedores['stock']."'>";
+                                echo "<input type='hidden' name='nUsuarioVend' value='".$fila['nUsuarioVend']."'>";
+                                echo "<input type='hidden' name='stock' value='".$fila['stock']."'>";
                                 echo '<label for="cantidad">Cantidad: </label>';
-                                echo "<input type='number' min='1' max=".$p_fila_vendedores['stock']." value='1' id='cantidad' name='cantidad' required>";
+                                echo "<input type='number' min='1' max=".$fila['stock']." value='1' id='cantidad' name='cantidad' required>";
                                 if(isset($_SESSION['nombreUsuario'])){
                                     echo '<input class=boton-compra type="submit" name="agregar" value="Agregar al carrito">';
                                 }
                                 
                             echo "</form>";
-                        } else {
-                            echo "<h2> Este producto no está en stock. </h2>";
                         }
+
+                         
+                        
+                            
+                            
+                            
+
                     ?>    
                 </div>
             </div>
