@@ -147,7 +147,7 @@
                                         echo "<input type='hidden' name='idIVP' value='" . $idIVP . "'>";
                                         echo "<select name='cantidad' onchange='this.form.submit()'>";
 
-                                            for ($i=0; $i <= $fila['stock']; $i++) {
+                                            for ($i = 0; $i <= $fila['stock'] and $i <= 50; $i++) {
                                                 if ($i == $cantidad) {
                                                     echo "<option value='" . $i . "' selected>" . $i . "</option>";
                                                 } else {

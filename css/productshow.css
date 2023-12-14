@@ -81,6 +81,30 @@ input[type="number"] {
     margin-bottom: 15px;
 }
 
+.otro-vendedor {
+    padding-top: 10px;
+    border-top: 1px solid gray;
+}
+
+.otros-vendedores-form{
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+.label-cantidad-otros {
+    margin-right: 4px;
+}
+
+.otros-vendedores-form input{
+    font-size: 12px;
+}
+
+.boton-otros-vendedores {
+    font-size: 10px;
+    padding: 5px;
+    border-radius: 2px;
+}
+
 ul {
     list-style-type: none;
     padding: 0;

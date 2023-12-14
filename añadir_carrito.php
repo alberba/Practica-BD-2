@@ -2,6 +2,11 @@
 
     session_start();
 
+    if (!isset($_SESSION['nombreUsuario'])) {
+        header("Location: portal_inicio_usuario.html");
+        exit();
+    }
+
     // Verificar si se ha enviado el formulario correctamente
     if (isset($_POST['cantidad']) && $_POST['cantidad'] > 0) {
 
