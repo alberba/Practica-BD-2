@@ -31,7 +31,7 @@
             <input class=registro-input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
             
             <label for="telf">Teléfono:</label>
-            <input class=registro-input type="text" id="telf" name="telf" pattern="(\+\d{1,3})?\s?\d{3}(?:\s?\d{3}){2}" title="Ingrese un número de teléfono válido" required>
+            <input class=registro-input type="text" id="telf" name="telf" pattern="^(\+\d{1,3}\s)?\d{3}((\s?\d{2}){3}|(\s?\d{3}){2})$" title="Ingrese un número de teléfono válido" required>
 
             <label for="email">Correo Electrónico:</label>
             <input class=registro-input type="email" id="email" name="email" required>
