@@ -16,8 +16,12 @@
 <body>
     <?php include "cabecera.php"; ?>
 
-    <div class="subpage">
+    <div class="subpage-cont">
         <h2 class="subtitulo">Comandas Activas</h2>
+
+        <div class="div-cont">
+            <a href="alta_ctrl_rep.php" class="enl-cont">Dar de alta usuarios</a>
+        </div>
     </div>
 
     <div class="content">
