@@ -10,6 +10,7 @@
             $idCom = $_GET['com'];
             // elegir repartidor al azar
             $consulta_rep = mysqli_query($conexion, "CALL setRepartidor($idDistribuidora, $idCom)");
+            header("Location: ". htmlspecialchars($_SERVER["PHP_SELF"]). "?com=" . $idCom);
         }
 
         $idComanda = $_GET['com'];
@@ -75,9 +76,9 @@
                                 JOIN zona_geografica
                                     JOIN poblacion
                                     ON zona_geografica.idZona = poblacion.idZona
-                                    AND poblacion.idPoblacion =   (SELECT idPoblacion
-                                                            FROM domicilio
-                                                            WHERE idDomicilio = $idDom)
+                                    AND poblacion.idPoblacion =     (SELECT idPoblacion
+                                                                    FROM domicilio
+                                                                    WHERE idDomicilio = $idDom)
                                 ON r_zona_distribuidora.idZona = zona_geografica.idZona
                             ON distribuidora.idDistribuidora = r_zona_distribuidora.idDistribuidora
                     ");
