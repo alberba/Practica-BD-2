@@ -1,76 +1,81 @@
 <?php
-session_start();
+    session_start();
 
-$conexion = mysqli_connect("localhost", "root", "");
-$bd = mysqli_select_db($conexion, "estimazon");
+    $conexion = mysqli_connect("localhost", "root", "");
+    $bd = mysqli_select_db($conexion, "estimazon");
 
-// Verificar si se ha proporcionado un ID de producto en la URL
-if (!isset($_GET['idProducto'])) {
-    echo "ID de producto no proporcionado.";
-    exit();
-}
+    // Verificar si se ha proporcionado un ID de producto en la URL
+    if (!isset($_GET['idProducto'])) {
 
-$idProducto = $_GET['idProducto'];
-$nUsuario = $_SESSION['nombreUsuario'];
+        echo "ID de producto no proporcionado.";
+        exit();
 
-// Verificar si el formulario se ha enviado
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Procesar la edición del producto
-    $nombre = $_POST["nombre"];
-    $descripcion = $_POST['descripcion'];
-    $imagen = $_POST['imagen'];
-    $precio = $_POST['precio'];
-    $stock = $_POST['stock'];
+    }
 
-    // Actualizar la información del producto en la base de datos
-    mysqli_query($conexion, "
-        UPDATE producto
-        SET nombre = '$nombre', descripcion = '$descripcion', imagen = '$imagen'
-        WHERE idProducto = '$idProducto'
-    ");
+    $idProducto = $_GET['idProducto'];
+    $nUsuario = $_SESSION['nombreUsuario'];
 
-    mysqli_query($conexion, "
-        UPDATE info_vendedor_producto
-        SET precio = '$precio', stock = '$stock'
-        WHERE idProducto = '$idProducto'
+    // Verificar si el formulario se ha enviado
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        // Procesar la edición del producto
+        $nombre = $_POST["nombre"];
+        $descripcion = $_POST['descripcion'];
+        $imagen = $_POST['imagen'];
+        $precio = $_POST['precio'];
+        $stock = $_POST['stock'];
+
+        // Actualizar la información del producto en la base de datos
+        mysqli_query($conexion, "
+            UPDATE producto
+            SET nombre = '$nombre', descripcion = '$descripcion', imagen = '$imagen'
+            WHERE idProducto = '$idProducto'
+        ");
+
+        mysqli_query($conexion, "
+            UPDATE info_vendedor_producto
+            SET precio = '$precio', stock = '$stock'
+            WHERE idProducto = '$idProducto'
+            AND  nUsuarioVend = '$nUsuario'
+        ");
+
+        echo '<p class="success-message">Producto actualizado correctamente.</p>';
+        echo '<meta http-equiv="refresh" content="0.4;url=vendedor.php" />';
+
+    }
+
+    // Obtener información del producto basado en el ID y el vendedor
+    $consulta = mysqli_query($conexion, "
+        SELECT producto.idProducto, producto.nombre, producto.descripcion, producto.imagen, info_vendedor_producto.precio, info_vendedor_producto.stock
+        FROM producto
+        JOIN info_vendedor_producto ON producto.idProducto = info_vendedor_producto.idProducto
+        WHERE producto.idProducto = '$idProducto'
         AND  nUsuarioVend = '$nUsuario'
     ");
 
-    echo '<p class="success-message">Producto actualizado correctamente.</p>';
-    echo '<meta http-equiv="refresh" content="0.4;url=vendedor.php" />';
-}
+    if ($producto = mysqli_fetch_array($consulta)) {
+        // Formulario para editar el producto
+?>
 
-// Obtener información del producto basado en el ID y el vendedor
-$consulta = mysqli_query($conexion, "
-    SELECT producto.idProducto, producto.nombre, producto.descripcion, producto.imagen, info_vendedor_producto.precio, info_vendedor_producto.stock
-    FROM producto
-    JOIN info_vendedor_producto ON producto.idProducto = info_vendedor_producto.idProducto
-    WHERE producto.idProducto = '$idProducto'
-    AND  nUsuarioVend = '$nUsuario'
-");
+<!DOCTYPE html>
+<html lang="es">
+<head>
 
-if ($producto = mysqli_fetch_array($consulta)) {
-    // Formulario para editar el producto
+    <meta charset="UTF-8">
+    <title>Editar Producto</title>
+    <link rel="stylesheet" type="text/css" href="css/general.css">
+    <link rel="stylesheet" type="text/css" href="css/añadir_producto.css">
+    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
+
+</head>
+<body>
+
+    <?php
+        include "cabecera.php";
     ?>
 
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <title>Editar Producto</title>
-        <link rel="stylesheet" type="text/css" href="css/general.css">
-        <link rel="stylesheet" type="text/css" href="css/añadir_producto.css">
-
-    </head>
-    <body>
-
-    <div class="sup">
-        <div class=titulo-sup>
-            <h1>Estimazon</h1>
-        </div>
-    </div>
-
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?idProducto=" . $idProducto); ?>" method="post">
+
         <label for="nombre">Nombre del producto:</label>
         <input type="text" id="nombre" name="nombre" value="<?php echo $producto['nombre']; ?>" required>
 
@@ -87,13 +92,16 @@ if ($producto = mysqli_fetch_array($consulta)) {
         <input type="number" id="stock" name="stock" min=1 step=1 value=1 value="<?php echo $producto['stock']; ?>" required>
 
         <button type="submit">Guardar cambios</button>
+
     </form>
 
-    </body>
-    </html>
+</body>
+</html>
 
 <?php
-} else {
-    echo "Producto no encontrado.";
-}
+
+    } else {
+        echo "Producto no encontrado.";
+    }
+
 ?>

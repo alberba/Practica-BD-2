@@ -1,12 +1,14 @@
 <?php
     session_start();
+
     $conexion = mysqli_connect("localhost","root","");
     $bd = mysqli_select_db($conexion, "estimazon");
 
+    // Comprobar si se ha enviado el formulario
     if (isset($_POST['registrarse'])) {
-        // asignar datos a variables locales
-        $clase = $_POST['tipo'];
-        $tabla = ($clase === "Cliente") ? "comprador" : "vendedor";
+
+        // Asignar datos a variables locales
+        $tabla = ($_POST['tipo'] === "Cliente") ? "comprador" : "vendedor";
         $nombre = $_POST['nombre'];
         $nUsuario = $_POST['nUsuario'];
         $contr1 = $_POST['contrasena'];
@@ -14,48 +16,70 @@
         $telf = $_POST['telf'];
         $email = $_POST['email'];
 
-        // comprobar que las contraseñas son iguales
+        // Comprobar que las contraseñas son iguales
         if ($contr1 !== $contr2) {
+
+            // Si no lo son, se redirige a la página de registro con un error
             header('Location: registrarse.php?error=2');
             exit();
+
         }
 
-        // insertar usuario en su clase correspondiente
+        // Insertar usuario en su clase correspondiente
         if ($tabla === "comprador") {
-            $insert = "INSERT INTO comprador(nombre, nUsuario, contraseña, teléfono, email) VALUES
-                                ('$nombre', '$nUsuario', '$contr1', '$telf', '$email')";
+
+            $insert = "
+                INSERT INTO comprador(nombre, nUsuario, contraseña, teléfono, email) VALUES
+                ('$nombre', '$nUsuario', '$contr1', '$telf', '$email')
+            ";
+
         } else {
-            $insert = "INSERT INTO vendedor(nombre, nUsuario, contraseña, teléfono, email, estado, numAvisos) VALUES
-                                ('$nombre', '$nUsuario', '$contr1', '$telf', '$email', 'BUENO', 0)";
+
+            $insert = "
+                INSERT INTO vendedor(nombre, nUsuario, contraseña, teléfono, email, estado, numAvisos) VALUES
+                ('$nombre', '$nUsuario', '$contr1', '$telf', '$email', 'BUENO', 0)
+            ";
+
         }
 
         try {
+
             if (mysqli_query($conexion, $insert)) {
-                // la consulta ha funcionado
+                // La consulta ha funcionado
+
+                // Redirigir al menú correspondiente
                 $dir = ($tabla === "comprador") ? "Location: catshow.php" : "Location: vendedor.php";
-                // hay que inicializar las variables de sesión
+
+                // Hay que inicializar las variables de sesión
                 $_SESSION['nombreUsuario'] = $nUsuario;
                 if ($tabla === "comprador")
                     $_SESSION['carrito'] = array();
 
-                // redirigir a la salida
+                // Redirigir a la salida
                 header($dir);
                 exit();
+
             } else {
-                // algún dato no era válido
+
+                // Algún dato no era válido
                 header('Location: registrarse.php?error=3');
                 exit();
+
             }
             
         } catch (Exception $e) {
-            // la consulta no se ha ejecutado. Probablemente, el usuario ya existe.
+
+            // La consulta no se ha ejecutado. Probablemente, el usuario ya existe.
             header('Location: registrarse.php?error=1');
             exit();
+
         }   
     } else {
-        // se ha llegado hasta aquí por motivos extraños
+
+        // Se ha llegado hasta aquí por motivos extraños
         header('Location: registrarse.php?error=777');
         exit();
+
     }
     
 ?>

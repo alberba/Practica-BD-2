@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <link rel="stylesheet" type="text/css" href="css/login_registro.css">
+
 </head>
 <body>
+
     <div class="container">
+
         <form action="proceso_registro.php" method="post" class="registro-form">
+
             <h1>REGISTRO</h1>
 
             <label for="tipo">¿Eres ...?:</label>
             <select name="tipo" class="select-tipo" required>
+
+                <!-- Solo los compradores y los vendedores podrán registrarse a partir del portal. Controlador y repartidor será a partir de la propia base de datos -->
                 <option value="Cliente" class="option-tipo">Cliente</option>
                 <option value="Vendedor" class="option-tipo">Vendedor</option>
+
             </select>
 
             <label for="nombre">Nombre y Apellidos:</label>
@@ -37,22 +45,41 @@
             <input class=registro-input type="email" id="email" name="email" required>
 
             <?php
+                // Si se ha enviado un error, se muestra el mensaje correspondiente
                 if (isset($_GET["error"])) {
+
                     $error = $_GET["error"];
                     $err_message = "";
+
                     switch ($error) {
-                        case 1: $err_message = "Este nombre de usuario ya está en uso."; break;
-                        case 2: $err_message = "Las 2 contraseñas no coinciden."; break;
-                        case 3: $err_message = "Alguno de los datos está en formato incorrecto (o es demasiado largo)."; break;
-                        default : $err_message = "Error desconocido."; break;
+
+                        case 1: 
+                            $err_message = "Este nombre de usuario ya está en uso.";
+                            break;
+
+                        case 2: 
+                            $err_message = "Las 2 contraseñas no coinciden."; 
+                            break;
+
+                        case 3: 
+                            $err_message = "Alguno de los datos está en formato incorrecto (o es demasiado largo)."; 
+                            break;
+
+                        default : 
+                            $err_message = "Error desconocido.";
+
                     }
                     echo "<p class=error-mess> ". $err_message. "</p>";
                 }
             ?>
+
             <input type="submit" name="registrarse" value="Registrarse" class="registro-button">
+
         </form>
         
         <p>¿Ya tienes una cuenta? <a href="portal_inicio_usuario.html">Iniciar sesión</a></p>
+
     </div>
+
 </body>
 </html>

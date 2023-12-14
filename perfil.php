@@ -68,7 +68,7 @@
             $verificar_contraseña = $_POST["verificar_contrasena"];
             
             // Comprobamos que tipo de usuario esta intentando acceder al perfil
-            if ($_SESSION['tipoUsuario'] != "controlador" and $_SESSION['tipoUsuario'] != "vendedor"){
+            if ($_SESSION['tipoUsuario'] != "controlador" and $_SESSION['tipoUsuario'] != "repartidor"){
 
                 $telefono = $_POST["telefono"];
 
@@ -188,10 +188,14 @@
                 <input class=input-perfil type="text" name="nombre" value="<?php echo $fila["nombre"]; ?>" required>
 
                 <?php
-                    if (isset($_SESSION['tipoUsuario']) && ($_SESSION['tipoUsuario'] != "controlador" and $_SESSION['tipoUsuario'] != "vendedor")) {
+
+                    if (isset($_SESSION['tipoUsuario']) && ($_SESSION['tipoUsuario'] != "controlador" and $_SESSION['tipoUsuario'] != "repartidor")) {
+
                         echo '<label for="telefono">Teléfono:</label>';
                         echo '<input class=input-perfil type="text" name="telefono" pattern="^(\+\d{1,3}\s)?\d{3}((\s?\d{2}){3}|(\s?\d{3}){2})$" value="' . $fila["teléfono"] . '" required>';
+                    
                     }
+
                 ?>
 
                 <label for="contraseña">Cambiar contraseña:</label>
@@ -201,6 +205,7 @@
                 <input class="input-perfil" type="password"  name="verificar_contrasena">
 
                 <?php
+
                     // Comprobamos si se ha pasado por parámetro un cambio de perfil erróneo o exitoso
                     if (isset($_GET["isOK"])){
 
@@ -216,6 +221,7 @@
                         
                         }
                     }
+
                 ?>
 
                 <button class="input-perfil boton-input" type="submit">Guardar cambios</button>
@@ -229,8 +235,10 @@
             if($_SESSION['tipoUsuario'] == "comprador") {
 
                 echo '<div id=direccion-container>';
+
                     echo '<h3 class="subtitulo">Direcciones</h3>';
                     echo '<div id=direcciones>';
+                    
                         echo '<a class="link" href="añadir_domicilios.php?llamador=perfil"> Añadir nuevo domicilio </a>';
         
                         $consulta = mysqli_query($conexion, "
@@ -255,8 +263,11 @@
                         }
                         
                     echo '</div>';
+
                 echo '</div>';
+
             }
+
         ?>
     </div>
 
