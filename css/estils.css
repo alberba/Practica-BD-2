@@ -118,3 +118,9 @@
     color: rgb(5, 113, 255);
     margin: 0px 30px;
 }
+
+#error-no-prod {
+    margin-left: 20px;
+    font-size: 40px;
+    font-weight: bold;
+}

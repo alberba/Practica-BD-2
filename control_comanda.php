@@ -32,6 +32,19 @@
             WHERE idComanda = $idComanda
         ");
         $comanda = mysqli_fetch_array($consulta);
+
+        // comprobar si alguno de los productos de la comanda no ha sido entregado
+        $consulta_entregados = mysqli_query($conexion, "
+            SELECT info_vendedor_producto.idIVP, enAlmacen
+            FROM info_vendedor_producto
+            JOIN
+                (SELECT idIVP, cantidad, enAlmacen
+                FROM r_ipv_comanda
+                WHERE idComanda = $idComanda) AS ipv_comanda
+            ON info_vendedor_producto.idIVP = ipv_comanda.idIVP
+            WHERE enAlmacen = FALSE
+        ");
+        $productos_entregados = mysqli_num_rows($consulta_entregados) == 0 ? TRUE : FALSE;
     }
 
 
@@ -87,41 +100,43 @@
                 $idDom = $comanda['idDomicilio'];
                 if ($nUsuarioRep == NULL) {
                     // No hay repartidor
-                    // Añadir opción para elegir empresa distribuidora
+                    // Añadir opción para elegir empresa distribuidora si todos los productos están entregados
+                    if ($productos_entregados) {
+                        
+                        // Consulta de empresas distribuidoras
+                        $consulta_distr = mysqli_query($conexion, "
+                            SELECT distribuidora.nombre, distribuidora.idDistribuidora
+                            FROM distribuidora
+                            JOIN r_zona_distribuidora
+                                JOIN zona_geografica
+                                    JOIN poblacion
+                                    ON zona_geografica.idZona = poblacion.idZona
+                                    AND poblacion.idPoblacion =     (SELECT idPoblacion
+                                                                    FROM domicilio
+                                                                    WHERE idDomicilio = $idDom)
+                                ON r_zona_distribuidora.idZona = zona_geografica.idZona
+                            ON distribuidora.idDistribuidora = r_zona_distribuidora.idDistribuidora
+                        ");
 
-                    // Consulta de empresas distribuidoras
-                    $consulta_distr = mysqli_query($conexion, "
-                        SELECT distribuidora.nombre, distribuidora.idDistribuidora
-                        FROM distribuidora
-                        JOIN r_zona_distribuidora
-                            JOIN zona_geografica
-                                JOIN poblacion
-                                ON zona_geografica.idZona = poblacion.idZona
-                                AND poblacion.idPoblacion =     (SELECT idPoblacion
-                                                                FROM domicilio
-                                                                WHERE idDomicilio = $idDom)
-                            ON r_zona_distribuidora.idZona = zona_geografica.idZona
-                        ON distribuidora.idDistribuidora = r_zona_distribuidora.idDistribuidora
-                    ");
+                        echo "<form method='post' action=". htmlspecialchars($_SERVER["PHP_SELF"]). "?com=" . $idComanda. ">";
 
-                    echo "<form method='post' action=". htmlspecialchars($_SERVER["PHP_SELF"]). "?com=" . $idComanda. ">";
+                            // Campo de seleccion
+                            echo "<select name='distribuidora'>";
 
-                        // Campo de seleccion
-                        echo "<select name='distribuidora'>";
+                                // Añadir cada distribuidora al select
+                                while($fila_distr = mysqli_fetch_array($consulta_distr)) {
 
-                            // Añadir cada distribuidora al select
-                            while($fila_distr = mysqli_fetch_array($consulta_distr)) {
+                                    echo "<option value='" . $fila_distr['idDistribuidora'] . "'>" . $fila_distr['nombre'] . "</option>";
 
-                                echo "<option value='" . $fila_distr['idDistribuidora'] . "'>" . $fila_distr['nombre'] . "</option>";
+                                }
 
-                            }
+                            echo "</select>";
 
-                        echo "</select>";
+                            echo "<input type='hidden' name='idCom' value='". $idComanda. "'>";
+                            echo "<input type='submit' value='Asignar distribuidora' name='asignarDistr'>";
 
-                        echo "<input type='hidden' name='idCom' value='". $idComanda. "'>";
-                        echo "<input type='submit' value='Asignar distribuidora' name='asignarDistr'>";
-
-                    echo "</form>";
+                        echo "</form>";
+                    }
 
                 } else {
 
@@ -143,15 +158,14 @@
         <div id=lista-prod>
         
             <?php
-
                 $consulta = mysqli_query($conexion, "
-                    SELECT producto.nombre AS prod, imagen, i_prod.cantidad, i_prod.nUsuarioVend AS vend
+                    SELECT producto.nombre AS prod, imagen, cantidad, nUsuarioVend AS vend, idIVP, enAlmacen
                     FROM producto
                     JOIN
-                        (SELECT nUsuarioVend, idProducto, cantidad
+                        (SELECT nUsuarioVend, idProducto, cantidad, enAlmacen, info_vendedor_producto.idIVP
                         FROM info_vendedor_producto
                         JOIN
-                            (SELECT idIVP, cantidad
+                            (SELECT idIVP, cantidad, enAlmacen
                             FROM r_ipv_comanda
                             WHERE idComanda = $idComanda) AS ipv_comanda
                         ON info_vendedor_producto.idIVP = ipv_comanda.idIVP) AS i_prod
@@ -172,11 +186,33 @@
 
                             echo "<div class='descripcion-prod'>";
 
-                                echo "<p> " . $fila['prod'] . "</p>";
+                                echo "<div class=vendedor-nombreProd-container>";
 
-                                echo "<p class=info-prod-carrito>Vendedor: " . $fila['vend'] . "</p>";
+                                    echo "<p class=nomProd> " . $fila['prod'] . "</p>";
 
-                                echo "<p class=info-prod-carrito>Cantidad: " . $fila['cantidad'] . "</p>";
+                                    echo "<p>Vendedor: " . $fila['vend'] . "</p>";
+                                
+                                echo "</div>";
+
+                                echo "<div class=almacen-cant-container>";
+
+                                    echo "<div class='almacen-container'>";
+
+                                        if ($fila['enAlmacen'] == TRUE) {
+                                            echo "<p class=almacen>En almacén</p>";
+                                        } else {
+                                            echo "<p class=almacen>Pendiente</p>";
+                                            echo "<form method='post' action='control_comanda.php?com=" . $idComanda . "'>";
+                                                echo "<input type='hidden' name=idIVP value=" . $fila["idIVP"] . ">";
+                                                echo "<input type='submit' class='btn-aviso' name=boton-almacen value='Llegó al almacen'>";
+                                            echo "</form>";
+                                        }
+
+                                    echo "</div>";
+
+                                    echo "<p class=cant-producto>Cantidad: " . $fila['cantidad'] . "</p>";
+                                
+                                echo "</div>";
 
                             echo "</div>";
 
@@ -184,66 +220,94 @@
                     
                     echo "</div>";
 
-                     // Convertir la fecha de la comanda a un objeto DateTime
-                     $fechaComanda = new DateTime($comanda['fecha']);
+                    // Convertir la fecha de la comanda a un objeto DateTime
+                    $fechaComanda = new DateTime($comanda['fecha']);
 
-                     // Obtener la fecha actual
-                     $fechaActual = new DateTime();
+                    // Obtener la fecha actual
+                    $fechaActual = new DateTime();
 
-                     // Calcular la diferencia en días
-                     $diferencia = $fechaActual->diff($fechaComanda)->days;
+                    // Calcular la diferencia en días
+                    $diferencia = $fechaActual->diff($fechaComanda)->days;
 
-                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                        $idComanda = $_GET['com'];
-
-
-                        $consulta = mysqli_query($conexion, "
-                        SELECT idIVP
-                        FROM r_ipv_comanda
-                        WHERE idComanda = '$idComanda'
-                        ");
-
-                        $vendedores = array();
-
-                        while($fila = mysqli_fetch_array($consulta)){
-                            $idIVP = $fila['idIVP'];
-
-                            $consulta2 = mysqli_query($conexion, "
-                            SELECT nUsuarioVend
-                            FROM info_vendedor_producto
-                            WHERE idIVP = '$idIVP'
-                            ");
-
-                            $fila = mysqli_fetch_array($consulta2);
-                            $vendedores[] = $fila['nUsuarioVend'];
-                        }
-
-                        foreach($vendedores as $vendedor){
-                            $consulta = mysqli_query($conexion, "
-                            SELECT numAvisos
-                            FROM vendedor
-                            WHERE nUsuario = '$vendedor'
-                            ");
-                            $fila = mysqli_fetch_array($consulta);
-                            $num_avisos = $fila['numAvisos'];
-
-                            $num_avisos = $num_avisos + 1;
-
-                            // Código nuevo para actualizar la tabla
-                            $actualizar = mysqli_query($conexion, "
-                            UPDATE vendedor
-                            SET numAvisos = '$num_avisos'
-                            WHERE nUsuario = '$vendedor'
-                            ");
-                        }
-
-                        echo '<p style="color: green;">Aviso añadido correctamente</p>';
-                    } else if ($diferencia >= 5) {
-                        echo "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "?com=" . urlencode($comanda['idComanda']) . "' method='post'>";
-                        echo "<input type='submit' class='btn-aviso' value='Poner aviso'>";
-                        echo "</form>";
-                    }
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     
+                        if (isset($_POST["boton-almacen"])) {
+                            // Se ha pulsado el botón de poner aviso
+                            
+                            // Obtener el idIVP del producto
+                            $idIVP = $_POST["idIVP"];
+
+                            $consulta = mysqli_query($conexion, "
+                                UPDATE r_ipv_comanda
+                                SET enAlmacen = TRUE
+                                WHERE idIVP = '$idIVP'
+                            ");
+
+                            header("Location: control_comanda.php?com=" . $idComanda);
+
+                        } else {
+
+                            if (isset($_POST["asignarDistr"])) {
+
+                                $idComanda = $_GET['com'];
+
+                                $consulta = mysqli_query($conexion, "
+                                    SELECT idIVP
+                                    FROM r_ipv_comanda
+                                    WHERE idComanda = '$idComanda'
+                                ");
+
+                                $vendedores = array();
+
+                                while($fila = mysqli_fetch_array($consulta)){
+
+                                    $idIVP = $fila['idIVP'];
+
+                                    $consulta2 = mysqli_query($conexion, "
+                                        SELECT nUsuarioVend
+                                        FROM info_vendedor_producto
+                                        WHERE idIVP = '$idIVP'
+                                    ");
+
+                                    $fila = mysqli_fetch_array($consulta2);
+                                    $vendedores[] = $fila['nUsuarioVend'];
+
+                                }
+
+                                foreach($vendedores as $vendedor){
+
+                                    $consulta = mysqli_query($conexion, "
+                                        SELECT numAvisos
+                                        FROM vendedor
+                                        WHERE nUsuario = '$vendedor'
+                                    ");
+
+                                    $fila = mysqli_fetch_array($consulta);
+                                    $num_avisos = $fila['numAvisos'];
+
+                                    $num_avisos = $num_avisos + 1;
+
+                                    // Código nuevo para actualizar la tabla
+                                    $actualizar = mysqli_query($conexion, "
+                                        UPDATE vendedor
+                                        SET numAvisos = '$num_avisos'
+                                        WHERE nUsuario = '$vendedor'
+                                    ");
+                                }
+
+                                echo '<p style="color: green;">Aviso añadido correctamente</p>';
+
+                            } else if ($diferencia >= 5) {
+
+                                echo "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "?com=" . urlencode($comanda['idComanda']) . "' method='post'>";
+                                echo "<input type='submit' class='btn-aviso' value='Poner aviso'>";
+                                echo "</form>";
+
+                            }
+
+                        }
+
+                    }       
 
                 }
 

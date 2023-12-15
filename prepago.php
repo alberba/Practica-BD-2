@@ -15,9 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/estils.css">
     <link rel="stylesheet" type="text/css" href="css/cabecera.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
-    <link rel="stylesheet" type="text/css" href="css/producto.css">
-    <link rel="stylesheet" type="text/css" href="css/carrito.css">
-    <link rel="stylesheet" type="text/css" href="css/domicilios.css">  
+    <link rel="stylesheet" type="text/css" href="css/prepago.css">
 
 </head>
 <body>
@@ -26,7 +24,7 @@
         include "cabecera.php";
     ?>
     
-    <div class="subpage">
+    <div class="subpage-prepago">
 
         <h2 class="subtitulo">Proceso de pago</h2>
 
@@ -34,7 +32,7 @@
 
     <div class=content>
 
-        <div id=div-carrito>
+        <div id=form-prepago>
 
             <?php
 
@@ -62,21 +60,21 @@
                     ");
 
                     // Mostrar formulario para introducir método de pago
-                    echo "<div class='info-gen-carrito'>";
+                    echo "<div id='info-prepago'>";
                         
                         if ($domicilios = mysqli_fetch_array($consulta)) {
 
                             echo '<form method="post" action="pago.php">';
 
-                                echo '<input type="hidden" name="precio_total" value="' . $precio_total . '">';
+                                echo '<input class=input-prepago type="hidden" name="precio_total" value="' . $precio_total . '">';
 
-                                echo '<input type="text" name="tipo_tarjeta" value="VISA" readonly>';
+                                echo '<input class=input-prepago type="text" name="tipo_tarjeta" value="VISA" readonly>';
 
-                                echo '<input type="text" name="numero_tarjeta" placeholder="Número de tarjeta" pattern="\d{16}" title="Ingrese 16 números" required>';
+                                echo '<input class=input-prepago type="text" name="numero_tarjeta" placeholder="Número de tarjeta" pattern="\d{16}" title="Ingrese 16 números" required>';
                                 
-                                echo '<input type="text" name="cvc" placeholder="CVC" pattern="\d{3}" title="Ingrese 3 números" required>';
+                                echo '<input class=input-prepago type="text" name="cvc" placeholder="CVC" pattern="\d{3}" title="Ingrese 3 números" required>';
 
-                                echo "<div class= 'div-but-mod'>";
+                                echo "<div id= 'div-but-mod'>";
 
                                     echo '<select name="domicilio" required>';
 
@@ -87,13 +85,13 @@
                                         } while ($domicilios = mysqli_fetch_array($consulta));
 
                                     echo '</select>';
-                                    echo '<a class="link" href="añadir_domicilios.php?llamador=prepago"> Añadir nuevo domicilio </a>';
+                                    echo '<a class="link-prepago" href="añadir_domicilios.php?llamador=prepago"> Añadir nuevo domicilio </a>';
 
                                 echo "</div>";
 
                                 echo "<h3 class='precio-total'>Total: {$precio_total} €</h3>";
 
-                                echo '<input class="button" type="submit" value="Pagar" name="pagar">';
+                                echo '<input class="boton-input" type="submit" value="Pagar" name="pagar">';
 
                             echo '</form>';        
                         

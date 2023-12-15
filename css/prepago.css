@@ -1,0 +1,71 @@
+.subpage-prepago {
+    text-align: center;
+}
+
+#form-prepago {
+    min-width: 400px;
+    display: flex;
+    align-items: center;
+    padding:20px;
+    border: 1px solid gray;
+    background-color: white;
+}
+
+#info-prepago {
+    width: 100%;
+}
+
+#info-prepago > *{
+
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+
+}
+
+.content{
+    justify-content: center;
+}
+
+.input-prepago {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#div-but-mod {
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    width: 100%;
+    justify-content: center;
+}
+
+#div-but-mod > select{
+    padding: 5px;
+}
+
+.link-prepago{
+    text-align: center;
+    text-decoration: none;
+    color: rgb(5, 113, 255);
+}
+
+.boton-input {
+    background-color: rgb(5, 113, 255);
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+.boton-input:hover {
+    background-color: rgb(5, 95, 213);
+}

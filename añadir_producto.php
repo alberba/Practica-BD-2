@@ -19,9 +19,9 @@
         include "cabecera.php";
     ?>
 
-    <div id="form-añadir-prod">
+    <div id="form-añadir-prod-container">
 
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form id=form-añadir-prod action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
             <label for="producto">Producto:</label>
             <input class="input-form" type="text" id="producto" name="producto" required>
@@ -49,8 +49,8 @@
 
                     while($fila = mysqli_fetch_array($consulta)){
                         echo '<div class="contenedor-checkbox">';
-                        echo '<label class="labelCategoria for="' . $fila['nombre'] . '">' . $fila['nombre'] . '</label>';
-                        echo '<input class="input-form" type="checkbox" id="' . $fila['nombre'] . '" name="categorias[]" value="' . $fila['nombre'] . '">';
+                        echo '<label class="labelCategoria" for="' . $fila['nombre'] . '">' . $fila['nombre'] . '</label>';
+                        echo '<input class="input-form-cat" type="checkbox" id="' . $fila['nombre'] . '" name="categorias[]" value="' . $fila['nombre'] . '">';
                         echo '</div>';
                     }
                 ?>

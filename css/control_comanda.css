@@ -1,0 +1,89 @@
+.imagen-descripcion-prod {
+    display: flex;
+    flex-direction: row; 
+    margin:5px;
+}
+
+#info-comanda {
+    padding-right: 20px;
+    border-right: 2px solid gray;
+    height: 100vh;
+}
+
+#lista-prod {
+    padding-left: 20px;
+    width: 100%;
+}
+
+.producto-lista {
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.content {
+    margin:0px 30px
+}
+
+.descripcion-prod{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin: 12px;
+
+}
+
+.vendedor-nombreProd-container{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.vendedor-nombreProd-container > p{
+    margin:0px;
+    font-size: 14px;
+}
+
+.nomProd{
+    font-weight: bold;
+    font-size: 18px !important;
+    margin-bottom: 5px !important;
+
+}
+
+.imagen-prod-container > *{
+    height: 80px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.cant-producto {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.almacen-cant-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.almacen-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.almacen-container > form > input {
+    font-weight: bold;
+    width: auto;
+    margin: 0px;
+    padding: 5px 10px;
+    background-color: rgb(255, 127, 41);
+    color: white;
+    border-radius: 2px;
+}

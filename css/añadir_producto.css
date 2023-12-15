@@ -1,4 +1,4 @@
-#form-añadir-prod{
+#form-añadir-prod-container{
     max-width: 400px;
     margin: 20px auto;
     text-align: center;
@@ -7,6 +7,16 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#form-añadir-prod {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#form-añadir-prod > * {
+    min-width: 300px;
 }
 
 label {
@@ -19,12 +29,16 @@ label {
     overflow-y: auto;
     border: 1px solid #ccc;
     padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap:5px;
 }
 
-.contenedor-checkboxes div {
+.contenedor-checkbox {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
+    margin: 5px;
 }
 
 .checkbox-container {
@@ -39,18 +53,20 @@ label {
 }
 .labelCategoria{
     width: auto;
-
-
-
+    margin:0px;
 }
 
 .input-form {
-    width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin: 0px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.botonAñadir button {
+    font-weight: bold;
 }
 
 select {
@@ -81,15 +97,7 @@ button:hover {
     font-size: 24px; 
     text-align: left;
 }
-.contenedor-checkbox {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-}
 
-.contenedor-checkbox label {
-    margin-left: 70px; 
-}
 .botonAñadir button {
     background-color: #ff9900;
     color: #fff;

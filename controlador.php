@@ -56,15 +56,12 @@
                     while ($comanda = mysqli_fetch_array($consulta)) {
                         echo "<li class='com-prev'>";
                         // enlace a la página de la comanda
-                            echo "<div>";
-                                echo "<a class='enl-com' href='control_comanda.php?com=" . $comanda['idComanda'] . "'>";
-                                    echo "<p class='text-com'> ID Comanda: " . $comanda['idComanda']. "</p>";
-                                    echo "<p class='text-com'> Fecha: " . $comanda['fecha']. "</p>";
-                                    echo "<p class='text-com'> Estado: " . $comanda['estado']. "</p>";
-                                echo "</a>";
+                            echo "<a class='enl-com' href='control_comanda.php?com=" . $comanda['idComanda'] . "'>";
+                                echo "<p class='text-com comanda-text'> ID Comanda: " . $comanda['idComanda']. "</p>";
+                                echo "<p class='text-com'> Fecha: " . $comanda['fecha']. "</p>";
+                                echo "<p class='text-com'> Estado: " . $comanda['estado']. "</p>";
+                            echo "</a>";
 
-                                
-                            echo "</div>";
                         echo "</li>";
                     }
                     echo "</ul>";

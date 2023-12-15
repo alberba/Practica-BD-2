@@ -5,14 +5,13 @@
     align-items: center;
 }
 
-.div-cont {
-    margin: 5px 0px;
-    text-align: right;
-    width: 70%;
-}
-
 .enl-cont{
     text-decoration: none;
+    padding: 5px;
+    background-color: rgb(255, 127, 41);
+    border: 2px solid black;
+    color: white;
+    border-radius: 5px;
 }
 
 .content {
@@ -47,6 +46,14 @@
     margin: 0;
 }
 
+.subtitulo {
+
+    width: 75%;
+    text-align: center;
+    margin-left: 200px;
+
+}
+
 /* copiados de estils.css y cmabiados de nombre */
 .div-com{
     margin-left: 10px;
@@ -57,12 +64,8 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-}
-
-.com-prev{
-    list-style-type: none;
-    margin-right: 40px;
-    margin-bottom: 40px;
+    justify-content: center;
+    padding: 0px;
 }
 
 .comanda{
@@ -80,15 +83,36 @@
     text-decoration: none;
     color: black;
     display: flex;
+    gap:10px;
     flex-direction: column;
     align-items:center;    
     border: 1px solid transparent;
 }
 
-.enl-com:hover{
-    border: 1px solid #000;
+.com-prev {
+    width: 220px;
+    height: 220px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.com-prev:hover {
+    transform: scale(1.05);
 }
 
 .text-com {
-    text-decoration: none;
+    margin: 5px;
+}
+
+.comanda-text {
+    font-weight: bold;
+    font-size: 20px;
 }

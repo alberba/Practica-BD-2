@@ -1,6 +1,6 @@
 form {
     max-width: 400px;
-    margin: 0 auto;
+    width: 100%;
 }
 
 label {
@@ -8,16 +8,8 @@ label {
     margin-bottom: 8px;
 }
 
-input,
-textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
-    box-sizing: border-box;
-}
-
 .button {
-    background-color: #4CAF50;
+    background-color: rgb(5, 113, 255);
     color: white;
     padding: 10px 15px;
     border: none;
@@ -26,5 +18,45 @@ textarea {
 }
 
 .button:hover {
-    background-color: #45a049;
+    background-color: rgb(5, 95, 213);
+}
+
+#subtitulo-añadir {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+#form-domicilio{
+    min-width: 400px;
+    display: flex;
+    align-items: center;
+    padding:20px;
+    border: 1px solid gray;
+    background-color: white;
+    border-radius: 6px;
+}
+
+#form-domicilio > form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#form-domicilio > form > input{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#form-domicilio > form > select{
+    padding: 5px;
+}
+
+.content-añ-domicilio{
+    display: flex;
+    justify-content: center;
 }
