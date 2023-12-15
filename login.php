@@ -30,19 +30,19 @@
 
                 case "comprador":
                     $_SESSION['carrito'] = array();
-                    header("Location: catshow.php");
+                    header("Location: comprador/catshow.php");
                     break;
 
                 case "vendedor":
-                    header("Location: vendedor.php");
+                    header("Location: vendedor/vendedor.php");
                     break;
 
                 case "controlador":
-                    header("Location: controlador.php");
+                    header("Location: controlador/controlador.php");
                     break;
                 
                 case "repartidor":
-                    header("Location: repartidor.php");
+                    header("Location: repartidor/repartidor.php");
                     break;
 
                 default:

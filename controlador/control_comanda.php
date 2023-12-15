@@ -55,10 +55,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/estils.css">
-    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
-    <link rel="stylesheet" type="text/css" href="css/general.css">
-    <link rel="stylesheet" type="text/css" href="css/control_comanda.css">
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+    <link rel="stylesheet" type="text/css" href="../css/cabecera.css">
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
+    <link rel="stylesheet" type="text/css" href="../css/control_comanda.css">
 
     <?php
         echo "<title>Comanda ". $idComanda. " - Estimazon</title>"
@@ -68,7 +68,7 @@
 <body>
 
     <?php 
-        include "cabecera.php"; 
+        include "../cabecera.php"; 
     ?>
 
     <div class="subpage">
@@ -290,55 +290,6 @@
                             ");
 
                             header("Location: control_comanda.php?com=" . $idComanda);
-
-                            /*
-                            // obtener productos de la comanda
-                            $consulta = mysqli_query($conexion, "
-                                SELECT idIVP
-                                FROM r_ipv_comanda
-                                WHERE idComanda = '$idComanda'
-                            ");
-
-                            $vendedores = array();
-
-                            while($fila = mysqli_fetch_array($consulta)){
-
-                                $idIVP = $fila['idIVP'];
-
-                                // obtener vendedor del producto de la comanda
-                                $consulta2 = mysqli_query($conexion, "
-                                    SELECT nUsuarioVend
-                                    FROM info_vendedor_producto
-                                    WHERE idIVP = '$idIVP'
-                                ");
-
-                                $fila = mysqli_fetch_array($consulta2);
-                                $vendedores[] = $fila['nUsuarioVend'];
-
-                            }
-
-                            foreach($vendedores as $vendedor){
-
-                                // obtener numAvisos de cada vendedor
-                                $consulta = mysqli_query($conexion, "
-                                    SELECT numAvisos
-                                    FROM vendedor
-                                    WHERE nUsuario = '$vendedor'
-                                ");
-
-                                $fila = mysqli_fetch_array($consulta);
-                                $num_avisos = $fila['numAvisos'];
-
-                                $num_avisos = $num_avisos + 1;
-
-                                // Código nuevo para actualizar la tabla
-                                $actualizar = mysqli_query($conexion, "
-                                    UPDATE vendedor
-                                    SET numAvisos = '$num_avisos'
-                                    WHERE nUsuario = '$vendedor'
-                                ");
-                            }
-                            */
 
                         }
 

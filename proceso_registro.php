@@ -60,7 +60,7 @@
                 // La consulta ha funcionado
 
                 // Redirigir al menú correspondiente
-                $dir = ($tabla === "comprador") ? "Location: catshow.php" : "Location: vendedor.php";
+                $dir = ($tabla === "comprador") ? "Location: comprador/catshow.php" : "Location: vendedor/vendedor.php";
 
                 // Hay que inicializar las variables de sesión
                 $_SESSION['nombreUsuario'] = $nUsuario;

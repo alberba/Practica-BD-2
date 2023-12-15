@@ -46,15 +46,15 @@
                     session_destroy();
 
                     // Redirigir a la página de inicio de sesión
-                    header("Location: portal_inicio_usuario.php");
+                    header("Location: ../portal_inicio_usuario.php");
                     exit();
 
                 }
 
                 if (!isset($_SESSION['nombreUsuario'])) {
 
-                    echo '<a class="boton-sesion" id=boton-inicio href="portal_inicio_usuario.php">Iniciar Sesión</a>';
-                    echo '<a class="boton-sesion" id=boton-registro href="registrarse.php">Registrarse</a>';
+                    echo '<a class="boton-sesion" id=boton-inicio href="../portal_inicio_usuario.php">Iniciar Sesión</a>';
+                    echo '<a class="boton-sesion" id=boton-registro href="../registrarse.php">Registrarse</a>';
 
                 } else {
 
@@ -62,9 +62,9 @@
 
                         echo "<p id=nombre-Usuario>".$_SESSION['nombreReal'].'</p>';
 
-                        echo "<a href=perfil.php>";
+                        echo "<a href=../perfil.php>";
 
-                            echo "<img src='imagenes/user.png' alt='Usuario' class='imagen-usuario'>";
+                            echo "<img src='../imagenes/user.png' alt='Usuario' class='imagen-usuario'>";
 
                         echo "</a>";
 
@@ -88,7 +88,7 @@
             if (!isset($_SESSION['tipoUsuario']) or $_SESSION['tipoUsuario'] == 'comprador') {
 
                 echo '<a href="carrito.php" id=carrito-btn-container>';
-                    echo '<img src="imagenes/carrito.png" alt="Ir al carrito" class="imagen-carrito">';
+                    echo '<img src="../imagenes/carrito.png" alt="Ir al carrito" class="imagen-carrito">';
                 echo '</a>';
 
             }

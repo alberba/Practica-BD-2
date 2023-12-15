@@ -7,14 +7,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/estils.css">
-    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
-    <link rel="stylesheet" type="text/css" href="css/general.css">
-    <link rel="stylesheet" type="text/css" href="css/controlador.css">
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+    <link rel="stylesheet" type="text/css" href="../css/cabecera.css">
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
+    <link rel="stylesheet" type="text/css" href="../css/controlador.css">
     <title>Comandas - Estimazon</title>
 </head>
 <body>
-    <?php include "cabecera.php"; ?>
+    <?php include "../cabecera.php"; ?>
 
     <div class="subpage-cont">
         <h2 class="subtitulo">Comandas Activas</h2>

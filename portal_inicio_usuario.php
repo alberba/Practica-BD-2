@@ -37,7 +37,7 @@
 
         <p>¿No tienes cuenta? <a href="registrarse.php">Registrarse</a></p>
 
-        <a href=catshow.php>Volver a Estimazon</a>
+        <a href=comprador/catshow.php>Volver a Estimazon</a>
      
     </div>
     

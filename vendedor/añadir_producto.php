@@ -8,15 +8,15 @@
 
     <meta charset="UTF-8">
     <title>Añadir Producto</title>
-    <link rel="stylesheet" type="text/css" href="css/añadir_producto.css">
-    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
-    <link rel="stylesheet" type="text/css" href="css/general.css">
+    <link rel="stylesheet" type="text/css" href="../css/añadir_producto.css">
+    <link rel="stylesheet" type="text/css" href="../css/cabecera.css">
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
 
 </head>
 <body>
 
     <?php
-        include "cabecera.php";
+        include "../cabecera.php";
     ?>
 
     <div id="form-añadir-prod-container">

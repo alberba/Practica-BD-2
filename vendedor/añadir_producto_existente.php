@@ -31,17 +31,17 @@
     <meta charset="UTF-8">
     <title>Añadir Producto Existente</title>
     
-    <link rel="stylesheet" type="text/css" href="css/estils.css">
-    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
-    <link rel="stylesheet" type="text/css" href="css/general.css">
-    <link rel="stylesheet" type="text/css" href="css/producto.css">
-    <link rel="stylesheet" type="text/css" href="css/vendedor.css">
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+    <link rel="stylesheet" type="text/css" href="../css/cabecera.css">
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
+    <link rel="stylesheet" type="text/css" href="../css/producto.css">
+    <link rel="stylesheet" type="text/css" href="../css/vendedor.css">
 
 </head>
 <body>
 
     <?php
-        include "cabecera.php";
+        include "../cabecera.php";
     ?>
 
     <div class="busqueda-container">

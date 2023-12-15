@@ -15,7 +15,7 @@
     <title>Controlador - Estimazon</title>
 </head>
 <body>
-    <?php include "cabecera.php"; ?>
+    <?php include "../cabecera.php"; ?>
  
     <div class="subpage">
         <h2 class="subtitulo">Menú Controlador</h2>

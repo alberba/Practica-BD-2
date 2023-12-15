@@ -75,17 +75,17 @@
 <head>
     
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/general.css">
-    <link rel="stylesheet" href="css/cabecera.css">
-    <link rel="stylesheet" href="css/estils.css">
-    <link rel="stylesheet" href="css/domicilios.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/cabecera.css">
+    <link rel="stylesheet" href="../css/estils.css">
+    <link rel="stylesheet" href="../css/domicilios.css">
     <title>Formulario de Domicilio</title>
 
 </head>
 <body>
 
     <?php
-        include "cabecera.php";
+        include "../cabecera.php";
     ?>
 
     <div class="subpage">

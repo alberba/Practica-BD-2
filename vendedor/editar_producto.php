@@ -63,16 +63,16 @@
 
     <meta charset="UTF-8">
     <title>Editar Producto</title>
-    <link rel="stylesheet" type="text/css" href="css/general.css">
-    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
-    <link rel="stylesheet" type="text/css" href="css/editar_producto.css">
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
+    <link rel="stylesheet" type="text/css" href="../css/cabecera.css">
+    <link rel="stylesheet" type="text/css" href="../css/editar_producto.css">
 
 
 </head>
 <body>
 
     <?php
-        include "cabecera.php";
+        include "../cabecera.php";
     ?>
     <div class="formulario">
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?idProducto=" . $idProducto); ?>" method="post">

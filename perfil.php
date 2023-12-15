@@ -170,9 +170,106 @@
     <title>Perfil - Estimazon</title>   
 </head>
 <body>
-    <?php
-        include "cabecera.php";
-    ?>
+    <div class="sup">
+        <div class=titulo-sup>
+
+            <a id="Titol" href=
+            <?php
+
+                if (!isset($_SESSION['tipoUsuario']) or $_SESSION['tipoUsuario'] == 'comprador') {
+
+                    echo "comprador/catshow.php";
+
+                } else {
+
+                    // Redirigir al menú correspondiente segun el tipo de usuario
+                    switch ($_SESSION['tipoUsuario']) {
+
+                        case "vendedor":
+                            echo "vendedor/vendedor.php";
+                            break;
+
+                        case "controlador":
+                            echo "controlador/controlador.php";
+                            break;
+
+                        case "repartidor":
+                            echo "repartidor/repartidor.php";
+                            break;
+                    }
+                }
+            ?>>
+
+                <h1>Estimazon</h1>
+            </a>
+
+        </div>
+
+        <div id=log-and-cart>
+
+            <div id="bot-log-reg">
+
+                <?php
+
+                    if (isset($_POST['cerrarSesion'])) {
+
+                        // Destruir la sesión
+                        session_unset();
+                        session_destroy();
+
+                        // Redirigir a la página de inicio de sesión
+                        header("Location: portal_inicio_usuario.php");
+                        exit();
+
+                    }
+
+                    if (!isset($_SESSION['nombreUsuario'])) {
+
+                        echo '<a class="boton-sesion" id=boton-inicio href="portal_inicio_usuario.php">Iniciar Sesión</a>';
+                        echo '<a class="boton-sesion" id=boton-registro href="registrarse.php">Registrarse</a>';
+
+                    } else {
+
+                        echo "<div id=img-nombre-usuario>";
+
+                            echo "<p id=nombre-Usuario>".$_SESSION['nombreReal'].'</p>';
+
+                            echo "<a href=perfil.php>";
+
+                                echo "<img src='imagenes/user.png' alt='Usuario' class='imagen-usuario'>";
+
+                            echo "</a>";
+
+                        echo "</div>";
+
+                        echo '<form action="" method="post">';
+                        
+                            echo "<input type='hidden' name='sesionCerrada' value=''>";
+                            echo '<input class=boton-sesion id=cerrar-sesion type="submit" value="Cerrar Sesión" name="cerrarSesion">';
+
+                        echo '</form>';
+
+                    }
+
+                ?>
+
+            </div>
+
+            <?php
+
+                if (!isset($_SESSION['tipoUsuario']) or $_SESSION['tipoUsuario'] == 'comprador') {
+
+                    echo '<a href="comprador/carrito.php" id=carrito-btn-container>';
+                        echo '<img src="imagenes/carrito.png" alt="Ir al carrito" class="imagen-carrito">';
+                    echo '</a>';
+
+                }
+                
+            ?>
+            
+        </div>
+        
+    </div>
 
     <div class="subpage">
         <h2 class="subtitulo">Perfil</h2>
@@ -239,7 +336,7 @@
                     echo '<h3 class="subtitulo">Direcciones</h3>';
                     echo '<div id=direcciones>';
                     
-                        echo '<a class="link" href="añadir_domicilios.php?llamador=perfil"> Añadir nuevo domicilio </a>';
+                        echo '<a class="link" href="comprador/añadir_domicilios.php?llamador=perfil"> Añadir nuevo domicilio </a>';
         
                         $consulta = mysqli_query($conexion, "
                             SELECT r_comprador_domicilio.idDomicilio, domicilio_poblacion.direccion, domicilio_poblacion.CP, domicilio_poblacion.nombre

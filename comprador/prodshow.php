@@ -35,18 +35,18 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/estils.css">
-    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
-    <link rel="stylesheet" type="text/css" href="css/general.css">
-    <link rel="stylesheet" type="text/css" href="css/producto.css">
-    <link rel="stylesheet" type="text/css" href="css/productshow.css">
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+    <link rel="stylesheet" type="text/css" href="../css/cabecera.css">
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
+    <link rel="stylesheet" type="text/css" href="../css/producto.css">
+    <link rel="stylesheet" type="text/css" href="../css/productshow.css">
     <?php
         echo "<title>".$producto['nombre']." - Estimazon</title>";
     ?>    
 </head>
 <body>
     <?php
-        include "cabecera.php";
+        include "../cabecera.php";
     ?>
     
     <div class="subpage">

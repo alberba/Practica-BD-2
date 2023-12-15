@@ -10,17 +10,17 @@
 <head>
 
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/estils.css">
-    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
-    <link rel="stylesheet" type="text/css" href="css/general.css">
-    <link rel="stylesheet" type="text/css" href="css/producto.css">
-    <link rel="stylesheet" type="text/css" href="css/carrito.css">  
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+    <link rel="stylesheet" type="text/css" href="../css/cabecera.css">
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
+    <link rel="stylesheet" type="text/css" href="../css/producto.css">
+    <link rel="stylesheet" type="text/css" href="../css/carrito.css">  
 
 </head>
 <body>
 
     <?php
-        include "cabecera.php";
+        include "../cabecera.php";
     ?>
     
     <div class="subpage">

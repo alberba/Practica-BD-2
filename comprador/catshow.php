@@ -9,16 +9,16 @@
 <head>
 
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/estils.css">
-    <link rel="stylesheet" type="text/css" href="css/cabecera.css">
-    <link rel="stylesheet" type="text/css" href="css/general.css">
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+    <link rel="stylesheet" type="text/css" href="../css/cabecera.css">
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
     <title>Catálogo - Estimazon</title>
 
 </head>
 <body>
 
     <?php
-        include "cabecera.php";
+        include "../cabecera.php";
     ?>
 
     <div class="subpage">
@@ -49,7 +49,7 @@
                     echo "</h3>";
                 } else {
                     echo "<p id=bienvenida> Bienvenidos a Estimazon,<br> la mejor tienda online de productos</p>";
-                    echo "<img src='imagenes/smile.png' id=logo-estimazon>";
+                    echo "<img src='../imagenes/smile.png' id=logo-estimazon>";
                 }
 
                 // Si se ha seleccionado una categoria
