@@ -64,6 +64,8 @@
 
                 // Hay que inicializar las variables de sesión
                 $_SESSION['nombreUsuario'] = $nUsuario;
+                $_SESSION['tipoUsuario'] = $tabla;
+                $_SESSION['nombreReal'] = $nombre;
                 if ($tabla === "comprador")
                     $_SESSION['carrito'] = array();
 
