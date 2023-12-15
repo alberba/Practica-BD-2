@@ -29,6 +29,9 @@
 #lista-prod {
     padding-left: 20px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .producto-lista {
@@ -102,4 +105,5 @@
     background-color: rgb(255, 127, 41);
     color: white;
     border-radius: 2px;
+    cursor: pointer;
 }

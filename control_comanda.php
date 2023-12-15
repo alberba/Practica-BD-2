@@ -204,7 +204,7 @@
 
                                         echo "<p class=vendedor>Vendedor: " . $fila['vend'] . "</p>";
 
-                                        if ($diferencia >= 5 && $fila['aviso'] == FALSE) {
+                                        if ($diferencia >= 5 && $fila['aviso'] == FALSE && $fila['enAlmacen'] == FALSE) {
 
                                             echo "<form action='control_comanda.php?com=" . $idComanda . "' method='post'>";
                                                 echo "<input type='hidden' name=vend value=" . $fila["vend"] . ">";

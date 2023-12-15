@@ -92,6 +92,7 @@
     margin: 0px;
     background-color: rgb(255, 127, 41);
     color: white;
+    cursor: pointer;
 }
 
 #cerrar-sesion:hover{
