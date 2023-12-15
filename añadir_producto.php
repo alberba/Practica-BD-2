@@ -40,28 +40,26 @@
 
             
             <div class="contenedor-checkboxes">
-
                 <?php 
-
-                    $conexion = mysqli_connect("localhost","root","");
+                    $conexion = mysqli_connect("localhost", "root", "");
                     $bd = mysqli_select_db($conexion, "estimazon");
 
                     // Consulta de todas las categorías
                     $consulta = mysqli_query($conexion, "SELECT nombre FROM categoria");
-                    
+
                     while($fila = mysqli_fetch_array($consulta)){
-
+                        echo '<div class="contenedor-checkbox">';
+                        echo '<label class="labelCategoria for="' . $fila['nombre'] . '">' . $fila['nombre'] . '</label>';
                         echo '<input class="input-form" type="checkbox" id="' . $fila['nombre'] . '" name="categorias[]" value="' . $fila['nombre'] . '">';
-                        echo '<label for="' . $fila['nombre'] . '">' . $fila['nombre'] . '</label>';
-
+                        echo '</div>';
                     }
-
                 ?>
-
             </div>
 
-            <button type="submit">Añadir</button>
 
+            <div class="botonAñadir">
+            <button type="submit">Añadir</button>
+            </div>
         </form>
 
     </div>

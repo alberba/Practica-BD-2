@@ -61,7 +61,7 @@
 
     <meta charset="UTF-8">
     <title>Vender Producto Existente</title>
-    <link rel="stylesheet" type="text/css" href="css/añadir_producto.css">
+    <link rel="stylesheet" type="text/css" href="css/editar_producto.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <link rel="stylesheet" type="text/css" href="css/cabecera.css">
 
@@ -71,7 +71,7 @@
     <?php
         include "cabecera.php";
     ?>
-
+    <div class="formulario">
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?idProducto=" . $idProducto); ?>" method="post">
 
         <label for="precio">Precio:</label>
@@ -83,7 +83,7 @@
         <button type="submit">Añadir producto</button>
         
     </form>
-
+    </div>
 </body>
 </html>
 

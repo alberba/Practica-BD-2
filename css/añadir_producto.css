@@ -1,6 +1,8 @@
 #form-añadir-prod{
     max-width: 400px;
     margin: 20px auto;
+    text-align: center;
+
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
@@ -13,15 +15,20 @@ label {
 }
 
 .contenedor-checkboxes {
-    max-height: 150px; 
-    overflow-y: auto; 
-    border: 1px solid #ccc; 
-    padding: 5px; 
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
 }
 
-.contenedor-checkboxes label {
-    display: block; 
-    margin-bottom: 5px; 
+.contenedor-checkboxes div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.checkbox-container {
+    margin-right: 5px;
 }
 
 #descrip-prod-tarea{
@@ -29,6 +36,12 @@ label {
     width: 100%;
     max-width: 100%;
     min-width: 100%;
+}
+.labelCategoria{
+    width: auto;
+
+
+
 }
 
 .input-form {
@@ -45,8 +58,7 @@ select {
 }
 
 button {
-    background-color: #007bff;
-    color: #fff;
+background-color: #ff9900;
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -54,7 +66,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #ff9900;
 }
 
 .success-message {
@@ -68,4 +80,28 @@ button:hover {
     color: rgb(224, 18, 18);
     font-size: 24px; 
     text-align: left;
+}
+.contenedor-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.contenedor-checkbox label {
+    margin-left: 70px; 
+}
+.botonAñadir button {
+    background-color: #ff9900;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 20px;
+    margin-right: 0px;
+}
+
+.botonAñadir button:hover {
+    background-color: #0056b3;
 }
