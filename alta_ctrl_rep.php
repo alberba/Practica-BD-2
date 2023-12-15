@@ -46,6 +46,8 @@
                 while ($dist = mysqli_fetch_array($consulta)) {
                     echo "<option value='" . $dist['idDistribuidora'] . "'>" . $dist['nombre'] . "</option>";
                 }
+
+                echo "</select>";
                 
                 if (isset($_GET["error"])) {
                     $error = $_GET["error"];

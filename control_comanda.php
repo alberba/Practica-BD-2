@@ -45,6 +45,7 @@
     <link rel="stylesheet" type="text/css" href="css/estils.css">
     <link rel="stylesheet" type="text/css" href="css/cabecera.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
+    <link rel="stylesheet" type="text/css" href="css/control_comanda.css">
 
     <?php
         echo "<title>Comanda ". $idComanda. " - Estimazon</title>"
@@ -68,7 +69,7 @@
 
     <div class="content">
 
-        <div>
+        <div id=info-comanda>
 
             <h3> Información de la comanda</h3>
 
@@ -125,7 +126,63 @@
                 } else {
 
                     // Hay repartidor asignado
-                    echo "<p> Repartidor: " . $nUsuarioRep. "</p>";
+                    $consulta_rep = mysqli_query($conexion, "
+                        SELECT nombre
+                        FROM repartidor
+                        WHERE nUsuario = '$nUsuarioRep'
+                    ");
+                    $fila = mysqli_fetch_array($consulta_rep);
+                    echo "<p> Repartidor: " . $fila['nombre']. "</p>";
+
+                }
+
+            ?>
+
+        </div>
+
+        <div id=lista-prod>
+        
+            <?php
+
+                $consulta = mysqli_query($conexion, "
+                    SELECT producto.nombre AS prod, imagen, i_prod.cantidad, i_prod.nUsuarioVend AS vend
+                    FROM producto
+                    JOIN
+                        (SELECT nUsuarioVend, idProducto, cantidad
+                        FROM info_vendedor_producto
+                        JOIN
+                            (SELECT idIVP, cantidad
+                            FROM r_ipv_comanda
+                            WHERE idComanda = $idComanda) AS ipv_comanda
+                        ON info_vendedor_producto.idIVP = ipv_comanda.idIVP) AS i_prod
+                    ON producto.idProducto = i_prod.idProducto
+                ");
+
+                while ($fila = mysqli_fetch_array($consulta)) {
+
+                    echo "<div class='producto-lista'>";
+
+                        echo "<div class='imagen-descripcion-prod'>";
+
+                            echo "<div class='imagen-prod-container'>";
+
+                                echo "<img src='" . $fila['imagen'] . "' alt='" . $fila['prod'] . "' class='imagen-prod'>";
+
+                            echo "</div>";
+
+                            echo "<div class='descripcion-prod'>";
+
+                                echo "<p> " . $fila['prod'] . "</p>";
+
+                                echo "<p class=info-prod-carrito>Vendedor: " . $fila['vend'] . "</p>";
+
+                                echo "<p class=info-prod-carrito>Cantidad: " . $fila['cantidad'] . "</p>";
+
+                            echo "</div>";
+
+                        echo "</div>";
+                    
+                    echo "</div>";
 
                 }
 

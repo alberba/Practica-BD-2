@@ -1,0 +1,4 @@
+.imagen-descripcion-prod{
+    display: flex;
+    flex-direction: row; 
+}
