@@ -77,7 +77,7 @@
 
         </form>
         
-        <p>¿Ya tienes una cuenta? <a href="portal_inicio_usuario.html">Iniciar sesión</a></p>
+        <p>¿Ya tienes una cuenta? <a href="portal_inicio_usuario.php">Iniciar sesión</a></p>
 
     </div>
 

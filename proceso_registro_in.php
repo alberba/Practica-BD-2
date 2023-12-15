@@ -20,6 +20,15 @@
             exit();
         }
 
+        // comprobar que el usuario no está en uso
+        $existe = mysqli_query($conexion, "SELECT existe_usuario('$nUsuario') as Res");
+        $res = mysqli_fetch_array($existe);
+        if ($res['Res']) {
+            // el usuario existe, no se debe hacer el insert
+            header('Location: alta_ctrl_rep.php?error=1');
+            exit();
+        }
+
         // insertar usuario en su clase correspondiente
         if ($tabla === "controlador") {
             $insert = "INSERT INTO $tabla(nombre, nUsuario, contraseña) VALUES
@@ -41,8 +50,8 @@
             }
             
         } catch (Exception $e) {
-            // la consulta no se ha ejecutado. Probablemente, el usuario ya existe.
-            header('Location: alta_ctrl_rep.php?error=1');
+            // la consulta no se ha ejecutado. Probablemente, algún dato no era válido
+            header('Location: alta_ctrl_rep.php?error=3');
             exit();
         }   
     } else {
