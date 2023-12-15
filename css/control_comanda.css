@@ -10,6 +10,22 @@
     height: 100vh;
 }
 
+#info-comanda > form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 200px;
+}
+
+#info-comanda > form > input {
+    background-color: rgb(5, 113, 255);
+    color:white;
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    font-weight: bold;
+}
+
 #lista-prod {
     padding-left: 20px;
     width: 100%;
@@ -78,7 +94,7 @@
     align-items: center;
 }
 
-.almacen-container > form > input {
+.btn {
     font-weight: bold;
     width: auto;
     margin: 0px;

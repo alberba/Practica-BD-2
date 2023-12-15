@@ -31,24 +31,9 @@
             $consulta = mysqli_query($conexion, "
                 SELECT comanda.idComanda, comanda.fecha, comanda.estado
                 FROM comanda
-                    LEFT JOIN incidencia
-                    ON incidencia.idComanda = comanda.idComanda
-                    AND idTIncidencia = (SELECT idTIncidencia FROM TIPO_INCIDENCIA WHERE nombre = 'Entregado al comprador')
-                WHERE DATE_SUB(CURRENT_DATE, INTERVAL 20 DAY) <= comanda.fecha
-                AND incidencia.idIncidencia IS NULL
+                WHERE comanda.estado NOT IN ('Entregado', 'Devuelto', 'Rechazado')
                 AND comanda.nUsuarioCont = '$nUsuarioControlador'
             ");
-
-            /*
-            WHERE nUsuarioCont = '$nUsuarioControlador'
-                AND DATEDIFF(NOW(), C.fecha) <= 15
-                AND NOT EXISTS (
-                    SELECT 1
-                    FROM INCIDENCIA I
-                    WHERE I.idComanda = C.idComanda
-                        AND I.idTIncidencia = (SELECT idTIncidencia FROM TIPO_INCIDENCIA WHERE nombre = 'Entregado al comprador')
-                )
-            */
 
             if ($consulta) {
                 echo "<div class='div-com'>";

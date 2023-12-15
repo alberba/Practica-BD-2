@@ -16,7 +16,7 @@
 ?>
 
 <div class="subpage">
-    <h2 class="subtitulo">Catálogo</h2>
+    <h2 class="subtitulo">Menú</h2>
 </div>
 
 <div class="mensaje-bienvenida">

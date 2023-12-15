@@ -112,8 +112,8 @@
 
                             // Añadir producto a r_ipv_comanda
                             $ret = mysqli_query($conexion, "
-                                INSERT INTO r_ipv_comanda(idIVP,idComanda,cantidad, enAlmacen) VALUES
-                                ($idIVP, $idComanda, $cantidad, FALSE);
+                                INSERT INTO r_ipv_comanda(idIVP,idComanda,cantidad, enAlmacen, aviso) VALUES
+                                ($idIVP, $idComanda, $cantidad, FALSE, FALSE);
                             ");
 
                             if ($ret === false) {

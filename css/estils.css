@@ -60,6 +60,14 @@
 .catalogo{
     margin-left: 10px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.catalogo > img{
+    margin-top: 100px;
+    min-width:300px;
+    align-self: center;
 }
 
 .lista-prod{
@@ -123,4 +131,16 @@
     margin-left: 20px;
     font-size: 40px;
     font-weight: bold;
+}
+
+.subtitulo-catalogo {
+    margin: 0px;
+    padding-left: 40px;
+}
+
+#bienvenida{
+    margin:0px 0px 0px 20px;
+    font-weight: bold;
+    font-size: 50px;
+    text-align: center;
 }

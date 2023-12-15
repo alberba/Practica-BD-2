@@ -40,6 +40,18 @@
                 $conexion = mysqli_connect("localhost","root","");
                 $bd = mysqli_select_db($conexion, "estimazon");
 
+                if (isset($_GET["param"])) {
+                    $idcat = $_GET["param"];
+                    $consulta = mysqli_query($conexion, "SELECT nombre FROM categoria WHERE idCategoria = $idcat");
+                    $fila = mysqli_fetch_array($consulta);
+                    echo "<h3 class='subtitulo-catalogo'>";
+                        echo $fila['nombre'];
+                    echo "</h3>";
+                } else {
+                    echo "<p id=bienvenida> Bienvenidos a Estimazon,<br> la mejor tienda online de productos</p>";
+                    echo "<img src='imagenes/smile.png' id=logo-estimazon>";
+                }
+
                 // Si se ha seleccionado una categoria
                 if (isset($_GET["param"])) {
 

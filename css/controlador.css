@@ -66,6 +66,7 @@
     flex-wrap: wrap;
     justify-content: center;
     padding: 0px;
+    gap: 40px;
 }
 
 .comanda{

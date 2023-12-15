@@ -158,14 +158,24 @@
         <div id=lista-prod>
         
             <?php
+
+                // Convertir la fecha de la comanda a un objeto DateTime
+                $fechaComanda = new DateTime($comanda['fecha']);
+
+                // Obtener la fecha actual
+                $fechaActual = new DateTime();
+
+                // Calcular la diferencia en días
+                $diferencia = $fechaActual->diff($fechaComanda)->days;
+
                 $consulta = mysqli_query($conexion, "
-                    SELECT producto.nombre AS prod, imagen, cantidad, nUsuarioVend AS vend, idIVP, enAlmacen
+                    SELECT producto.nombre AS prod, imagen, cantidad, nUsuarioVend AS vend, idIVP, enAlmacen, aviso
                     FROM producto
                     JOIN
-                        (SELECT nUsuarioVend, idProducto, cantidad, enAlmacen, info_vendedor_producto.idIVP
+                        (SELECT nUsuarioVend, idProducto, cantidad, enAlmacen, aviso, info_vendedor_producto.idIVP
                         FROM info_vendedor_producto
                         JOIN
-                            (SELECT idIVP, cantidad, enAlmacen
+                            (SELECT idIVP, cantidad, enAlmacen, aviso
                             FROM r_ipv_comanda
                             WHERE idComanda = $idComanda) AS ipv_comanda
                         ON info_vendedor_producto.idIVP = ipv_comanda.idIVP) AS i_prod
@@ -190,7 +200,21 @@
 
                                     echo "<p class=nomProd> " . $fila['prod'] . "</p>";
 
-                                    echo "<p>Vendedor: " . $fila['vend'] . "</p>";
+                                    echo "<div class=vendedor-container>";
+
+                                        echo "<p class=vendedor>Vendedor: " . $fila['vend'] . "</p>";
+
+                                        if ($diferencia >= 5 && $fila['aviso'] == FALSE) {
+
+                                            echo "<form action='control_comanda.php?com=" . $idComanda . "' method='post'>";
+                                                echo "<input type='hidden' name=vend value=" . $fila["vend"] . ">";
+                                                echo "<input type='hidden' name=idIVP value=" . $fila["idIVP"] . ">";
+                                                echo "<input type='submit' class='btn' name='btn-aviso' value='Poner aviso'>";
+                                            echo "</form>";
+
+                                        }
+                                    
+                                    echo "</div>";
                                 
                                 echo "</div>";
 
@@ -204,7 +228,7 @@
                                             echo "<p class=almacen>Pendiente</p>";
                                             echo "<form method='post' action='control_comanda.php?com=" . $idComanda . "'>";
                                                 echo "<input type='hidden' name=idIVP value=" . $fila["idIVP"] . ">";
-                                                echo "<input type='submit' class='btn-aviso' name=boton-almacen value='Llegó al almacen'>";
+                                                echo "<input type='submit' class='btn' name=boton-almacen value='Llegó al almacen'>";
                                             echo "</form>";
                                         }
 
@@ -245,65 +269,76 @@
 
                             header("Location: control_comanda.php?com=" . $idComanda);
 
-                        } else {
+                        } elseif (isset($_POST["btn-aviso"])) {
+                            // obtener el id de la comanda, del vendedor y el idIVP
+                            $idComanda = $_GET['com'];
+                            $usuarioVend = $_POST['vend'];
+                            $idIVP = $_POST['idIVP'];
 
-                            if (isset($_POST["asignarDistr"])) {
+                            // Código para actualizar la tabla
+                            $actualizar_vend = mysqli_query($conexion, "
+                                UPDATE vendedor
+                                SET numAvisos = numAvisos + 1
+                                WHERE nUsuario = '$usuarioVend'
+                            ");
 
-                                $idComanda = $_GET['com'];
+                            $actualizar_idIVP = mysqli_query($conexion, "
+                                UPDATE r_ipv_comanda
+                                SET aviso = TRUE
+                                WHERE idIVP = $idIVP
+                                AND idComanda = $idComanda
+                            ");
 
-                                $consulta = mysqli_query($conexion, "
-                                    SELECT idIVP
-                                    FROM r_ipv_comanda
-                                    WHERE idComanda = '$idComanda'
+                            header("Location: control_comanda.php?com=" . $idComanda);
+
+                            /*
+                            // obtener productos de la comanda
+                            $consulta = mysqli_query($conexion, "
+                                SELECT idIVP
+                                FROM r_ipv_comanda
+                                WHERE idComanda = '$idComanda'
+                            ");
+
+                            $vendedores = array();
+
+                            while($fila = mysqli_fetch_array($consulta)){
+
+                                $idIVP = $fila['idIVP'];
+
+                                // obtener vendedor del producto de la comanda
+                                $consulta2 = mysqli_query($conexion, "
+                                    SELECT nUsuarioVend
+                                    FROM info_vendedor_producto
+                                    WHERE idIVP = '$idIVP'
                                 ");
 
-                                $vendedores = array();
-
-                                while($fila = mysqli_fetch_array($consulta)){
-
-                                    $idIVP = $fila['idIVP'];
-
-                                    $consulta2 = mysqli_query($conexion, "
-                                        SELECT nUsuarioVend
-                                        FROM info_vendedor_producto
-                                        WHERE idIVP = '$idIVP'
-                                    ");
-
-                                    $fila = mysqli_fetch_array($consulta2);
-                                    $vendedores[] = $fila['nUsuarioVend'];
-
-                                }
-
-                                foreach($vendedores as $vendedor){
-
-                                    $consulta = mysqli_query($conexion, "
-                                        SELECT numAvisos
-                                        FROM vendedor
-                                        WHERE nUsuario = '$vendedor'
-                                    ");
-
-                                    $fila = mysqli_fetch_array($consulta);
-                                    $num_avisos = $fila['numAvisos'];
-
-                                    $num_avisos = $num_avisos + 1;
-
-                                    // Código nuevo para actualizar la tabla
-                                    $actualizar = mysqli_query($conexion, "
-                                        UPDATE vendedor
-                                        SET numAvisos = '$num_avisos'
-                                        WHERE nUsuario = '$vendedor'
-                                    ");
-                                }
-
-                                echo '<p style="color: green;">Aviso añadido correctamente</p>';
-
-                            } else if ($diferencia >= 5) {
-
-                                echo "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "?com=" . urlencode($comanda['idComanda']) . "' method='post'>";
-                                echo "<input type='submit' class='btn-aviso' value='Poner aviso'>";
-                                echo "</form>";
+                                $fila = mysqli_fetch_array($consulta2);
+                                $vendedores[] = $fila['nUsuarioVend'];
 
                             }
+
+                            foreach($vendedores as $vendedor){
+
+                                // obtener numAvisos de cada vendedor
+                                $consulta = mysqli_query($conexion, "
+                                    SELECT numAvisos
+                                    FROM vendedor
+                                    WHERE nUsuario = '$vendedor'
+                                ");
+
+                                $fila = mysqli_fetch_array($consulta);
+                                $num_avisos = $fila['numAvisos'];
+
+                                $num_avisos = $num_avisos + 1;
+
+                                // Código nuevo para actualizar la tabla
+                                $actualizar = mysqli_query($conexion, "
+                                    UPDATE vendedor
+                                    SET numAvisos = '$num_avisos'
+                                    WHERE nUsuario = '$vendedor'
+                                ");
+                            }
+                            */
 
                         }
 
