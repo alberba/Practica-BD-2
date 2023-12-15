@@ -65,7 +65,7 @@
                 </div>
                 <div id=descripcion-prod>
                     <?php
-                    
+                        // información del producto más barato
                         if ($p_fila_vendedores = mysqli_fetch_array($consulta_precios)) {
                             echo "<h2>".$producto['nombre']."</h2>";
                             echo "<p>".$producto['descripcion']."</p>";
@@ -73,6 +73,7 @@
                             if ($p_fila_vendedores['stock'] <= 10)
                                 echo "<p id=stock> Sólo quedan ".$p_fila_vendedores['stock']." unidades a este precio!</p>";
                         
+                            // formulario para pasar los datos a añadir_carrito.php
                             echo "<form method='post' action='añadir_carrito.php' id=form-prod>";
                                 echo "<input type='hidden' name='idIVP' value='".$p_fila_vendedores['idIVP']."'>";
                                 echo "<input type='hidden' name='producto' value='".$idprod."'>";
@@ -89,14 +90,16 @@
                 </div>
             </div>
             <?php
+                // comprobar si otros vendedores venden el producto (será al mismo precio o más caros)
                 if ($p_fila_vendedores = mysqli_fetch_array($consulta_precios)) {
                     echo '<div id=otros-vend>';
                     echo '<p id=tit-otros-vend> Otros vendedores </p>';
                     echo '<ul>';
                     
+                    // para cada vendedor, dar la opción de comprarle a él el producto
                     do {
                         echo "<li class=otro-vendedor>".$p_fila_vendedores['nombre'].": ".$p_fila_vendedores['precio']." €";
-
+                            // formulario para pasar los datos a añadir_carrito.php
                             echo "<form method='post' action='añadir_carrito.php' class=otros-vendedores-form>";
 
                                 echo "<input type='hidden' name='idIVP' value='".$p_fila_vendedores['idIVP']."'>";

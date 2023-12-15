@@ -25,7 +25,7 @@
 
         // Obtener información de la comanda
         $consulta = mysqli_query($conexion, "
-            SELECT fecha, estado, comprador.nombre AS compN, nUsuarioRep, idDomicilio
+            SELECT idComanda, fecha, estado, comprador.nombre AS compN, nUsuarioRep, idDomicilio
             FROM comanda
                 JOIN comprador
                 ON comprador.nUsuario = nUsuarioComp
@@ -34,7 +34,7 @@
         $comanda = mysqli_fetch_array($consulta);
     }
 
-    if ($comanda) {
+
 
 ?>
 
@@ -184,6 +184,67 @@
                     
                     echo "</div>";
 
+                     // Convertir la fecha de la comanda a un objeto DateTime
+                     $fechaComanda = new DateTime($comanda['fecha']);
+
+                     // Obtener la fecha actual
+                     $fechaActual = new DateTime();
+
+                     // Calcular la diferencia en días
+                     $diferencia = $fechaActual->diff($fechaComanda)->days;
+
+                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        $idComanda = $_GET['com'];
+
+
+                        $consulta = mysqli_query($conexion, "
+                        SELECT idIVP
+                        FROM r_ipv_comanda
+                        WHERE idComanda = '$idComanda'
+                        ");
+
+                        $vendedores = array();
+
+                        while($fila = mysqli_fetch_array($consulta)){
+                            $idIVP = $fila['idIVP'];
+
+                            $consulta2 = mysqli_query($conexion, "
+                            SELECT nUsuarioVend
+                            FROM info_vendedor_producto
+                            WHERE idIVP = '$idIVP'
+                            ");
+
+                            $fila = mysqli_fetch_array($consulta2);
+                            $vendedores[] = $fila['nUsuarioVend'];
+                        }
+
+                        foreach($vendedores as $vendedor){
+                            $consulta = mysqli_query($conexion, "
+                            SELECT numAvisos
+                            FROM vendedor
+                            WHERE nUsuario = '$vendedor'
+                            ");
+                            $fila = mysqli_fetch_array($consulta);
+                            $num_avisos = $fila['numAvisos'];
+
+                            $num_avisos = $num_avisos + 1;
+
+                            // Código nuevo para actualizar la tabla
+                            $actualizar = mysqli_query($conexion, "
+                            UPDATE vendedor
+                            SET numAvisos = '$num_avisos'
+                            WHERE nUsuario = '$vendedor'
+                            ");
+                        }
+
+                        echo '<p style="color: green;">Aviso añadido correctamente</p>';
+                    } else if ($diferencia >= 5) {
+                        echo "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "?com=" . urlencode($comanda['idComanda']) . "' method='post'>";
+                        echo "<input type='submit' class='btn-aviso' value='Poner aviso'>";
+                        echo "</form>";
+                    }
+                    
+
                 }
 
             ?>
@@ -195,10 +256,3 @@
 </body>
 </html>
 
-<?php
-
-    } else {
-        echo "Producto no encontrado.";
-    }
-
-?>
