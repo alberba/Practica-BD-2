@@ -62,6 +62,8 @@
                                     echo "<p class='text-com'> Fecha: " . $comanda['fecha']. "</p>";
                                     echo "<p class='text-com'> Estado: " . $comanda['estado']. "</p>";
                                 echo "</a>";
+
+                                
                             echo "</div>";
                         echo "</li>";
                     }
